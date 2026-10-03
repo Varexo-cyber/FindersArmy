@@ -13,8 +13,13 @@ import { formatCents } from "@/lib/money";
 import { paidOutTotalCents } from "@/lib/server/public-stats";
 import { siteUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 600;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  return pageMetadata((await params).locale, null, "/");
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale === "en" ? "en" : "nl";

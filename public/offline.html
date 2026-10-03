@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offline · FindersArmy</title>
+<style>
+:root{--bg:#F5F3EE;--fg:#0E0F0C;--muted:#6B6E66}
+@media (prefers-color-scheme:dark){:root{--bg:#0E0F0C;--fg:#F5F3EE;--muted:#9a9d94}}
+body{margin:0;min-height:100vh;display:flex;align-items:center;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{padding:24px;max-width:420px}
+h1{font-size:40px;line-height:1;letter-spacing:-.03em;margin:0 0 12px}
+p{color:var(--muted)}
+button{margin-top:16px;height:44px;padding:0 16px;border:0;border-radius:6px;background:#D4FF3F;color:#0E0F0C;font-weight:600;font-size:15px}
+</style>
+</head>
+<body><main>
+<p style="font:12px monospace;letter-spacing:.12em">FINDERSARMY</p>
+<h1>Geen verbinding.</h1>
+<p>Je bent offline. Je saldo en klanten laden we alleen live, zodat je nooit verouderde bedragen ziet.</p>
+<button onclick="location.reload()">Opnieuw proberen</button>
+</main></body>
+</html>
