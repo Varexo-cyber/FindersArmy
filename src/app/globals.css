@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --ink: #0e0f0c;
+  --paper: #f5f3ee;
+  --olive: #3a4a2e;
+  --signal: #d4ff3f;
+  --muted: #6b6e66;
+  --line: #e2dfd7;
+  --danger: #d94a2b;
+
+  /* Semantic tokens: components use these, never the raw palette. */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --surface: #fbfaf7;
+  --surface-2: #efece5;
+  --border: var(--line);
+  --subtle: var(--muted);
+  --accent: var(--olive);
+  --accent-fg: var(--paper);
+  /* Signal on paper fails contrast as text, so money text in light mode uses ink on a signal chip. */
+  --money-bg: var(--signal);
+  --money-fg: var(--ink);
+  --focus: var(--olive);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --surface: #161814;
+  --surface-2: #1e211b;
+  --border: #2b2e27;
+  --subtle: #9a9d94;
+  --accent: #8fa577;
+  --accent-fg: var(--ink);
+  --money-bg: var(--signal);
+  --money-fg: var(--ink);
+  --focus: var(--signal);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--ink);
+    --fg: var(--paper);
+    --surface: #161814;
+    --surface-2: #1e211b;
+    --border: #2b2e27;
+    --subtle: #9a9d94;
+    --accent: #8fa577;
+    --accent-fg: var(--ink);
+    --focus: var(--signal);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-olive: var(--olive);
+  --color-signal: var(--signal);
+  --color-danger: var(--danger);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-focus: var(--focus);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 6px;
+  --radius-xl: 6px;
+
+  --ease-out-quick: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    font-weight: 700;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0ms !important;
+      animation-duration: 0ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+  .money {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtle);
+  }
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .prose-legal h2 {
+    font-size: 1.375rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-legal h3 {
+    font-size: 1.05rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-legal p,
+  .prose-legal li {
+    color: var(--fg);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .prose-legal ul {
+    list-style: square;
+    padding-left: 1.25rem;
+  }
+  .prose-legal ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+  }
+}

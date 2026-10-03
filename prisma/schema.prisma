@@ -1,0 +1,644 @@
+// FindersArmy data model.
+// Money is always stored as integer cents (Int). Percentages as basis points (1% = 100 bps).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FINDER
+  BUSINESS
+  ADMIN
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  SUPPORT
+}
+
+enum FinderStatus {
+  ACTIVE
+  WARNED
+  SUSPENDED
+}
+
+enum BusinessStatus {
+  PENDING_REVIEW
+  ACTIVE
+  UNDER_REVIEW
+  SUSPENDED
+  REJECTED
+}
+
+enum BusinessMemberRole {
+  OWNER
+  MEMBER
+}
+
+enum FeeType {
+  PERCENTAGE
+  FIXED
+  TIERED
+}
+
+enum CampaignStatus {
+  DRAFT
+  LIVE
+  PAUSED
+  BUDGET_REACHED
+  SUSPENDED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUOTE_SENT
+  WON
+  COMPLETED
+  CONFIRMED
+  INVOICED
+  PAID
+  PAID_OUT
+  LOST
+  DISPUTED
+  DUPLICATE
+  FRAUD
+}
+
+enum ActorType {
+  FINDER
+  BUSINESS
+  CUSTOMER
+  ADMIN
+  SYSTEM
+}
+
+enum LedgerType {
+  EXPECTED
+  AVAILABLE
+  PAYOUT
+  BONUS
+  ADJUSTMENT
+}
+
+enum InvoiceStatus {
+  OPEN
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PayoutStatus {
+  REQUESTED
+  APPROVED
+  BATCHED
+  PAID
+  REJECTED
+}
+
+enum PayoutBatchStatus {
+  EXPORTED
+  PAID
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED
+  REJECTED
+}
+
+enum ReportStatus {
+  OPEN
+  RESOLVED
+  REJECTED
+}
+
+// ---------- Auth.js ----------
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  phone         String?
+  roles         Role[]    @default([])
+  adminRole     AdminRole?
+  locale        String    @default("nl")
+  deletedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  finderProfile FinderProfile?
+  memberships   BusinessMember[]
+  notifications Notification[]
+  auditLogs     AuditLog[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ---------- Finders ----------
+
+model FinderProfile {
+  id                 String       @id @default(cuid())
+  userId             String       @unique
+  birthDate          DateTime
+  city               String
+  iban               String?
+  ibanHolder         String?
+  paidDeals          Int          @default(0)
+  score              Int          @default(100)
+  status             FinderStatus @default(ACTIVE)
+  inviteCode         String       @unique
+  referredByFinderId String?
+  inviteBonusPaid    Boolean      @default(false)
+  firstDealBonusPaid Boolean      @default(false)
+  nickname           String?
+  leaderboardOptIn   Boolean      @default(false)
+  termsAcceptedAt    DateTime
+  parentEmail        String?
+  parentConsentAt    DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referredBy    FinderProfile?    @relation("FinderInvites", fields: [referredByFinderId], references: [id])
+  invitees      FinderProfile[]   @relation("FinderInvites")
+  links         ReferralLink[]
+  leads         Lead[]            @relation("LeadFinder")
+  ledger        LedgerEntry[]
+  payouts       Payout[]
+  reports       Report[]
+  devices       FinderDevice[]
+  originalOf    Customer[]
+}
+
+// Hashed IP/user-agent fingerprints seen on a Finder's session, used for self-referral detection.
+model FinderDevice {
+  id         String   @id @default(cuid())
+  finderId   String
+  ipHash     String
+  uaHash     String
+  lastSeenAt DateTime @default(now())
+
+  finder FinderProfile @relation(fields: [finderId], references: [id], onDelete: Cascade)
+
+  @@unique([finderId, ipHash, uaHash])
+  @@index([ipHash])
+}
+
+// ---------- Businesses ----------
+
+model Category {
+  id              String  @id @default(cuid())
+  slug            String  @unique
+  nameNl          String
+  nameEn          String
+  descriptionNl   String  @default("")
+  descriptionEn   String  @default("")
+  exampleJobCents Int     @default(0)
+  excluded        Boolean @default(false)
+  excludedReason  String?
+  sortOrder       Int     @default(0)
+
+  businesses Business[]
+}
+
+model Business {
+  id                String         @id @default(cuid())
+  name              String
+  kvk               String
+  vatNumber         String
+  street            String
+  houseNumber       String
+  postcode          String
+  city              String
+  country           String         @default("NL")
+  contactName       String
+  phone             String
+  email             String
+  logoUrl           String?
+  description       String
+  website           String?
+  offerUrl          String?
+  categoryId        String
+  serviceArea       Json
+  status            BusinessStatus @default(PENDING_REVIEW)
+  score             Int            @default(100)
+  suspendedReason   String?
+  termsAcceptedAt   DateTime
+  approvedAt        DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  category  Category         @relation(fields: [categoryId], references: [id])
+  members   BusinessMember[]
+  campaigns Campaign[]
+  invoices  Invoice[]
+}
+
+model BusinessMember {
+  businessId String
+  userId     String
+  role       BusinessMemberRole @default(OWNER)
+  createdAt  DateTime           @default(now())
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([businessId, userId])
+}
+
+model Campaign {
+  id                 String         @id @default(cuid())
+  businessId         String
+  title              String
+  description        String
+  targetCustomer     String
+  feeType            FeeType
+  feePercentBps      Int?
+  feeFixedCents      Int?
+  tiers              Json?
+  minJobAmountCents  Int            @default(50000)
+  minFeeCents        Int            @default(5000)
+  monthlyBudgetCents Int?
+  region             String
+  status             CampaignStatus @default(DRAFT)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  business Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  boosts   Boost[]
+  links    ReferralLink[]
+  leads    Lead[]
+
+  @@index([status])
+}
+
+model Boost {
+  id            String   @id @default(cuid())
+  campaignId    String
+  extraFeeCents Int
+  label         String
+  startsAt      DateTime
+  endsAt        DateTime
+  createdAt     DateTime @default(now())
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  leads    Lead[]
+}
+
+// ---------- Referrals & leads ----------
+
+model ReferralLink {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  finderId   String
+  campaignId String
+  clicks     Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  finder    FinderProfile @relation(fields: [finderId], references: [id], onDelete: Cascade)
+  campaign  Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  clickLogs Click[]
+  leads     Lead[]
+
+  @@unique([finderId, campaignId])
+}
+
+model Click {
+  id             String   @id @default(cuid())
+  referralLinkId String
+  ipHash         String
+  userAgentHash  String
+  createdAt      DateTime @default(now())
+
+  referralLink ReferralLink @relation(fields: [referralLinkId], references: [id], onDelete: Cascade)
+
+  @@index([referralLinkId, createdAt])
+}
+
+model Customer {
+  id                   String    @id @default(cuid())
+  firstName            String
+  lastName             String
+  email                String
+  phone                String
+  postcode             String
+  houseNumber          String
+  city                 String?
+  consentAt            DateTime
+  originalFinderId     String?
+  attributionExpiresAt DateTime?
+  anonymizedAt         DateTime?
+  createdAt            DateTime  @default(now())
+
+  originalFinder FinderProfile? @relation(fields: [originalFinderId], references: [id])
+  leads          Lead[]
+
+  @@index([email])
+  @@index([phone])
+}
+
+model Lead {
+  id                String     @id @default(cuid())
+  customerId        String
+  campaignId        String
+  finderId          String
+  referralLinkId    String?
+  description       String
+  timeframe         String
+  status            LeadStatus @default(NEW)
+  dealAmountCents   Int?
+  lostReason        String?
+  isRepeat          Boolean    @default(false)
+  boostId           String?
+  boostCents        Int        @default(0)
+  ipHash            String?
+  fraudFlags        String[]   @default([])
+  respondedAt       DateTime?
+  wonAt             DateTime?
+  confirmationSentAt DateTime?
+  reminderSentAt    DateTime?
+  invoiceId         String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  campaign     Campaign      @relation(fields: [campaignId], references: [id])
+  finder       FinderProfile @relation("LeadFinder", fields: [finderId], references: [id])
+  referralLink ReferralLink? @relation(fields: [referralLinkId], references: [id])
+  boost        Boost?        @relation(fields: [boostId], references: [id])
+  invoice      Invoice?      @relation(fields: [invoiceId], references: [id])
+  events       LeadEvent[]
+  photos       LeadPhoto[]
+  confirmation Confirmation?
+  fee          Fee?
+  ledger       LedgerEntry[]
+  disputes     Dispute[]
+  reports      Report[]
+
+  @@index([status])
+  @@index([finderId])
+  @@index([campaignId])
+}
+
+model LeadPhoto {
+  id        String   @id @default(cuid())
+  leadId    String
+  url       String
+  createdAt DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model LeadEvent {
+  id          String      @id @default(cuid())
+  leadId      String
+  fromStatus  LeadStatus?
+  toStatus    LeadStatus
+  actorUserId String?
+  actorType   ActorType
+  note        String?
+  createdAt   DateTime    @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId, createdAt])
+}
+
+model Confirmation {
+  id                   String    @id @default(cuid())
+  leadId               String    @unique
+  token                String    @unique
+  confirmedAt          DateTime?
+  confirmedAmountCents Int?
+  disagreed            Boolean   @default(false)
+  bonusCents           Int       @default(0)
+  bonusSentAt          DateTime?
+  createdAt            DateTime  @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+// ---------- Money ----------
+
+model Fee {
+  id                 String   @id @default(cuid())
+  leadId             String   @unique
+  totalCents         Int
+  finderCents        Int
+  platformCents      Int
+  customerBonusCents Int
+  calculatedWith     Json
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model InvoiceSequence {
+  year Int @id
+  last Int @default(0)
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  number         String        @unique
+  businessId     String
+  subtotalCents  Int
+  vatRateBps     Int
+  vatCents       Int
+  totalCents     Int
+  status         InvoiceStatus @default(OPEN)
+  issuedAt       DateTime      @default(now())
+  dueAt          DateTime
+  paidAt         DateTime?
+  molliePaymentId String?
+  paymentUrl     String?
+  pdfUrl         String?
+  remindersSent  Int           @default(0)
+  lastReminderAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id])
+  leads    Lead[]
+
+  @@index([status, dueAt])
+}
+
+// The Finder's balance is always derived from this ledger, never stored as a mutable field.
+model LedgerEntry {
+  id          String     @id @default(cuid())
+  finderId    String
+  leadId      String?
+  payoutId    String?
+  type        LedgerType
+  amountCents Int
+  note        String?
+  createdAt   DateTime   @default(now())
+
+  finder FinderProfile @relation(fields: [finderId], references: [id])
+  lead   Lead?         @relation(fields: [leadId], references: [id])
+  payout Payout?       @relation(fields: [payoutId], references: [id])
+
+  @@index([finderId])
+}
+
+model Payout {
+  id          String       @id @default(cuid())
+  finderId    String
+  amountCents Int
+  status      PayoutStatus @default(REQUESTED)
+  iban        String
+  ibanHolder  String
+  batchId     String?
+  rejectReason String?
+  requestedAt DateTime     @default(now())
+  approvedAt  DateTime?
+  paidAt      DateTime?
+
+  finder FinderProfile @relation(fields: [finderId], references: [id])
+  batch  PayoutBatch?  @relation(fields: [batchId], references: [id])
+  ledger LedgerEntry[]
+}
+
+model PayoutBatch {
+  id          String            @id @default(cuid())
+  reference   String            @unique
+  createdBy   String
+  sepaXml     String            @db.Text
+  sepaXmlUrl  String?
+  totalCents  Int
+  status      PayoutBatchStatus @default(EXPORTED)
+  createdAt   DateTime          @default(now())
+  paidAt      DateTime?
+
+  payouts Payout[]
+}
+
+// ---------- Quality & support ----------
+
+model Dispute {
+  id         String        @id @default(cuid())
+  leadId     String
+  openedBy   ActorType
+  reason     String
+  status     DisputeStatus @default(OPEN)
+  resolution String?
+  createdAt  DateTime      @default(now())
+  resolvedAt DateTime?
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model Report {
+  id        String       @id @default(cuid())
+  leadId    String
+  finderId  String
+  message   String
+  status    ReportStatus @default(OPEN)
+  resolution String?
+  createdAt DateTime     @default(now())
+
+  lead   Lead          @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  finder FinderProfile @relation(fields: [finderId], references: [id])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  type      String
+  payload   Json
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+}
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  action      String
+  entity      String
+  entityId    String
+  before      Json?
+  after       Json?
+  createdAt   DateTime @default(now())
+
+  actor User? @relation(fields: [actorUserId], references: [id])
+
+  @@index([entity, entityId])
+}
+
+// Development-only mailbox: used when no RESEND_API_KEY is configured, so flows (and e2e tests)
+// can read the magic links and notifications that would otherwise be emailed.
+model DevMail {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  html      String   @db.Text
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([to, createdAt])
+}
+
+model StoredFile {
+  key         String   @id
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
+}
