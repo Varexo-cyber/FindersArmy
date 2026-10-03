@@ -16,8 +16,8 @@ import { cn } from "@/lib/utils";
 
 export const revalidate = 600;
 
-export default async function HomePage({ params }: { params: Promise<{ locale: "nl" | "en" }> }) {
-  const { locale } = await params;
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale === "en" ? "en" : "nl";
   setRequestLocale(locale);
   const t = await getTranslations("home");
   const tc = await getTranslations("common");
