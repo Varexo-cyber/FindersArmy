@@ -21,3 +21,4 @@ shots.tmp.mjs
 snapshot.tmp.mjs
 test-results
 chat.tmp.mjs
+*.tmp.*
