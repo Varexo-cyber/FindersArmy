@@ -804,7 +804,7 @@
     "serverBody": "We're aware. Please try again in a few minutes."
   },
   "assistant": {
-    "open": "Ask the FindersArmy assistant",
+    "open": "Ask a question",
     "close": "Close",
     "title": "Questions?",
     "subtitle": "Instant answers about earning, payouts and signing up.",
