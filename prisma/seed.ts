@@ -102,6 +102,16 @@ const BUSINESSES: DemoBusiness[] = [
 async function main() {
   await categories();
   await wipeDemo();
+  // Demo company details so invoices and SEPA batches work locally. The IBAN is the standard
+  // documentation example; replace all of this under Admin › Instellingen before going live.
+  if (!(await db.setting.findUnique({ where: { key: "company" } }))) {
+    await db.setting.create({
+      data: {
+        key: "company",
+        value: { name: "FindersArmy (demo-omgeving)", street: "Demostraat 1", postcodeCity: "2671 AA Naaldwijk", kvk: "00000000", vatNumber: "NL000000000B00", iban: "NL91ABNA0417164300", bic: "ABNANL2A", email: "facturen@findersarmy.test" },
+      },
+    });
+  }
 
   await user("admin@findersarmy.test", "Admin (demo)", ["ADMIN"], { adminRole: "SUPER_ADMIN" });
   await user("support@findersarmy.test", "Support (demo)", ["ADMIN"], { adminRole: "SUPPORT" });

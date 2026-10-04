@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { env } from "@/lib/env";
 import { runDailyJobs } from "@/lib/server/services/jobs";
+import { withTimeTravel } from "@/lib/server/clock";
 
 export const maxDuration = 300;
 
@@ -10,7 +11,9 @@ export async function GET(req: NextRequest) {
   if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
-  const results = await runDailyJobs();
+  // E2E builds may simulate elapsed days to exercise reminders and confirmation mails.
+  const days = process.env.E2E === "1" ? Number(req.nextUrl.searchParams.get("offsetDays") ?? 0) : 0;
+  const results = days > 0 ? await withTimeTravel(days, runDailyJobs) : await runDailyJobs();
   console.info(JSON.stringify({ event: "cron_daily", results }));
   return NextResponse.json({ ok: true, results });
 }

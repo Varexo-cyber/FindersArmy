@@ -223,3 +223,8 @@ export async function adminToggleChecklist(id: string, isDone: boolean): Promise
   await audit({ actorUserId: admin.id, action: "checklist.toggled", entity: "Setting", entityId: id, after: { done: isDone } });
   return done("/admin");
 }
+
+/** Same as adminLedgerAdjustment, with the argument order AdminAction passes (reason, amount). */
+export async function adminLedgerAdjustmentFor(finderId: string, reason: string, amount?: string): Promise<Result> {
+  return adminLedgerAdjustment(finderId, amount ?? "", reason);
+}
