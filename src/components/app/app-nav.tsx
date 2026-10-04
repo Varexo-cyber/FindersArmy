@@ -2,9 +2,9 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { BadgeEuro, Bell, Briefcase, FileText, Inbox, LayoutGrid, Medal, Megaphone, Search, User, Users, Shield, Settings, AlertTriangle, Wallet, ScrollText } from "lucide-react";
+import { BadgeEuro, Bell, Briefcase, FileText, Inbox, LayoutGrid, Medal, Megaphone, Search, User, Users, Shield, Settings, AlertTriangle, Wallet, ScrollText, ShieldBan } from "lucide-react";
 
-const ICONS = { BadgeEuro, Bell, Briefcase, FileText, Inbox, LayoutGrid, Medal, Megaphone, Search, User, Users, Shield, Settings, AlertTriangle, Wallet, ScrollText };
+const ICONS = { BadgeEuro, Bell, Briefcase, FileText, Inbox, LayoutGrid, Medal, Megaphone, Search, User, Users, Shield, Settings, AlertTriangle, Wallet, ScrollText, ShieldBan };
 export type IconName = keyof typeof ICONS;
 export interface NavItem {
   href: string;

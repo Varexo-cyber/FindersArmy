@@ -1,5 +1,7 @@
 "use server";
 
+import { isBanned } from "../bans";
+import { TERMS_VERSION } from "@/content/legal/version";
 import { businessSignupSchema } from "@/lib/validation/business";
 import { flattenErrors, type FieldErrors } from "@/lib/validation/common";
 import { db } from "../db";
@@ -29,6 +31,10 @@ export async function registerBusiness(formData: FormData): Promise<BusinessSign
   if (!parsed.success) return { ok: false, errors: flattenErrors(parsed.error) };
   const data = parsed.data;
 
+  if ((await isBanned("KVK", data.company.kvk)) || (await isBanned("EMAIL", user.email))) {
+    return { ok: false, errors: {}, formError: "BANNED" };
+  }
+
   const category = await db.category.findUnique({ where: { id: data.categoryId } });
   if (!category || category.excluded) return { ok: false, errors: { categoryId: "required" } };
 
@@ -52,6 +58,7 @@ export async function registerBusiness(formData: FormData): Promise<BusinessSign
         categoryId: category.id,
         serviceArea: data.serviceArea,
         termsAcceptedAt: t,
+        termsVersion: TERMS_VERSION,
         members: { create: { userId: user.id, role: "OWNER" } },
       },
     });

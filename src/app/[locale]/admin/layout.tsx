@@ -25,6 +25,7 @@ export default async function AdminLayout({ children, params }: { children: Reac
     { href: "/admin/bedrijven", label: "Bedrijven", icon: "Briefcase", badge: pendingBusinesses },
     { href: "/admin/campagnes", label: "Campagnes", icon: "Megaphone" },
     { href: "/admin/finders", label: "Finders", icon: "Users" },
+    { href: "/admin/gebruikers", label: "Gebruikers & bans", icon: "ShieldBan" },
     { href: "/admin/leads", label: "Leads", icon: "Inbox", badge: flagged },
     { href: "/admin/geschillen", label: "Geschillen & meldingen", icon: "AlertTriangle", badge: openDisputes + openReports },
     { href: "/admin/facturen", label: "Facturen", icon: "FileText" },

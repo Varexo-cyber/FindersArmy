@@ -131,6 +131,9 @@ model User {
   adminRole     AdminRole?
   locale        String    @default("nl")
   deletedAt     DateTime?
+  /// Set by an admin: the user can no longer sign in and existing sessions are revoked.
+  bannedAt      DateTime?
+  bannedReason  String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -199,6 +202,7 @@ model FinderProfile {
   nickname           String?
   leaderboardOptIn   Boolean      @default(false)
   termsAcceptedAt    DateTime
+  termsVersion       String   @default("2026-10")
   parentEmail        String?
   parentConsentAt    DateTime?
   createdAt          DateTime     @default(now())
@@ -270,6 +274,7 @@ model Business {
   score             Int            @default(100)
   suspendedReason   String?
   termsAcceptedAt   DateTime
+  termsVersion      String   @default("2026-10")
   approvedAt        DateTime?
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
@@ -641,4 +646,21 @@ model StoredFile {
   contentType String
   data        Bytes
   createdAt   DateTime @default(now())
+}
+
+enum BanKind {
+  EMAIL
+  KVK
+}
+
+/// Identities that may not (re)register. Values are stored as privacy hashes, never in plain text.
+model Ban {
+  id          String   @id @default(cuid())
+  kind        BanKind
+  valueHash   String
+  reason      String
+  createdById String?
+  createdAt   DateTime @default(now())
+
+  @@unique([kind, valueHash])
 }

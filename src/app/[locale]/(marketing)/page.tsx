@@ -12,6 +12,7 @@ import { PHOTOS } from "@/content/photos";
 import { PROVINCES } from "@/content/regions";
 import { CategoryTiles } from "@/components/marketing/category-tiles";
 import { HeroChat } from "@/components/marketing/hero-chat";
+import { ExampleStories } from "@/components/marketing/example-stories";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { FAQ } from "@/content/faq";
 import { HOME_EXAMPLE, categoryExample } from "@/lib/examples";
@@ -133,6 +134,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         }
       />
+
+      <ExampleStories locale={locale} />
 
       {/* Side job versus FindersArmy. */}
       <section className="bg-surface py-16 md:py-24">

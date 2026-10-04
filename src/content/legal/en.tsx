@@ -42,6 +42,9 @@ export function TermsFindersEn() {
         <li>Spam, misleading messages, or posing as staff of a Business or FindersArmy.</li>
         <li>False promises about a Business&apos;s prices, quality or discounts, or pressuring Customers.</li>
       </ul>
+      <h2>8A. Consequences of abuse</h2>
+      <p>In case of fraud or abuse (such as self-referral, fake requests or spam), fees earned that way are forfeited, money already paid out must be repaid, we may block your account and exclude your e-mail address from new sign-ups, and we may take legal action and report the matter to the police.</p>
+
       <h2>9. Quality and measures</h2>
       <p>We measure the quality of your requests. Many requests marked as spam lead to a warning first, and on repetition or fraud to suspension or termination. Expected earnings from fraudulent requests lapse and wrongly paid amounts may be reclaimed.</p>
       <h2>10. Customer privacy</h2>
@@ -82,6 +85,17 @@ export function TermsBusinessEn() {
       <p>6.2 If the Customer awards a job to the Business in that period, the fee is due, even if the job is arranged or performed outside the platform, including through an affiliated company.</p>
       <p>6.3 The Business cooperates with verification, including Customers being asked to confirm completion.</p>
       <p>6.4 In case of circumvention, the fee is due on the actual job amount or, failing information, on a reasonable estimate, plus investigation costs.</p>
+      <h2>6A. Evidence</h2>
+      <p>6A.1 Our records serve as evidence of a referral between the parties, subject to proof to the contrary by the Business. They include the click on the Finder&apos;s personal link, the Request with date and time, messages and status changes on the platform, and the Customer&apos;s confirmation.</p>
+      <p>6A.2 If the Business claims a Customer did not come through FindersArmy, it must support this with documents dated before the Request, such as an earlier quote or invoice to the same Customer.</p>
+
+      <h2>6B. Non-payment, denial or circumvention</h2>
+      <p>6B.1 The Business breaches these terms if it (a) fails to pay an invoice that is due, (b) wrongly denies that a Customer was referred through FindersArmy, (c) does not register a won deal, or registers it too low, or (d) serves the Customer outside the platform to avoid the fee.</p>
+      <p>6B.2 In cases b, c and d the Business forfeits, without notice of default being required, an immediately payable penalty of twice the Finder&apos;s fee owed, with a minimum of € 500 per case. The penalty is in addition to the fee itself and does not affect our right to compensation for actual damages (deviating from Article 6:92(2) of the Dutch Civil Code).</p>
+      <p>6B.3 In case of late payment the Business owes statutory commercial interest (Article 6:119a Dutch Civil Code), extrajudicial collection costs of 15% of the principal with a minimum of € 40, and court costs if we have to start proceedings.</p>
+      <p>6B.4 In these cases we may hand the claim to a collection agency or lawyer, start legal proceedings, and suspend or terminate the Business&apos;s account. Payment obligations and the referral clause survive termination.</p>
+      <p>6B.5 The Business expressly accepts these provisions on sign-up by ticking &ldquo;I agree to the terms&rdquo;. We record which version of these terms was accepted and when.</p>
+
       <h2>7. Disputes about deals</h2>
       <p>If Business and Customer disagree, we investigate and determine the amount due. The Business may object with reasons within 14 days.</p>
       <h2>8. Score and visibility</h2>

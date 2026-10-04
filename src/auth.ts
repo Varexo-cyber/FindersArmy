@@ -1,3 +1,4 @@
+import { isBanned } from "@/lib/server/bans";
 import NextAuth, { type DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -62,7 +63,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async signIn({ user }) {
       const existing = user.email ? await db.user.findUnique({ where: { email: user.email.toLowerCase() } }) : null;
-      return !existing?.deletedAt;
+      if (existing?.deletedAt || existing?.bannedAt) return false;
+      return !(await isBanned("EMAIL", user.email));
     },
   },
   events: {

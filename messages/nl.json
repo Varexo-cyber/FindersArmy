@@ -87,7 +87,8 @@
     "amount": "Bedrag",
     "actions": "Acties",
     "yes": "Ja",
-    "no": "Nee"
+    "no": "Nee",
+    "banned": "Dit account of bedrijf is uitgesloten van FindersArmy. Denk je dat dit een vergissing is? Mail hallo@findersarmy.com."
   },
   "home": {
     "eyebrow": "Finder's fees voor gewone mensen",
@@ -229,7 +230,13 @@
       "sollicitatie",
       "vacature",
       "poespas"
-    ]
+    ],
+    "storiesTitle": "Zo kan het voor jou lopen.",
+    "storiesSub": "Drie voorbeelden van hoe een paar tips in een paar weken optellen. Gewone mensen, gewone netwerken.",
+    "storiesLabel": "Voorbeeldprofiel",
+    "storiesTotal": "verdiend",
+    "storiesPaidAfter": "{days} dagen na de tip gewonnen",
+    "storiesNote": "Dit zijn voorbeeldprofielen, geen echte gebruikers. De bedragen zijn rekenvoorbeelden voor een Rekruut (75%) met gangbare fees; de echte fee staat bij elke campagne."
   },
   "finders": {
     "eyebrow": "Voor Finders",
@@ -307,7 +314,7 @@
     "boostBody": "Moet er iets weg? Verhoog tijdelijk je fee (“+ € 100 deze week”) of boost een specifiek product. Je campagne krijgt een badge en staat bovenaan bij Finders.",
     "excludedTitle": "Niet voor iedereen",
     "excludedBody": "Makelaardij, hypotheken, verzekeringen en andere financiële producten, advocatuur en medische zorg laten we bij de start niet toe. Voor het betaald aanbrengen van klanten gelden daar strengere regels.",
-    "heroTitle2": "Gratis aanmelden. Wij sturen je klanten.",
+    "heroTitle2": "Een heel salesteam. Je betaalt pas als het werkt.",
     "freeTitle": "Gratis aanmelden. Gratis blijven.",
     "freeBody": "Je betaalt niets om erop te staan, niets per maand en niets per aanvraag. Pas als een aangebrachte klant echt klant wordt, betaal je de fee die je zelf hebt gekozen.",
     "armyTitle": "Mensen gaan voor jou op zoek",
@@ -317,7 +324,20 @@
     "whoTitle": "Wie zoekt er voor je?",
     "whoBody": "Finders zijn gewone mensen: studenten, ouders, collega's, buren. Ze kennen iemand die precies zoekt wat jij verkoopt, en ze worden pas betaald als jij een klant wint. Dus sturen ze je alleen mensen die echt iets nodig hebben.",
     "sectorsTitle": "Voor elk soort bedrijf",
-    "sectorsSub": "{count} categorieën in {groups} sectoren, in alle 342 gemeenten. Staat jouw branche er niet tussen? Meld je toch aan, we voegen hem toe."
+    "sectorsSub": "{count} categorieën in {groups} sectoren, in alle 342 gemeenten. Staat jouw branche er niet tussen? Meld je toch aan, we voegen hem toe.",
+    "salesTitle": "Zo simpel is het",
+    "sales1t": "Gratis aanmelden",
+    "sales1b": "Vijf minuten. Geen abonnement, geen contract per maand, geen opstartkosten.",
+    "sales2t": "Finders zoeken klanten voor je",
+    "sales2b": "Mensen uit heel Nederland sturen jouw bedrijf naar vrienden, familie en collega's die iets nodig hebben.",
+    "sales3t": "Pas betalen bij een nieuwe klant",
+    "sales3b": "Wordt iemand echt klant, dan betaal je de fee die je zelf instelde. Niets gewonnen? Dan betaal je niets.",
+    "exTitle": "Rekenvoorbeeld: een autodealer",
+    "exLabel": "Voorbeeld",
+    "exCustomers": "nieuwe klanten via Finders",
+    "exRevenue": "omzet uit die klanten",
+    "exCost": "wat het je kostte",
+    "exNote": "Rekenvoorbeeld met een vaste fee van {fee} per verkochte auto en een gemiddelde auto van {car}. Je stelt de fee zelf in."
   },
   "how": {
     "eyebrow": "Hoe het werkt",
@@ -508,7 +528,7 @@
     "offerUrlHint": "Bijvoorbeeld je website, AutoScout24 of Marktplaats. Je hoeft geen producten apart te plaatsen.",
     "budget": "Maandbudget voor fees",
     "budgetHint": "Optioneel. Als het op is, pauzeert je campagne automatisch tot de volgende maand.",
-    "termsLabel": "Ik ga akkoord met de <terms>voorwaarden voor bedrijven</terms>, inclusief de aanbrengclausule.",
+    "termsLabel": "Ik ga akkoord met de <terms>voorwaarden voor bedrijven</terms>, inclusief de aanbrengclausule van 12 maanden en de boeteregeling bij niet betalen, ontkennen of omzeilen (artikel 6, 6A en 6B).",
     "clauseSummary": "Aanbrengclausule: een klant die via FindersArmy binnenkomt telt 12 maanden lang als aangebracht, ook als je buiten het platform om afspraken maakt.",
     "submit": "Aanmelding versturen",
     "pendingTitle": "Je aanmelding is binnen.",

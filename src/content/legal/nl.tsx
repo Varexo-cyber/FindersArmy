@@ -54,6 +54,9 @@ export function TermsFindersNl() {
         <li>Klanten onder druk zetten om een opdracht te geven.</li>
       </ul>
 
+      <h2>8A. Gevolgen van misbruik</h2>
+      <p>Bij fraude of misbruik (zoals zelf aanbrengen, nepaanvragen of spam) vervallen de fees die daarmee verdiend zijn, moet al uitbetaald geld worden terugbetaald, kunnen wij je account blokkeren en je e-mailadres uitsluiten van nieuwe aanmeldingen, en kunnen wij juridische stappen nemen en aangifte doen.</p>
+
       <h2>9. Kwaliteit en maatregelen</h2>
       <p>9.1 Wij meten de kwaliteit van je aanvragen. Worden veel van je aanvragen door Bedrijven als spam of onzin gemarkeerd, dan krijg je eerst een waarschuwing.</p>
       <p>9.2 Bij herhaling of bij fraude kunnen wij je account schorsen of beëindigen. Verwachte verdiensten uit frauduleuze aanvragen vervallen. Wij kunnen onterecht uitbetaalde bedragen terugvorderen.</p>
@@ -111,6 +114,17 @@ export function TermsBusinessNl() {
       <p>6.2 Geeft de Klant in die periode een opdracht aan het Bedrijf, dan is de Finder&apos;s fee verschuldigd, ook als de opdracht buiten het platform om tot stand komt of wordt uitgevoerd. Dit geldt ook voor opdrachten via een gelieerde onderneming.</p>
       <p>6.3 Het Bedrijf verleent medewerking aan controle, onder meer doordat de Klant wordt gevraagd de uitvoering te bevestigen.</p>
       <p>6.4 Bij omzeiling is het Bedrijf de fee verschuldigd over het werkelijke opdrachtbedrag, of bij gebrek aan informatie over een redelijk geschat bedrag, vermeerderd met de kosten van onderzoek.</p>
+
+      <h2>6A. Bewijs</h2>
+      <p>6A.1 Onze administratie geldt tussen partijen als bewijs van een aanbreng, behoudens tegenbewijs door het Bedrijf. Daartoe behoren onder meer: de klik op de persoonlijke link van de Finder, de Aanvraag met datum en tijdstip, de berichten en statuswijzigingen op het platform, en de bevestiging van de Klant.</p>
+      <p>6A.2 Stelt het Bedrijf dat een Klant niet via FindersArmy kwam, dan moet het Bedrijf dat met stukken onderbouwen die van vóór de Aanvraag dateren, zoals een eerdere offerte of factuur aan dezelfde Klant.</p>
+
+      <h2>6B. Niet betalen, ontkennen of omzeilen</h2>
+      <p>6B.1 Het Bedrijf handelt in strijd met deze voorwaarden als het (a) een opeisbare factuur niet betaalt, (b) ten onrechte ontkent dat een Klant via FindersArmy is aangebracht, (c) een gewonnen deal niet of te laag registreert, of (d) de Klant buiten het platform om bedient om de fee te ontlopen.</p>
+      <p>6B.2 In de gevallen onder b, c en d verbeurt het Bedrijf, zonder dat een ingebrekestelling nodig is, een direct opeisbare boete van tweemaal de verschuldigde Finder&apos;s fee, met een minimum van € 500 per geval. Deze boete komt bovenop de verschuldigde fee zelf en laat ons recht op vergoeding van de werkelijke schade onverlet (in afwijking van artikel 6:92 lid 2 BW).</p>
+      <p>6B.3 Bij niet-tijdige betaling is het Bedrijf de wettelijke handelsrente (artikel 6:119a BW) verschuldigd en de buitengerechtelijke incassokosten van 15% van de hoofdsom met een minimum van € 40, en daarnaast de gerechtelijke kosten als wij een procedure moeten starten.</p>
+      <p>6B.4 Wij kunnen in deze gevallen de vordering uit handen geven aan een incassobureau of advocaat, een gerechtelijke procedure starten, en het account van het Bedrijf schorsen of beëindigen. Na beëindiging blijven alle betalingsverplichtingen en de aanbrengclausule van kracht.</p>
+      <p>6B.5 Het Bedrijf aanvaardt deze regeling uitdrukkelijk bij het aanmelden door het vakje &ldquo;Ik ga akkoord met de voorwaarden&rdquo; aan te vinken. Wij leggen vast welke versie van deze voorwaarden is geaccepteerd en wanneer.</p>
 
       <h2>7. Geschillen over deals</h2>
       <p>Zijn Bedrijf en Klant het oneens over de uitvoering of het bedrag, dan onderzoeken wij de zaak en stellen wij het verschuldigde bedrag vast. Het Bedrijf kan daartegen binnen 14 dagen gemotiveerd bezwaar maken.</p>

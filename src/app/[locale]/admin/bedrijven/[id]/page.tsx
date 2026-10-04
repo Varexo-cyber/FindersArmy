@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card";
 import { Money } from "@/components/ui/money";
 import { db } from "@/lib/server/db";
-import { approveBusiness, rejectBusiness, suspendBusiness, setCampaignStatusAdmin } from "@/lib/server/actions/admin";
+import { adminBanBusiness, adminReactivateBusiness, approveBusiness, rejectBusiness, suspendBusiness, setCampaignStatusAdmin } from "@/lib/server/actions/admin";
 import { formatCents } from "@/lib/money";
 
 export default async function AdminBusinessDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -31,6 +31,8 @@ export default async function AdminBusinessDetail({ params }: { params: Promise<
             {b.status !== "ACTIVE" ? <AdminAction action={approveBusiness.bind(null, b.id)} label="Goedkeuren" variant="primary" /> : null}
             {b.status === "PENDING_REVIEW" ? <AdminAction action={rejectBusiness.bind(null, b.id)} label="Afwijzen" reason="Reden (gaat naar het bedrijf)" variant="danger" /> : null}
             {b.status === "ACTIVE" || b.status === "UNDER_REVIEW" ? <AdminAction action={suspendBusiness.bind(null, b.id)} label="Schorsen" reason="Reden van schorsing" variant="danger" /> : null}
+            {b.status === "SUSPENDED" ? <AdminAction action={adminReactivateBusiness.bind(null, b.id)} label="Heractiveren" reason="Reden" variant="primary" /> : null}
+            {!b.suspendedReason?.startsWith("BAN:") ? <AdminAction action={adminBanBusiness.bind(null, b.id)} label="Bannen (KvK + accounts)" reason="Reden van ban" variant="danger" /> : null}
           </>
         }
       />
@@ -43,7 +45,7 @@ export default async function AdminBusinessDetail({ params }: { params: Promise<
                 ["KvK", b.kvk], ["BTW", b.vatNumber], ["Adres", `${b.street} ${b.houseNumber}, ${b.postcode} ${b.city}`], ["Contact", `${b.contactName} · ${b.phone}`],
                 ["E-mail", b.email], ["Website", b.website ?? "—"], ["Aanbod", b.offerUrl ?? "—"], ["Categorie", b.category.nameNl],
                 ["Werkgebied", area.type === "radius" ? `${area.km} km rond ${area.city}` : (area.prefixes ?? []).join(", ")],
-                ["Leden", b.members.map((m) => m.user.email).join(", ")], ["Voorwaarden", format.dateTime(b.termsAcceptedAt, { dateStyle: "medium", timeStyle: "short" })],
+                ["Leden", b.members.map((m) => m.user.email).join(", ")], ["Voorwaarden", `${format.dateTime(b.termsAcceptedAt, { dateStyle: "medium", timeStyle: "short" })} · versie ${b.termsVersion}`],
               ].map(([k, v]) => (<Fragment key={k}><dt className="text-subtle">{k}</dt><dd className="break-words">{v}</dd></Fragment>))}
             </dl>
             <p className="mt-4 text-sm whitespace-pre-line text-subtle">{b.description}</p>

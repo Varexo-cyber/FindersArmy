@@ -15,6 +15,7 @@ import { updateSetting } from "../settings";
 import { settingsSchema, type SettingKey } from "../../settings-schema";
 import { parseEuroToCents } from "../../money";
 import { recomputeFinderScore } from "../services/scores";
+import { addBan, removeBan } from "../bans";
 
 type Result = { ok: true; message?: string } | { ok: false; error: string };
 
@@ -227,4 +228,75 @@ export async function adminToggleChecklist(id: string, isDone: boolean): Promise
 /** Same as adminLedgerAdjustment, with the argument order AdminAction passes (reason, amount). */
 export async function adminLedgerAdjustmentFor(finderId: string, reason: string, amount?: string): Promise<Result> {
   return adminLedgerAdjustment(finderId, amount ?? "", reason);
+}
+
+/**
+ * Ban a person: no sign-in, sessions revoked, Finder profile suspended, and the e-mail address
+ * on the ban list so a fresh account with the same address is refused too.
+ */
+export async function adminBanUser(userId: string, reason: string): Promise<Result> {
+  const admin = await assertAdmin();
+  if (!reason.trim()) return { ok: false, error: "REASON_REQUIRED" };
+  if (userId === admin.id) return { ok: false, error: "CANNOT_BAN_SELF" };
+  const user = await db.user.findUniqueOrThrow({ where: { id: userId }, include: { finderProfile: true } });
+  if (user.adminRole) return { ok: false, error: "CANNOT_BAN_ADMIN" };
+  await db.$transaction(async (tx) => {
+    await tx.user.update({ where: { id: userId }, data: { bannedAt: now(), bannedReason: reason } });
+    await tx.session.deleteMany({ where: { userId } });
+    if (user.finderProfile) await tx.finderProfile.update({ where: { id: user.finderProfile.id }, data: { status: "SUSPENDED" } });
+    await addBan("EMAIL", user.email, reason, admin.id, tx);
+    await audit({ actorUserId: admin.id, action: "user.banned", entity: "User", entityId: userId, after: { reason } }, tx);
+  });
+  return done("/admin/gebruikers");
+}
+
+export async function adminUnbanUser(userId: string, reason: string): Promise<Result> {
+  const admin = await assertAdmin();
+  if (!reason.trim()) return { ok: false, error: "REASON_REQUIRED" };
+  const user = await db.user.findUniqueOrThrow({ where: { id: userId }, include: { finderProfile: true } });
+  await db.$transaction(async (tx) => {
+    await tx.user.update({ where: { id: userId }, data: { bannedAt: null, bannedReason: null } });
+    if (user.finderProfile?.status === "SUSPENDED") await tx.finderProfile.update({ where: { id: user.finderProfile.id }, data: { status: "WARNED" } });
+    await removeBan("EMAIL", user.email, tx);
+    await audit({ actorUserId: admin.id, action: "user.unbanned", entity: "User", entityId: userId, after: { reason } }, tx);
+  });
+  return done("/admin/gebruikers");
+}
+
+/** Ban a business: suspended, campaigns stopped, every member banned and the KvK number blocked. */
+export async function adminBanBusiness(businessId: string, reason: string): Promise<Result> {
+  const admin = await assertAdmin();
+  if (!reason.trim()) return { ok: false, error: "REASON_REQUIRED" };
+  const business = await db.business.findUniqueOrThrow({ where: { id: businessId }, include: { members: { include: { user: true } } } });
+  await db.$transaction(async (tx) => {
+    await tx.business.update({ where: { id: businessId }, data: { status: "SUSPENDED", suspendedReason: `BAN: ${reason}` } });
+    await tx.campaign.updateMany({ where: { businessId, status: { not: "DRAFT" } }, data: { status: "SUSPENDED" } });
+    await addBan("KVK", business.kvk, reason, admin.id, tx);
+    for (const m of business.members) {
+      if (m.user.adminRole) continue;
+      await tx.user.update({ where: { id: m.userId }, data: { bannedAt: now(), bannedReason: reason } });
+      await tx.session.deleteMany({ where: { userId: m.userId } });
+      await addBan("EMAIL", m.user.email, reason, admin.id, tx);
+    }
+    await audit({ actorUserId: admin.id, action: "business.banned", entity: "Business", entityId: businessId, before: { status: business.status }, after: { reason } }, tx);
+  });
+  return done("/admin/bedrijven");
+}
+
+/** Lift a suspension or ban. Campaigns stay paused: the business restarts them itself. */
+export async function adminReactivateBusiness(businessId: string, reason: string): Promise<Result> {
+  const admin = await assertAdmin();
+  if (!reason.trim()) return { ok: false, error: "REASON_REQUIRED" };
+  const business = await db.business.findUniqueOrThrow({ where: { id: businessId }, include: { members: { include: { user: true } } } });
+  await db.$transaction(async (tx) => {
+    await tx.business.update({ where: { id: businessId }, data: { status: "ACTIVE", suspendedReason: null } });
+    await tx.campaign.updateMany({ where: { businessId, status: "SUSPENDED" }, data: { status: "PAUSED" } });
+    await removeBan("KVK", business.kvk, tx);
+    for (const m of business.members) {
+      await tx.user.update({ where: { id: m.userId }, data: { bannedAt: null, bannedReason: null } });
+      await removeBan("EMAIL", m.user.email, tx);
+    }
+    await audit({ actorUserId: admin.id, action: "business.reactivated", entity: "Business", entityId: businessId, before: { status: business.status }, after: { reason } }, tx);
+  });
+  return done("/admin/bedrijven");
 }

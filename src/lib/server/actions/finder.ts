@@ -1,5 +1,7 @@
 "use server";
 
+import { isBanned } from "../bans";
+import { TERMS_VERSION } from "@/content/legal/version";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { finderSignupSchema, finderProfileSchema } from "@/lib/validation/finder";
@@ -32,6 +34,7 @@ export async function registerFinder(raw: unknown): Promise<FinderResult> {
   const user = await currentUser();
   if (!user) return { ok: false, error: "UNAUTHENTICATED" };
   if (user.finderProfile) return { ok: true };
+  if (user.bannedAt || (await isBanned("EMAIL", user.email))) return { ok: false, error: "BANNED" };
   const parsed = finderSignupSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, errors: flattenErrors(parsed.error) };
   const data = parsed.data;
@@ -54,6 +57,7 @@ export async function registerFinder(raw: unknown): Promise<FinderResult> {
         inviteCode: await uniqueCode("inviteCode"),
         referredByFinderId: inviter && inviter.userId !== user.id ? inviter.id : null,
         termsAcceptedAt: now(),
+        termsVersion: TERMS_VERSION,
         parentEmail: age === "NEEDS_PARENT" ? data.parentEmail : null,
       },
     });

@@ -86,7 +86,7 @@ export function BusinessSignupForm({ categories, defaults }: { categories: Categ
       }
       const firstStep = STEPS.findIndex((s) => Object.keys(res.errors).some((k) => s.fields.some((f) => k.startsWith(f))));
       if (firstStep >= 0) setStep(firstStep);
-      if (res.formError) setFormError(tc("error"));
+      if (res.formError) setFormError(res.formError === "BANNED" ? tc("banned") : tc("error"));
     });
   });
 

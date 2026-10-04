@@ -87,7 +87,8 @@
     "amount": "Amount",
     "actions": "Actions",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "banned": "This account or business has been excluded from FindersArmy. Think this is a mistake? Email hallo@findersarmy.com."
   },
   "home": {
     "eyebrow": "Finder's fees for ordinary people",
@@ -229,7 +230,13 @@
       "application",
       "vacancy",
       "hassle"
-    ]
+    ],
+    "storiesTitle": "Here's how it could go for you.",
+    "storiesSub": "Three examples of how a few tips add up over a few weeks. Regular people, regular networks.",
+    "storiesLabel": "Example profile",
+    "storiesTotal": "earned",
+    "storiesPaidAfter": "won {days} days after the tip",
+    "storiesNote": "These are example profiles, not real users. Amounts are worked examples for a Recruit (75%) with typical fees; the real fee is on each campaign."
   },
   "finders": {
     "eyebrow": "For Finders",
@@ -307,7 +314,7 @@
     "boostBody": "Need to move something? Temporarily raise your fee (“+ € 100 this week”) or boost a specific product. Your campaign gets a badge and sits at the top for Finders.",
     "excludedTitle": "Not for everyone",
     "excludedBody": "Real estate brokerage, mortgages, insurance and other financial products, legal services and medical care are excluded at launch. Paid customer referral is more strictly regulated there.",
-    "heroTitle2": "Sign up free. We send you customers.",
+    "heroTitle2": "A whole sales team. You only pay when it works.",
     "freeTitle": "Free to join. Free to stay.",
     "freeBody": "You pay nothing to be listed, nothing per month and nothing per request. Only when a referred customer actually becomes your customer do you pay the fee you chose yourself.",
     "armyTitle": "People go looking for you",
@@ -317,7 +324,20 @@
     "whoTitle": "Who is looking for you?",
     "whoBody": "Finders are regular people: students, parents, colleagues, neighbours. They know someone looking for exactly what you sell, and they only get paid when you win a customer. So they only send you people who really need something.",
     "sectorsTitle": "For every kind of business",
-    "sectorsSub": "{count} categories in {groups} sectors, in all 342 municipalities. Is your industry missing? Sign up anyway and we'll add it."
+    "sectorsSub": "{count} categories in {groups} sectors, in all 342 municipalities. Is your industry missing? Sign up anyway and we'll add it.",
+    "salesTitle": "It's this simple",
+    "sales1t": "Sign up for free",
+    "sales1b": "Five minutes. No subscription, no monthly contract, no setup costs.",
+    "sales2t": "Finders look for customers for you",
+    "sales2b": "People across the Netherlands send your business to friends, family and colleagues who need something.",
+    "sales3t": "Only pay for a new customer",
+    "sales3b": "When someone actually becomes a customer, you pay the fee you set yourself. Nothing won? You pay nothing.",
+    "exTitle": "Worked example: a car dealer",
+    "exLabel": "Example",
+    "exCustomers": "new customers via Finders",
+    "exRevenue": "revenue from those customers",
+    "exCost": "what it cost you",
+    "exNote": "Worked example with a fixed fee of {fee} per car sold and an average car of {car}. You set the fee yourself."
   },
   "how": {
     "eyebrow": "How it works",
@@ -508,7 +528,7 @@
     "offerUrlHint": "For example your website, AutoScout24 or Marktplaats. No need to list products separately.",
     "budget": "Monthly fee budget",
     "budgetHint": "Optional. When it's used up, your campaign pauses automatically until next month.",
-    "termsLabel": "I agree to the <terms>terms for businesses</terms>, including the referral clause.",
+    "termsLabel": "I agree to the <terms>terms for businesses</terms>, including the 12-month referral clause and the penalty provisions for non-payment, denial or circumvention (articles 6, 6A and 6B).",
     "clauseSummary": "Referral clause: a customer who comes in through FindersArmy counts as referred for 12 months, even if you make arrangements outside the platform.",
     "submit": "Submit registration",
     "pendingTitle": "Your registration is in.",

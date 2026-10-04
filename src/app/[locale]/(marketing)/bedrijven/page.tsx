@@ -10,6 +10,10 @@ import { BusinessCalculator } from "@/components/marketing/business-calculator";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
 import { FAQ } from "@/content/faq";
 import { pageMetadata } from "@/lib/metadata";
+import { baseFee } from "@/lib/fees";
+import { formatEuroShort } from "@/lib/money";
+
+const EX_CUSTOMERS = 6;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   return pageMetadata((await params).locale, "business", "/bedrijven");
@@ -20,6 +24,8 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
   setRequestLocale(locale);
   const t = await getTranslations("business");
   const tHome = await getTranslations("home");
+  const dealer = CATEGORIES.find((c) => c.slug === "autodealers")!;
+  const dealerFee = baseFee(dealer.example, dealer.exampleJobCents);
   return (
     <>
       <JsonLd data={faqJsonLd(FAQ[locale].business)} />
@@ -45,6 +51,34 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
           <span className="font-mono text-xs text-subtle">{t("ctaNote")}</span>
         </div>
       </PageHero>
+
+      {/* The whole offer in three steps, then the maths. */}
+      <section className="py-16 md:py-24">
+        <div className="container-x flex flex-col gap-10">
+          <h2 className="text-4xl md:text-6xl">{t("salesTitle")}</h2>
+          <ol className="grid gap-4 md:grid-cols-3">
+            {[1, 2, 3].map((n) => (
+              <li key={n} className={`flex flex-col gap-4 rounded-[28px] p-7 md:p-9 ${n === 3 ? "bg-signal text-ink" : "bg-surface"}`}>
+                <span className="money text-6xl font-semibold opacity-30">0{n}</span>
+                <h3 className="text-2xl md:text-3xl">{t(`sales${n}t` as "sales1t")}</h3>
+                <p className={n === 3 ? "text-ink/75" : "text-subtle"}>{t(`sales${n}b` as "sales1b")}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="relative overflow-hidden rounded-[28px] bg-ink p-7 text-paper md:p-10">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-2xl md:text-3xl">{t("exTitle")}</h3>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs">{t("exLabel")}</span>
+            </div>
+            <dl className="mt-8 grid gap-6 md:grid-cols-3">
+              <div><dt className="text-sm text-[#a9aca2]">{t("exCustomers")}</dt><dd className="money text-6xl font-semibold">{EX_CUSTOMERS}</dd></div>
+              <div><dt className="text-sm text-[#a9aca2]">{t("exRevenue")}</dt><dd className="money text-5xl font-semibold md:text-6xl">{formatEuroShort(EX_CUSTOMERS * dealer.exampleJobCents, locale)}</dd></div>
+              <div><dt className="text-sm text-[#a9aca2]">{t("exCost")}</dt><dd className="money text-5xl font-semibold text-signal md:text-6xl">{formatEuroShort(EX_CUSTOMERS * dealerFee, locale)}</dd></div>
+            </dl>
+            <p className="mt-6 text-sm text-[#a9aca2]">{t("exNote", { fee: formatEuroShort(dealerFee, locale), car: formatEuroShort(dealer.exampleJobCents, locale) })}</p>
+          </div>
+        </div>
+      </section>
 
       {/* Who is looking for you: real people, photographed. */}
       <section className="py-16 md:py-24">
@@ -88,21 +122,6 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <Section>
-        <div className="grid gap-4 md:grid-cols-3">
-          {[
-            [t("freeTitle"), t("freeBody")],
-            [t("armyTitle"), t("armyBody")],
-            [t("controlTitle"), t("controlBody")],
-          ].map(([title, body], i) => (
-            <div key={title} data-spot data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-6">
-              <span className="flex size-9 items-center justify-center rounded-full bg-signal font-mono text-sm font-semibold text-ink">{i + 1}</span>
-              <h2 className="text-2xl">{title}</h2>
-              <p className="text-subtle">{body}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
 
       <Section>
         <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">

@@ -43,7 +43,7 @@ export function FinderSignupForm({ defaults, allow16Plus }: { defaults: { name: 
         return;
       }
       for (const [k, v] of Object.entries(res.errors ?? {})) setError(k as keyof FinderSignupInput, { message: v });
-      if (res.error) setFormError(tc("error"));
+      if (res.error) setFormError(res.error === "BANNED" ? tc("banned") : tc("error"));
     });
   });
 
