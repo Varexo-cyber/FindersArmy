@@ -11,7 +11,7 @@ import Image from "next/image";
 import { PHOTOS } from "@/content/photos";
 import { PROVINCES } from "@/content/regions";
 import { CategoryTiles } from "@/components/marketing/category-tiles";
-import { PhoneMockup } from "@/components/marketing/phone-mockup";
+import { HeroChat } from "@/components/marketing/hero-chat";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { FAQ } from "@/content/faq";
 import { HOME_EXAMPLE, categoryExample } from "@/lib/examples";
@@ -44,38 +44,62 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", name: "FindersArmy", url: siteUrl(), logo: `${siteUrl()}/icon.svg`, email: "hallo@findersarmy.com", areaServed: "NL" }} />
       <JsonLd data={faqJsonLd(faq)} />
 
-      {/* Hero: the hook, and the app on a phone. */}
-      <section className="relative overflow-hidden bg-ink text-paper [--fg:var(--paper)] [--subtle:#a9aca2] [--border:#2b2e27]">
-        <Image src={PHOTOS.vriendenStraat.src} alt="" fill priority sizes="100vw" className="object-cover opacity-25" />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/60" />
-        <div className="container-x relative grid gap-14 pt-14 pb-20 md:grid-cols-[1.15fr_1fr] md:items-center md:pt-20 md:pb-28">
+      {/* Hero: the hook, and how it actually happens: one WhatsApp message. */}
+      <section className="relative overflow-hidden">
+        <div aria-hidden className="absolute inset-x-0 top-0 h-[70%] bg-[radial-gradient(60%_60%_at_80%_20%,color-mix(in_oklab,var(--signal)_22%,transparent),transparent_70%)]" />
+        <div className="container-x relative grid gap-14 pt-12 pb-20 md:grid-cols-[1.1fr_1fr] md:items-center md:pt-20 md:pb-28">
           <div className="flex flex-col gap-7">
-            <p className="text-sm font-medium text-signal">{t("h3Kicker")}</p>
-            <h1 className="text-[2.9rem] leading-[1.02] md:text-[5.2rem]">
+            <p className="inline-flex w-fit flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-border bg-bg/70 px-4 py-2 text-sm font-medium backdrop-blur">
+              <span aria-hidden className="size-2 rounded-full bg-[#25d366]" />
+              {t("h3Kicker")}
+            </p>
+            <h1 className="text-[3rem] leading-[1] md:text-[5.4rem]">
               {t("h4A")}
               <br />
-              <span className="fa-words text-signal" aria-label={words[0]}>
+              <span className="fa-words" aria-label={words[0]}>
                 {[...words, words[0]].map((w, i) => (
-                  <span key={i} aria-hidden>{w}</span>
+                  <span key={i} aria-hidden className="box-decoration-clone bg-[linear-gradient(transparent_55%,var(--signal)_55%,var(--signal)_80%,transparent_80%)]">{w}</span>
                 ))}
               </span>
             </h1>
-            <p className="max-w-xl text-lg text-[#c9cbc4] md:text-xl">{t("h4Sub")}</p>
+            <p className="max-w-xl text-lg text-subtle md:text-xl">{t("h4Sub")}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/aanmelden/finder" className={buttonVariants({ variant: "primary", size: "xl" })}>
+              <Link href="/aanmelden/finder" className={buttonVariants({ variant: "solid", size: "xl" })}>
                 {t("ctaFinder")} <ArrowRight aria-hidden />
               </Link>
-              <Link href="/bedrijven" className={cn(buttonVariants({ variant: "outline", size: "xl" }), "border-white/25 text-paper hover:bg-white/10")}>
+              <Link href="/bedrijven" className={buttonVariants({ variant: "outline", size: "xl" })}>
                 {t("ctaBusiness")}
               </Link>
             </div>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#a9aca2]">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-subtle">
               {[t("trust1"), t("trust2"), t("trust3")].map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-signal" />{x}</li>
+                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-fg" />{x}</li>
               ))}
             </ul>
           </div>
-          <PhoneMockup locale={locale} />
+          <HeroChat locale={locale} cents={categoryExample(CATEGORIES.find((c) => c.slug === "autodealers")!).finderCents} />
+        </div>
+      </section>
+
+      {/* Free, for both sides. */}
+      <section className="bg-ink py-14 text-paper md:py-20">
+        <div className="container-x flex flex-col gap-8">
+          <h2 className="text-4xl md:text-6xl">{t("freeTitle")}</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {[
+              { label: t("freeFinderLabel"), body: t("freeFinderBody"), cta: t("freeFinderCta"), href: "/aanmelden/finder" },
+              { label: t("freeBizLabel"), body: t("freeBizBody"), cta: t("freeBizCta"), href: "/aanmelden/bedrijf" },
+            ].map((x) => (
+              <Link key={x.href} href={x.href} data-spot className="group flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.04] p-7 hover:border-signal md:p-9">
+                <p className="text-sm font-medium text-signal">{x.label}</p>
+                <p className="money text-7xl font-semibold md:text-8xl">€ 0</p>
+                <p className="max-w-md text-lg text-[#c9cbc4]">{x.body}</p>
+                <span className="mt-auto inline-flex items-center gap-2 font-medium">
+                  {x.cta} <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

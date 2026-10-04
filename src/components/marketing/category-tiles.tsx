@@ -16,18 +16,23 @@ export async function CategoryTiles({ locale, limit = TIP_TILES.length }: { loca
         const c = CATEGORIES.find((x) => x.slug === tile.slug)!;
         const ex = categoryExample(c);
         return (
-          <li key={tile.slug} className="w-[74%] shrink-0 snap-start sm:w-[45%] md:w-auto">
-            <Link href={`/categorieen/${tile.slug}`} className="photo-zoom group relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-3xl bg-ink p-5 text-paper">
-              <Image src={tile.photo.src} alt={tile.photo.alt[locale]} fill sizes="(min-width: 768px) 25vw, 74vw" className="object-cover" />
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90" />
-              <div className="relative flex items-start justify-between gap-3">
-                <span className="rounded-full bg-black/40 px-3 py-1 text-xs font-medium backdrop-blur">{locale === "en" ? c.nameEn : c.nameNl}</span>
-                <ArrowUpRight aria-hidden className="size-5 opacity-0 transition-opacity group-hover:opacity-100" />
+          <li key={tile.slug} className="w-[72%] shrink-0 snap-start sm:w-[44%] md:w-auto">
+            <Link href={`/categorieen/${tile.slug}`} data-spot className="photo-zoom group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-bg">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image src={tile.photo.src} alt={tile.photo.alt[locale]} fill sizes="(min-width: 768px) 25vw, 72vw" className="object-cover" />
               </div>
-              <div className="relative flex flex-col gap-1">
-                <p className="text-sm text-[#d6d8d0]">{t("tileDeal", { amount: formatEuroShort(ex.jobCents, locale) })}</p>
-                <p className="money text-5xl font-semibold tracking-tight text-signal">{formatEuroShort(ex.finderCents, locale)}</p>
-                <p className="text-sm text-[#d6d8d0]">{t("tilesYou")}</p>
+              <div className="flex flex-1 flex-col gap-3 p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-lg font-semibold tracking-tight">{locale === "en" ? c.nameEn : c.nameNl}</h3>
+                  <ArrowUpRight aria-hidden className="size-4 shrink-0 text-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg" />
+                </div>
+                <div className="mt-auto flex items-end justify-between gap-3 border-t border-border pt-3">
+                  <span className="text-xs text-subtle">{t("tileDeal", { amount: formatEuroShort(ex.jobCents, locale) })}</span>
+                  <span className="flex flex-col items-end">
+                    <span className="text-[11px] text-subtle">{t("tilesYou")}</span>
+                    <span className="money rounded-md bg-signal px-1.5 text-2xl font-semibold text-ink">{formatEuroShort(ex.finderCents, locale)}</span>
+                  </span>
+                </div>
               </div>
             </Link>
           </li>

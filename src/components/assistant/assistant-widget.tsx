@@ -2,7 +2,8 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowUp, MessageCircle, RotateCcw, X } from "lucide-react";
+import { ArrowUp, RotateCcw, X } from "lucide-react";
+import { LogoMark } from "@/components/brand/logo";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -131,30 +132,41 @@ export function AssistantWidget() {
         <section
           role="dialog"
           aria-label={t("title")}
-          className="flex h-[min(620px,calc(100dvh-7rem))] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-[0_30px_80px_-20px_rgb(0_0_0/0.45)]"
+          className="fa-pop flex h-[min(640px,calc(100dvh-7rem))] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[28px] border border-border bg-bg shadow-[0_30px_90px_-20px_rgb(0_0_0/0.45)]"
         >
-          <header className="relative flex items-start gap-3 border-b border-border px-4 py-4">
-            <div className="relative flex-1">
-              <p className="font-display text-base font-semibold tracking-tight">{t("title")}</p>
-              <p className="text-xs text-subtle">{t("subtitle")}</p>
+          <header className="relative bg-ink px-5 pt-5 pb-6 text-paper">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="relative flex size-11 items-center justify-center rounded-2xl bg-signal text-ink">
+                  <LogoMark className="size-6" />
+                  <span aria-hidden className="absolute -right-0.5 -bottom-0.5 size-3 rounded-full bg-[#25d366] ring-2 ring-ink" />
+                </span>
+                <div>
+                  <p className="font-display text-lg font-semibold tracking-tight">FindersArmy</p>
+                  <p className="text-xs text-[#a9aca2]">{t("subtitle")}</p>
+                </div>
+              </div>
+              <div className="flex gap-1">
+                {msgs.length ? (
+                  <button type="button" onClick={() => setMsgs([])} aria-label={t("reset")} title={t("reset")} className="rounded-full p-2 text-[#a9aca2] hover:bg-white/10 hover:text-paper">
+                    <RotateCcw aria-hidden className="size-4" />
+                  </button>
+                ) : null}
+                <button type="button" onClick={() => setOpen(false)} aria-label={t("close")} className="rounded-full p-2 text-[#a9aca2] hover:bg-white/10 hover:text-paper">
+                  <X aria-hidden className="size-4" />
+                </button>
+              </div>
             </div>
-            {msgs.length ? (
-              <button type="button" onClick={() => setMsgs([])} aria-label={t("reset")} title={t("reset")} className="relative rounded-md p-1.5 text-subtle hover:text-fg">
-                <RotateCcw aria-hidden className="size-4" />
-              </button>
-            ) : null}
-            <button type="button" onClick={() => setOpen(false)} aria-label={t("close")} className="relative rounded-md p-1.5 text-subtle hover:text-fg">
-              <X aria-hidden className="size-4" />
-            </button>
           </header>
 
-          <div ref={listRef} className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4" aria-live="polite">
-            <div className="max-w-[88%] rounded-lg rounded-tl-sm bg-surface-2 px-3.5 py-2.5 text-sm">{t("greeting")}</div>
+          <div ref={listRef} className="-mt-3 flex flex-1 flex-col gap-3 overflow-y-auto rounded-t-[24px] bg-bg px-4 pt-5 pb-4" aria-live="polite">
+            <div className="max-w-[88%] rounded-2xl rounded-tl-md bg-surface-2 px-4 py-3 text-sm leading-relaxed">{t("greeting")}</div>
             {msgs.length === 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="mt-1 flex flex-col gap-2">
                 {suggestions.map((s) => (
-                  <button key={s} type="button" onClick={() => ask(s)} data-spot className="rounded-full border border-border px-3 py-1.5 text-left text-xs transition-colors duration-150 hover:border-fg">
+                  <button key={s} type="button" onClick={() => ask(s)} className="group flex items-center justify-between gap-3 rounded-2xl border border-border bg-bg px-4 py-3 text-left text-sm transition-colors duration-150 hover:border-fg hover:bg-surface">
                     {s}
+                    <ArrowUp aria-hidden className="size-4 rotate-45 text-subtle transition-transform group-hover:rotate-90 group-hover:text-fg" />
                   </button>
                 ))}
               </div>
@@ -163,11 +175,19 @@ export function AssistantWidget() {
               <div
                 key={i}
                 className={cn(
-                  "max-w-[88%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed",
-                  m.role === "user" ? "self-end rounded-tr-sm bg-fg text-bg" : "rounded-tl-sm bg-surface-2",
+                  "max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
+                  m.role === "user" ? "self-end rounded-tr-md bg-ink text-paper" : "rounded-tl-md bg-surface-2",
                 )}
               >
-                {m.content ? <Rich text={m.content} /> : <span className="text-subtle">{t("thinking")}</span>}
+                {m.content ? (
+                  <Rich text={m.content} />
+                ) : (
+                  <span className="inline-flex gap-1 py-1" aria-label={t("thinking")}>
+                    <span className="fa-dot size-1.5 rounded-full bg-subtle" />
+                    <span className="fa-dot size-1.5 rounded-full bg-subtle [animation-delay:150ms]" />
+                    <span className="fa-dot size-1.5 rounded-full bg-subtle [animation-delay:300ms]" />
+                  </span>
+                )}
               </div>
             ))}
             {offline && msgs.length ? <p className="text-[11px] text-subtle">{t("offlineNote")}</p> : null}
@@ -178,9 +198,9 @@ export function AssistantWidget() {
               e.preventDefault();
               void ask(input);
             }}
-            className="flex flex-col gap-2 border-t border-border p-3"
+            className="flex flex-col gap-2 px-4 pt-2 pb-4"
           >
-            <div className="flex items-end gap-2">
+            <div className="flex items-end gap-2 rounded-[22px] border border-border bg-surface p-1.5 pl-4 focus-within:border-fg">
               <label htmlFor="assistant-input" className="sr-only">{t("placeholder")}</label>
               <textarea
                 id="assistant-input"
@@ -196,13 +216,13 @@ export function AssistantWidget() {
                   }
                 }}
                 placeholder={t("placeholder")}
-                className="max-h-32 min-h-11 flex-1 resize-none rounded-md border border-border bg-surface px-3 py-2.5 text-sm"
+                className="max-h-32 min-h-9 flex-1 resize-none bg-transparent py-2 text-sm outline-none"
               />
-              <button type="submit" disabled={busy || !input.trim()} aria-label={t("send")} className="inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-fg text-bg disabled:opacity-40">
-                <ArrowUp aria-hidden className="size-5" />
+              <button type="submit" disabled={busy || !input.trim()} aria-label={t("send")} className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-opacity disabled:opacity-30">
+                <ArrowUp aria-hidden className="size-4" />
               </button>
             </div>
-            <p className="text-[11px] text-subtle">{t("privacy")}</p>
+            <p className="px-2 text-center text-[11px] text-subtle">{t("privacy")}</p>
           </form>
         </section>
       ) : null}
@@ -211,11 +231,16 @@ export function AssistantWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? t("close") : t("open")}
-       
-        className="flex h-12 items-center gap-2 rounded-full bg-fg px-4 text-bg shadow-lg transition-transform duration-150 hover:-translate-y-0.5"
+        className="group flex h-14 items-center gap-3 rounded-full bg-ink py-2 pr-5 pl-2 text-paper shadow-[0_16px_40px_-12px_rgb(0_0_0/0.55)] ring-1 ring-white/10 transition-transform duration-200 hover:-translate-y-0.5"
       >
-        {open ? <X aria-hidden className="size-5" /> : <MessageCircle aria-hidden className="size-5" />}
-        <span className="hidden text-sm font-medium sm:inline">{open ? t("close") : t("title")}</span>
+        <span className="relative flex size-10 items-center justify-center rounded-full bg-signal text-ink">
+          {open ? <X aria-hidden className="size-5" /> : <LogoMark className="size-5" />}
+          {!open ? <span aria-hidden className="absolute -right-0.5 -bottom-0.5 size-3 rounded-full bg-[#25d366] ring-2 ring-ink" /> : null}
+        </span>
+        <span className="hidden flex-col items-start leading-tight sm:flex">
+          <span className="text-sm font-semibold">{open ? t("close") : t("title")}</span>
+          {!open ? <span className="text-[11px] text-[#a9aca2]">{t("online")}</span> : null}
+        </span>
       </button>
     </div>
   );

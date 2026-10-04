@@ -147,7 +147,10 @@ export function searchKnowledge(query: string, chunks: KnowledgeChunk[], limit =
     let score = 0;
     stems.forEach((stem, i) => {
       const w = Math.max(0, idf[i]!);
-      if (d.title.some((t) => t.startsWith(stem))) score += 2 * w;
+      // A title word that is the query word ("Zonnepanelen") beats a compound that merely
+      // contains it ("Zonnepanelenreiniging").
+      const titleHit = d.title.filter((t) => t.startsWith(stem));
+      if (titleHit.length) score += (titleHit.some((t) => t.length <= stem.length + 4) ? 3 : 1.5) * w;
       const hits = d.body.filter((t) => t.startsWith(stem)).length;
       if (hits) score += w * (1 + Math.log2(hits));
     });

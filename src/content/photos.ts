@@ -19,9 +19,9 @@ export const PHOTOS = {
   groep: p("groep", "1517486808906-6ca8b3f04846", "Groep jongeren zit samen buiten", "Group of young people sitting outside"),
   vriendenTafel: p("vrienden-tafel", "1543269865-cbf427effbad", "Vrienden praten aan tafel", "Friends talking at a table"),
   bedrijf: p("bedrijf-highfive", "1600880292203-757bb62b4baf", "Twee ondernemers geven elkaar een high five", "Two business owners high-fiving"),
-  auto: p("auto", "1494976388531-d1058494cdd8", "Zwarte sportauto", "Black sports car"),
+  auto: p("auto", "1580273916550-e323be2ae537", "Blauwe sportwagen bij schemering", "Blue sports car at dusk"),
   rijles: p("rijles", "1549317661-bd32c8ce0db2", "Kleine blauwe auto in de straat", "Small blue car in the street"),
-  keuken: p("keuken", "1556911220-bff31c812dba", "Nieuwe witte keuken", "New white kitchen"),
+  keuken: p("keuken", "1556912173-3bb406ef7e77", "Lichte nieuwe keuken met marmer", "Bright new kitchen with marble"),
   koppelKeuken: p("koppel-keuken", "1556909114-f6e7ad7d3136", "Stel kookt samen in de keuken", "Couple cooking together"),
   schilder: p("schilder", "1562259949-e8e7689d7828", "Verfroller op een muur", "Paint roller on a wall"),
   zonnepanelen: p("zonnepanelen", "1509391366360-2e959784a276", "Zonnepanelen in een veld", "Solar panels in a field"),
@@ -36,6 +36,9 @@ export const PHOTOS = {
   reizen: p("reizen", "1469854523086-cc02fe5d8800", "Busje op een lege weg", "Van on an empty road"),
   kantoor: p("kantoor", "1497366216548-37526070297c", "Modern kantoor", "Modern office"),
   telefoon: p("telefoon", "1512941937669-90a1b58e7e9c", "Smartphone met apps", "Smartphone with apps"),
+  interieur: p("interieur", "1600607687939-ce8a6c25118c", "Modern verbouwd interieur", "Modern renovated interior"),
+  team: p("team", "1556761175-b413da4baf72", "Team aan het werk op kantoor", "Team working in an office"),
+  woonkamer: p("woonkamer", "1600210492486-724fe5c67fb0", "Lichte woonkamer", "Bright living room"),
   bouw: p("bouw", "1504307651254-35680f356dfd", "Bouwplaats van bovenaf", "Construction site from above"),
 } as const;
 
@@ -52,13 +55,13 @@ export const TIP_TILES: { slug: string; photo: Photo }[] = [
 ];
 
 const GROUP_PHOTO: Record<string, Photo> = {
-  wonen: PHOTOS.timmerman,
+  wonen: PHOTOS.interieur,
   energie: PHOTOS.zonnepanelen,
   buiten: PHOTOS.tuin,
   auto: PHOTOS.auto,
   events: PHOTOS.bruiloft,
   sport: PHOTOS.sportschool,
-  zakelijk: PHOTOS.kantoor,
+  zakelijk: PHOTOS.team,
   winkels: PHOTOS.winkel,
   horeca: PHOTOS.restaurant,
   reizen: PHOTOS.reizen,

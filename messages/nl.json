@@ -164,18 +164,18 @@
     "categoriesTitle2": "Van schilder tot software.",
     "categoriesSub2": "{count} categorieën waarin jij klanten kunt aanbrengen. Bedragen zijn voorbeelden voor een Rekruut.",
     "stepsSub": "Geen verkooppraatjes, geen app vol gedoe. Een link, een klant, een fee.",
-    "h3Kicker": "Gratis · vanaf 18 jaar · uitbetaald op je eigen rekening",
+    "h3Kicker": "Gratis · vanaf 18 jaar · geen sollicitatie, geen vacature, geen poespas",
     "h3TitleA": "Jij kent mensen.",
     "h3TitleB": "Dat is geld waard.",
     "h3Sub": "Je oom zoekt een auto. Je zus wil een nieuwe keuken. Stuur ze jouw link. Gaat de deal door, dan krijg jij tot 85% van de beloning die het bedrijf betaalt.",
-    "h3ChatQ": "Weet jij nog een goeie autodealer?",
-    "h3ChatA": "Ja, deze! Zeg dat je via mij komt 👇",
+    "h3ChatQ": "Hé, weet jij nog een goeie autodealer? Mijn oude bak is op 😅",
+    "h3ChatA": "Deze! Zeg dat je via mij komt 👌",
     "h3ChatLink": "findersarmy.com/r/sam",
-    "h3Notif": "Fee bijgeschreven",
-    "h3NotifSub": "Autodealer · deal gewonnen",
+    "h3Notif": "Je fee is binnen 💸",
+    "h3NotifSub": "staat op je saldo. Deal bij de autodealer gewonnen.",
     "tilesTitle": "Iemand zoekt iets. Jij verdient.",
     "tilesSub": "Zo veel krijg jij als Rekruut als de deal doorgaat. Rekenvoorbeelden; de echte fee staat bij elke campagne.",
-    "tilesYou": "naar jouw rekening",
+    "tilesYou": "jij verdient",
     "bandTitle": "Geen verkoper. Geen gedoe. Gewoon jij en je telefoon.",
     "bandBody": "Je hoeft niemand iets aan te smeren. Je stuurt alleen een link naar iemand die toch al iets zoekt. Het bedrijf doet de rest.",
     "bizPhotoAlt": "Ondernemers vieren een nieuwe klant",
@@ -214,7 +214,16 @@
     ],
     "regionsTitle": "Overal in Nederland",
     "regionsSub": "Van Groningen tot Maastricht: Finders en bedrijven in alle 12 provincies en alle 342 gemeenten.",
-    "regionsAll": "Bekijk jouw regio"
+    "regionsAll": "Bekijk jouw regio",
+    "h3LinkTitle": "Autohuis in jouw buurt · via FindersArmy",
+    "h3Now": "nu",
+    "freeTitle": "Kost niks. Voor niemand.",
+    "freeFinderLabel": "Voor jou als Finder",
+    "freeFinderBody": "Gratis account. Geen inleg, geen abonnement, geen sollicitatie. Je verdient alleen.",
+    "freeBizLabel": "Voor bedrijven",
+    "freeBizBody": "Gratis aanmelden. Geen maandkosten, geen kosten per lead. Je betaalt alleen voor een klant die klant wordt.",
+    "freeFinderCta": "Maak je gratis account",
+    "freeBizCta": "Meld je bedrijf gratis aan"
   },
   "finders": {
     "eyebrow": "Voor Finders",
@@ -847,8 +856,8 @@
   "assistant": {
     "open": "Stel een vraag",
     "close": "Sluiten",
-    "title": "Vragen?",
-    "subtitle": "Direct antwoord over verdienen, uitbetalen en aanmelden.",
+    "title": "Vraag het ons",
+    "subtitle": "Online · antwoordt direct, dag en nacht",
     "placeholder": "Stel je vraag…",
     "send": "Versturen",
     "thinking": "Even denken…",
@@ -862,7 +871,8 @@
       "Wat kost het voor een bedrijf?",
       "Welke bedrijven zitten erop?"
     ],
-    "reset": "Nieuw gesprek"
+    "reset": "Nieuw gesprek",
+    "online": "Online · direct antwoord"
   },
   "regions": {
     "eyebrow": "Heel Nederland",
