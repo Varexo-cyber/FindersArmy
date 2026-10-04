@@ -10,9 +10,8 @@ import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
 import Image from "next/image";
 import { PHOTOS } from "@/content/photos";
 import { PROVINCES } from "@/content/regions";
-import { CategoryTiles } from "@/components/marketing/category-tiles";
+import { MoneyBoard } from "@/components/marketing/money-board";
 import { HeroChat } from "@/components/marketing/hero-chat";
-import { ExampleStories } from "@/components/marketing/example-stories";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { FAQ } from "@/content/faq";
 import { HOME_EXAMPLE, categoryExample } from "@/lib/examples";
@@ -122,20 +121,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       ) : null}
 
       {/* What one deal is worth, per category. */}
-      <CategoryTiles
-        locale={locale}
-        pinned
-        header={
-          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <SectionHeading title={t("tilesTitle")} sub={t("tilesSub")} className="mb-0 md:mb-0" />
-            <Link href="/categorieen" className={buttonVariants({ variant: "outline" })}>
-              {t("categoriesAll")} <ArrowRight aria-hidden />
-            </Link>
-          </div>
-        }
-      />
-
-      <ExampleStories locale={locale} />
+      <MoneyBoard locale={locale} />
 
       {/* Side job versus FindersArmy. */}
       <section className="bg-surface py-16 md:py-24">

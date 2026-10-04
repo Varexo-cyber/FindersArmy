@@ -59,6 +59,12 @@ export function AssistantWidget() {
   const locale = useLocale();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  // The panel is mounted shortly after load (closed), so opening and closing both animate.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setMounted(true), 600);
+    return () => clearTimeout(id);
+  }, []);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -127,12 +133,15 @@ export function AssistantWidget() {
   if (/^\/(aanmelden|login|r\/|bevestig)/.test(pathname)) return null;
 
   return (
-    <div className={cn("fixed right-4 z-50 flex flex-col items-end gap-3", inApp ? "bottom-20 md:bottom-6" : "bottom-4 md:bottom-6")}>
-      {open ? (
+    <div className={cn("pointer-events-none fixed right-4 z-50 flex flex-col items-end gap-3 [&>*]:pointer-events-auto [&>section:not([data-open])]:pointer-events-none", inApp ? "bottom-20 md:bottom-6" : "bottom-4 md:bottom-6")}>
+      {mounted ? (
         <section
           role="dialog"
           aria-label={t("title")}
-          className="fa-pop flex h-[min(640px,calc(100dvh-7rem))] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[28px] border border-border bg-bg shadow-[0_30px_90px_-20px_rgb(0_0_0/0.45)]"
+          aria-hidden={!open}
+          inert={!open}
+          data-open={open ? "" : undefined}
+          className="fa-chat flex h-[min(640px,calc(100dvh-7rem))] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[28px] border border-border bg-bg shadow-[0_30px_90px_-20px_rgb(0_0_0/0.45)]"
         >
           <header className="relative bg-ink px-5 pt-5 pb-6 text-paper">
             <div className="flex items-start justify-between gap-3">
@@ -228,7 +237,10 @@ export function AssistantWidget() {
       ) : null}
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setMounted(true);
+          setOpen((v) => !v);
+        }}
         aria-expanded={open}
         aria-label={open ? t("close") : t("open")}
         className="group flex h-14 items-center gap-3 rounded-full bg-ink py-2 pr-5 pl-2 text-paper shadow-[0_16px_40px_-12px_rgb(0_0_0/0.55)] ring-1 ring-white/10 transition-transform duration-200 hover:-translate-y-0.5"

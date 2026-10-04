@@ -236,7 +236,9 @@
     "storiesLabel": "Voorbeeldprofiel",
     "storiesTotal": "verdiend",
     "storiesPaidAfter": "{days} dagen na de tip gewonnen",
-    "storiesNote": "Dit zijn voorbeeldprofielen, geen echte gebruikers. De bedragen zijn rekenvoorbeelden voor een Rekruut (75%) met gangbare fees; de echte fee staat bij elke campagne."
+    "storiesNote": "Dit zijn voorbeeldprofielen, geen echte gebruikers. De bedragen zijn rekenvoorbeelden voor een Rekruut (75%) met gangbare fees; de echte fee staat bij elke campagne.",
+    "boardFee": "fee van het bedrijf",
+    "boardShare": "Jij krijgt {pct}% van de fee als Rekruut, tot 85% als Commandant."
   },
   "finders": {
     "eyebrow": "Voor Finders",

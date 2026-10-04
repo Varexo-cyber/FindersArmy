@@ -411,9 +411,22 @@
   from { opacity: 0; transform: translateY(12px) scale(0.98); }
   to { opacity: 1; transform: none; }
 }
-.fa-pop {
+.fa-chat {
   transform-origin: bottom right;
-  animation: fa-pop 220ms var(--ease-out-quick);
+  opacity: 0;
+  transform: translateY(16px) scale(0.92);
+  filter: blur(6px);
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 260ms ease, transform 420ms cubic-bezier(0.2, 1.25, 0.3, 1), filter 300ms ease, visibility 0s linear 420ms;
+}
+.fa-chat[data-open] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  pointer-events: auto;
+  visibility: visible;
+  transition: opacity 260ms ease, transform 520ms cubic-bezier(0.2, 1.25, 0.3, 1), filter 300ms ease, visibility 0s;
 }
 @keyframes fa-dot {
   0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
@@ -423,7 +436,8 @@
   animation: fa-dot 1s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .fa-pop, .fa-dot { animation: none; }
+  .fa-dot { animation: none; }
+  .fa-chat { transition: none; }
 }
 
 /* ── Motion layer (public/motion.js) ─────────────────────────────────────── */
@@ -501,3 +515,14 @@
 img[src*="photos"] {
   filter: saturate(0.82) contrast(1.06) brightness(0.96) sepia(0.06);
 }
+/* Money board (components/marketing/money-board.tsx). */
+.fa-row { color: rgb(245 243 238 / 0.55); }
+.fa-row.is-active, .fa-row:hover, .fa-row:focus-visible { color: var(--paper); }
+.fa-row.is-active .fa-row-bar { height: 60%; }
+.fa-row.is-active .money { color: var(--signal); }
+.fa-panel {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 600ms var(--ease-out-quick), transform 900ms var(--ease-out-quick);
+}
+.fa-panel.is-active { opacity: 1; transform: none; }

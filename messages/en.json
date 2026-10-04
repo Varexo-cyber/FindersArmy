@@ -236,7 +236,9 @@
     "storiesLabel": "Example profile",
     "storiesTotal": "earned",
     "storiesPaidAfter": "won {days} days after the tip",
-    "storiesNote": "These are example profiles, not real users. Amounts are worked examples for a Recruit (75%) with typical fees; the real fee is on each campaign."
+    "storiesNote": "These are example profiles, not real users. Amounts are worked examples for a Recruit (75%) with typical fees; the real fee is on each campaign.",
+    "boardFee": "business fee",
+    "boardShare": "You get {pct}% of the fee as a Recruit, up to 85% as a Commander."
   },
   "finders": {
     "eyebrow": "For Finders",

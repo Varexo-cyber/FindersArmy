@@ -47,12 +47,33 @@
       document.documentElement.classList.add("has-fa-cursor");
     }
 
+    // Money board: hover/focus picks a row; otherwise it cycles slowly.
+    function board(root) {
+      if (root.__faB) return;
+      root.__faB = true;
+      var rows = [].slice.call(root.querySelectorAll("[data-board-row]"));
+      var panels = [].slice.call(root.querySelectorAll("[data-board-panel]"));
+      var cur = 0, held = false;
+      function pick(i) {
+        cur = i;
+        rows.forEach(function (r, j) { r.classList.toggle("is-active", j === i); });
+        panels.forEach(function (p, j) { p.classList.toggle("is-active", j === i); });
+      }
+      rows.forEach(function (r, i) {
+        r.addEventListener("pointerenter", function () { held = true; pick(i); });
+        r.addEventListener("focus", function () { held = true; pick(i); });
+      });
+      root.addEventListener("pointerleave", function () { held = false; });
+      if (!reduce) setInterval(function () { if (!held && !document.hidden) pick((cur + 1) % rows.length); }, 3200);
+    }
+
     var layers = [], hs = [];
     function scan() {
       layers = [].slice.call(document.querySelectorAll("[data-depth]")).map(function (el) {
         return el.__fa || (el.__fa = { el: el, d: parseFloat(el.getAttribute("data-depth")) || 1, x: 0, y: 0 });
       });
       hs = [].slice.call(document.querySelectorAll("[data-hscroll]"));
+      document.querySelectorAll("[data-board]").forEach(board);
       if (!("IntersectionObserver" in window) || reduce) return;
       document.querySelectorAll("[data-unveil]").forEach(function (el) {
         if (el.__faU) return;

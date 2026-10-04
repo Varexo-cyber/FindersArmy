@@ -35,9 +35,15 @@ export interface CategoryDef {
   example: FeeRule;
 }
 
-const pct = (bps: number, minJob = 50_000, minFee = 5_000): FeeRule => ({ feeType: "PERCENTAGE", feePercentBps: bps, minJobAmountCents: minJob, minFeeCents: minFee });
-const fixed = (cents: number, minJob = 0): FeeRule => ({ feeType: "FIXED", feeFixedCents: cents, minJobAmountCents: minJob, minFeeCents: 0 });
-const tiers = (minJob: number, ...t: [number, number][]): FeeRule => ({ feeType: "TIERED", tiers: t.map(([fromCents, feeCents]) => ({ fromCents, feeCents })), minJobAmountCents: minJob, minFeeCents: 5_000 });
+/**
+ * Worked-example fee levels. Example fees are set at what a business would pay for a warm, referred
+ * customer who actually buys (comparable to a sales commission), so the Finder's share is worth
+ * the effort. Every real campaign sets its own fee.
+ */
+const BOOST = 2.5;
+const pct = (bps: number, minJob = 50_000, minFee = 5_000): FeeRule => ({ feeType: "PERCENTAGE", feePercentBps: Math.min(Math.round(bps * 2), 1500), minJobAmountCents: minJob, minFeeCents: minFee * 2 });
+const fixed = (cents: number, minJob = 0): FeeRule => ({ feeType: "FIXED", feeFixedCents: Math.round(cents * BOOST), minJobAmountCents: minJob, minFeeCents: 0 });
+const tiers = (minJob: number, ...t: [number, number][]): FeeRule => ({ feeType: "TIERED", tiers: t.map(([fromCents, feeCents]) => ({ fromCents, feeCents: Math.round(feeCents * BOOST) })), minJobAmountCents: minJob, minFeeCents: 10_000 });
 const eur = (n: number) => n * 100;
 
 type Row = [slug: string, group: CategoryGroup, nl: string, en: string, descNl: string, descEn: string, whoNl: string, whoEn: string, jobEur: number, rule: FeeRule];
