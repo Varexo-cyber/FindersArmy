@@ -7,6 +7,7 @@ import { PrismaClient, type FeeType } from "@prisma/client";
 import { CATEGORIES, EXCLUDED_CATEGORIES } from "../src/content/categories";
 import { calculateFee } from "../src/lib/fees";
 import { rankFor } from "../src/lib/ranks";
+import { COMPANY } from "../src/content/company";
 
 const db = new PrismaClient();
 const DAY = 86_400_000;
@@ -102,16 +103,10 @@ const BUSINESSES: DemoBusiness[] = [
 async function main() {
   await categories();
   await wipeDemo();
-  // Demo company details so invoices and SEPA batches work locally. The IBAN is the standard
-  // documentation example; replace all of this under Admin › Instellingen before going live.
-  if (!(await db.setting.findUnique({ where: { key: "company" } }))) {
-    await db.setting.create({
-      data: {
-        key: "company",
-        value: { name: "FindersArmy (demo-omgeving)", street: "Demostraat 1", postcodeCity: "2671 AA Naaldwijk", kvk: "00000000", vatNumber: "NL000000000B00", iban: "NL91ABNA0417164300", bic: "ABNANL2A", email: "facturen@findersarmy.test" },
-      },
-    });
-  }
+  // FindersArmy's own details for invoices and SEPA batches. The address is still to be filled in
+  // under Admin › Instellingen › company.
+  const company = { name: COMPANY.name, street: "Adres nog in te vullen", postcodeCity: "", kvk: COMPANY.kvk, vatNumber: COMPANY.vatNumber, iban: COMPANY.iban, bic: COMPANY.bic, email: COMPANY.email };
+  await db.setting.upsert({ where: { key: "company" }, create: { key: "company", value: company }, update: { value: company } });
 
   await user("admin@findersarmy.test", "Admin (demo)", ["ADMIN"], { adminRole: "SUPER_ADMIN" });
   await user("support@findersarmy.test", "Support (demo)", ["ADMIN"], { adminRole: "SUPPORT" });

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DEFAULT_RANKS } from "./ranks";
 import { DEFAULT_COUNTRIES } from "./vat";
+import { COMPANY } from "../content/company";
 
 /**
  * Every number the platform acts on is a setting with a typed default, editable by admins.
@@ -54,14 +55,14 @@ export const settingsSchema = z.object({
       email: z.string(),
     })
     .default({
-      name: "FindersArmy B.V. (in oprichting)",
+      name: COMPANY.name,
       street: "Adres nog in te vullen",
       postcodeCity: "",
-      kvk: "nog in te vullen",
-      vatNumber: "nog in te vullen",
-      iban: "NL00XXXX0000000000",
-      bic: "XXXXNL2A",
-      email: "facturen@findersarmy.com",
+      kvk: COMPANY.kvk,
+      vatNumber: COMPANY.vatNumber,
+      iban: COMPANY.iban,
+      bic: COMPANY.bic,
+      email: COMPANY.email,
     }),
   ownerChecklist: z
     .array(z.object({ id: z.string(), done: z.boolean() }))
@@ -74,7 +75,7 @@ export type SettingKey = keyof Settings;
 export const OWNER_CHECKLIST = [
   { id: "tax-payouts", nl: "Met een boekhouder afstemmen hoe uitbetalingen aan particulieren fiscaal worden gemeld (IB47 / renseignering).", en: "Agree with an accountant how payments to private individuals are reported for tax (IB47)." },
   { id: "legal-review", nl: "Voorwaarden, privacyverklaring en cookieverklaring laten controleren door een jurist.", en: "Have terms, privacy and cookie statements reviewed by a lawyer." },
-  { id: "company-details", nl: "Bedrijfsgegevens (KvK, BTW, IBAN, BIC) invullen bij Instellingen › Bedrijf.", en: "Enter company details (KvK, VAT, IBAN, BIC) under Settings › Company." },
+  { id: "company-details", nl: "Vestigingsadres invullen bij Instellingen › company (KvK, BTW en IBAN staan er al in).", en: "Enter the registered address under Settings › company (KvK, VAT and IBAN are set)." },
   { id: "mollie-live", nl: "Mollie-account verifiëren en live API-sleutel instellen.", en: "Verify the Mollie account and set the live API key." },
   { id: "dpa", nl: "Verwerkersovereenkomsten afsluiten met Vercel, Resend, Mollie, Cloudflare en de databasehost.", en: "Sign data processing agreements with Vercel, Resend, Mollie, Cloudflare and the database host." },
   { id: "gift-cards", nl: "Leverancier kiezen voor de klant-cadeaubonnen en het verzendproces vastleggen.", en: "Choose a gift card supplier for customer bonuses and define the fulfilment process." },

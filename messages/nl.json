@@ -47,7 +47,8 @@
     "cookies": "Cookies",
     "signupBusiness": "Bedrijf aanmelden",
     "rights": "FindersArmy. Alle bedragen excl. btw tenzij anders vermeld.",
-    "noPyramid": "Geen piramide: je verdient alleen aan klanten die jij zelf aanbrengt."
+    "noPyramid": "Geen piramide: je verdient alleen aan klanten die jij zelf aanbrengt.",
+    "vat": "BTW"
   },
   "common": {
     "earnUpTo": "Verdien tot",

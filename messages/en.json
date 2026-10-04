@@ -47,7 +47,8 @@
     "cookies": "Cookies",
     "signupBusiness": "Register a business",
     "rights": "FindersArmy. All amounts excl. VAT unless stated otherwise.",
-    "noPyramid": "No pyramid: you only earn from customers you bring in yourself."
+    "noPyramid": "No pyramid: you only earn from customers you bring in yourself.",
+    "vat": "VAT"
   },
   "common": {
     "earnUpTo": "Earn up to",

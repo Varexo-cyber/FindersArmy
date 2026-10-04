@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
+import { COMPANY } from "@/content/company";
+import { formatIban } from "@/lib/iban";
 
 export async function SiteFooter() {
   const t = await getTranslations("footer");
@@ -60,7 +62,11 @@ export async function SiteFooter() {
       <div className="border-t border-border">
         <div className="container-x flex flex-col gap-2 py-6 text-xs text-subtle md:flex-row md:justify-between">
           <span className="font-mono">© {new Date().getFullYear()} {t("rights")}</span>
-          <span className="font-mono">findersarmy.com · finderarmy.nl</span>
+          <dl className="flex flex-wrap gap-x-4 gap-y-1 font-mono">
+            <div className="flex gap-1.5"><dt>KvK</dt><dd>{COMPANY.kvk}</dd></div>
+            <div className="flex gap-1.5"><dt>{t("vat")}</dt><dd>{COMPANY.vatNumber}</dd></div>
+            <div className="flex gap-1.5"><dt>IBAN</dt><dd>{formatIban(COMPANY.iban)}</dd></div>
+          </dl>
         </div>
       </div>
     </footer>
