@@ -22,7 +22,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <Section>
         <dl className="grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">
           {rows.map(([label, email]) => (
-            <div key={label} className="flex flex-col gap-2 bg-bg p-6">
+            <div key={label} data-spot className="flex flex-col gap-2 bg-bg p-6 transition-colors duration-150 hover:bg-surface">
               <dt className="eyebrow">{label}</dt>
               <dd>
                 <a href={`mailto:${email}`} className="font-mono text-lg underline-offset-4 hover:underline">{email}</a>

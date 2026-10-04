@@ -25,12 +25,12 @@ export default async function HowPage({ params }: { params: Promise<{ locale: st
       <Section>
         <div className="grid gap-6 md:grid-cols-3">
           {columns.map((c) => (
-            <div key={c.title} className="flex flex-col rounded-md border border-border">
+            <div key={c.title} data-spot data-reveal className="flex flex-col rounded-lg border border-border bg-surface">
               <h2 className="border-b border-border px-5 py-4 text-2xl">{c.title}</h2>
               <ol className="flex flex-col">
                 {c.steps.map((s, i) => (
                   <li key={s} className="flex gap-4 border-b border-border px-5 py-4 last:border-0">
-                    <span className="font-mono text-sm text-subtle">0{i + 1}</span>
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-signal font-mono text-xs font-semibold text-ink">{i + 1}</span>
                     <span>{s}</span>
                   </li>
                 ))}
@@ -43,7 +43,7 @@ export default async function HowPage({ params }: { params: Promise<{ locale: st
         <SectionHeading title={t("pipelineTitle")} sub={t("pipelineSub")} />
         <ol className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3 lg:grid-cols-9">
           {PIPELINE.map((s, i) => (
-            <li key={s} className="flex flex-col gap-3 bg-bg p-4">
+            <li key={s} data-spot className="flex flex-col gap-3 bg-bg p-4">
               <span className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</span>
               <Badge tone={s === "PAID" || s === "PAID_OUT" ? "signal" : "olive"}>{ts(s)}</Badge>
               <span className="text-sm text-subtle">{tl(s)}</span>
@@ -53,15 +53,15 @@ export default async function HowPage({ params }: { params: Promise<{ locale: st
       </Section>
       <Section>
         <div className="grid gap-12 md:grid-cols-2">
-          <div className="flex flex-col gap-4">
+          <div data-spot className="flex flex-col gap-4 rounded-lg border border-border bg-surface p-6 md:p-8">
             <h2 className="text-3xl md:text-4xl">{t("moneyTitle")}</h2>
             <p className="leading-relaxed text-subtle">{t("moneyBody")}</p>
           </div>
-          <div className="flex flex-col gap-4">
+          <div data-spot className="flex flex-col gap-4 rounded-lg border border-border bg-surface p-6 md:p-8">
             <h2 className="text-3xl md:text-4xl">{t("fairTitle")}</h2>
             <ul className="flex flex-col border-t border-border">
               {[t("fair1"), t("fair2"), t("fair3"), t("fair4"), t("fair5")].map((f) => (
-                <li key={f} className="border-b border-border py-3">{f}</li>
+                <li key={f} className="flex gap-3 border-b border-border py-3 last:border-0"><span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-signal" />{f}</li>
               ))}
             </ul>
           </div>

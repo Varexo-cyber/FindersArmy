@@ -16,12 +16,27 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
   const locale = (await params).locale === "en" ? "en" : "nl";
   setRequestLocale(locale);
   const t = await getTranslations("business");
+  const tHome = await getTranslations("home");
   return (
     <>
       <JsonLd data={faqJsonLd(FAQ[locale].business)} />
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")}>
+      <PageHero
+        eyebrow={t("eyebrow")}
+        title={t("heroTitle2")}
+        sub={t("sub")}
+        aside={
+          <ul className="grid gap-3">
+            {[tHome("bizStat1"), tHome("bizStat2"), tHome("bizStat3")].map((label) => (
+              <li key={label} data-spot className="flex items-baseline gap-4 rounded-md border border-white/10 bg-white/[0.04] px-6 py-5 backdrop-blur-sm">
+                <span className="money text-5xl font-semibold text-signal">€ 0</span>
+                <span className="text-lg text-[#c9cbc4]">{label}</span>
+              </li>
+            ))}
+          </ul>
+        }
+      >
         <div className="flex flex-col gap-2">
-          <Link href="/aanmelden/bedrijf" className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
+          <Link href="/aanmelden/bedrijf" data-magnetic className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
             {t("cta")} <ArrowRight aria-hidden />
           </Link>
           <span className="font-mono text-xs text-subtle">{t("ctaNote")}</span>
@@ -29,11 +44,27 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
       </PageHero>
 
       <Section>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            [t("freeTitle"), t("freeBody")],
+            [t("armyTitle"), t("armyBody")],
+            [t("controlTitle"), t("controlBody")],
+          ].map(([title, body], i) => (
+            <div key={title} data-spot data-tilt data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-6">
+              <span className="flex size-9 items-center justify-center rounded-full bg-signal font-mono text-sm font-semibold text-ink">{i + 1}</span>
+              <h2 className="text-2xl">{title}</h2>
+              <p className="text-subtle">{body}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section>
         <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
           <h2 className="text-3xl md:text-4xl">{t("vsTitle")}</h2>
           <ul className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
             {[t("vs1"), t("vs2"), t("vs3"), t("vs4")].map((v) => (
-              <li key={v} className="flex items-start gap-3 bg-bg p-5">
+              <li key={v} data-spot className="flex items-start gap-3 bg-bg p-5">
                 <X aria-hidden className="mt-0.5 size-4 shrink-0 text-danger" />
                 {v}
               </li>
@@ -50,7 +81,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
             [t("feeFixed"), t("feeFixedEx"), "€ 200"],
             [t("feeTiered"), t("feeTieredEx"), "€ 100 / € 250"],
           ].map(([title, ex, sample]) => (
-            <div key={title} className="flex flex-col gap-3 rounded-md border border-border bg-bg p-6">
+            <div key={title} data-spot data-reveal className="flex flex-col gap-3 rounded-md border border-border bg-bg p-6">
               <span className="money text-3xl">{sample}</span>
               <p className="font-display text-xl font-semibold tracking-tight">{title}</p>
               <p className="text-sm text-subtle">{ex}</p>
@@ -78,7 +109,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
 
       <Section>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="flex flex-col gap-4 rounded-md border-2 border-olive p-6 md:p-10 dark:border-accent">
+          <div data-spot className="flex flex-col gap-4 rounded-md border-2 border-olive p-6 md:p-10 dark:border-accent">
             <p className="eyebrow">Art. 6</p>
             <h2 className="text-3xl">{t("clauseTitle")}</h2>
             <p className="leading-relaxed text-subtle">{t("clauseBody")}</p>

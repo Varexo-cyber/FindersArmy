@@ -11,7 +11,8 @@ import { requireFinder } from "@/lib/server/session";
 import { getSettings } from "@/lib/server/settings";
 import { discoverCampaigns } from "@/lib/server/services/campaigns";
 import { db } from "@/lib/server/db";
-import { rankFor } from "@/lib/ranks";
+import { nextRank, rankFor, rankProgress } from "@/lib/ranks";
+import { Insignia } from "@/components/brand/insignia";
 
 export default async function DiscoverPage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ categorie?: string; regio?: string; sort?: string; welkom?: string }> }) {
   const { locale } = await params;
@@ -21,7 +22,11 @@ export default async function DiscoverPage({ params, searchParams }: { params: P
   const tc = await getTranslations("common");
   const sp = await searchParams;
   const settings = await getSettings();
-  const share = rankFor(finder.paidDeals, settings.ranks).shareBps;
+  const rank = rankFor(finder.paidDeals, settings.ranks);
+  const share = rank.shareBps;
+  const next = nextRank(finder.paidDeals, settings.ranks);
+  const progress = rankProgress(finder.paidDeals, settings.ranks);
+  const tr = await getTranslations("ranks");
   const sort = sp.sort === "new" || sp.sort === "boost" ? sp.sort : "earning";
   const [rows, categories, anyLive] = await Promise.all([
     discoverCampaigns(share, { category: sp.categorie, region: sp.regio?.slice(0, 60), sort }),
@@ -35,6 +40,27 @@ export default async function DiscoverPage({ params, searchParams }: { params: P
       <PageHeader title={t("discoverTitle")} sub={t("discoverSub")} />
       {finder.status === "WARNED" ? <Alert tone="warning" className="mb-6">{t("warned")}</Alert> : null}
       {finder.status === "SUSPENDED" ? <Alert tone="warning" className="mb-6">{t("suspended")}</Alert> : null}
+
+      <Link
+        href="/app/finder/rang"
+        data-flow
+        data-spot
+        className="fx-flow relative mb-6 flex flex-col gap-4 overflow-hidden rounded-xl bg-ink p-5 text-paper sm:flex-row sm:items-center md:p-6"
+      >
+        <div className="fx-grid" aria-hidden />
+        <Insignia rank={rank.key} className="relative size-12 shrink-0 text-signal" />
+        <div className="relative flex min-w-0 flex-1 flex-col gap-2">
+          <p className="font-display text-lg font-semibold tracking-tight">
+            {tr(rank.key)} · <span className="text-signal">{share / 100}%</span> <span className="text-sm font-normal text-[#a9aca2]">{t("rankShare").toLowerCase()}</span>
+          </p>
+          <div className="h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden>
+            <div className="h-full rounded-full bg-signal" style={{ width: `${Math.round(progress * 100)}%` }} />
+          </div>
+          <p className="text-sm text-[#a9aca2]">
+            {next ? t("rankNext", { count: next.dealsToGo, rank: tr(next.rank.key), share: `${next.rank.shareBps / 100}%` }) : t("rankMax")}
+          </p>
+        </div>
+      </Link>
 
       <form className="mb-6 grid grid-cols-2 gap-2 md:grid-cols-[1fr_1fr_1fr_auto]" role="search">
         <label className="sr-only" htmlFor="f-cat">{t("filterCategory")}</label>

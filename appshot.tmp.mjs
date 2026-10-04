@@ -1,0 +1,15 @@
+import { chromium } from "@playwright/test";
+const [,, email, out, path, w = "1280"] = process.argv;
+const base = "http://localhost:3000";
+const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
+const page = await browser.newPage({ viewport: { width: Number(w), height: 900 } });
+const errs = []; page.on("console", (m) => m.type() === "error" && errs.push(m.text().slice(0, 200)));
+await page.goto(`${base}/login`); await page.fill("#email", email); await page.click("button[type=submit]");
+await page.waitForURL(/check/, { waitUntil: "commit" });
+const mails = await (await fetch(`${base}/api/dev/mail?format=json&to=${email}`)).json();
+await page.goto(mails[0].links.find((l) => l.includes("callback")));
+await page.goto(base + path, { waitUntil: "networkidle" });
+await page.waitForTimeout(1500);
+await page.screenshot({ path: out, fullPage: false });
+console.log("errors:", errs);
+await browser.close();

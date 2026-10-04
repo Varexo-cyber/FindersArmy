@@ -20,7 +20,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <p>{t("p2")}</p>
             <p>{t("p3")}</p>
           </div>
-          <aside className="flex flex-col gap-3 self-start rounded-md border border-border p-6">
+          <aside data-spot data-tilt className="flex flex-col gap-3 self-start rounded-lg border border-signal/40 bg-ink p-6 text-paper [--subtle:#a9aca2]">
             <h2 className="text-xl">{t("statusTitle")}</h2>
             <p className="text-sm text-subtle">{t("statusBody")}</p>
           </aside>
@@ -30,8 +30,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         <h2 className="mb-8 text-3xl md:text-4xl">{t("principlesTitle")}</h2>
         <ul className="grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">
           {[t("principle1"), t("principle2"), t("principle3"), t("principle4")].map((p, i) => (
-            <li key={p} className="flex gap-4 bg-bg p-6">
-              <span className="font-mono text-sm text-subtle">0{i + 1}</span>
+            <li key={p} data-spot className="flex gap-4 bg-bg p-6">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-signal font-mono text-xs font-semibold text-ink">{i + 1}</span>
               <span>{p}</span>
             </li>
           ))}

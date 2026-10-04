@@ -81,8 +81,8 @@ test.describe.serial("deal → invoice → payment → payout", () => {
     await login(page, finderEmail, "/app/finder/saldo");
     await page.goto("/app/finder/saldo");
     await expect(page.getByText("Beschikbaar").first()).toBeVisible();
-    // € 4.200 × 8% = € 336 + € 100 boost = € 436 fee; Recruit 60% = € 261,60 (+ € 10 first-deal bonus)
-    await expect(page.getByText("€ 271,60").first()).toBeVisible();
+    // € 4.200 × 8% = € 336 + € 100 boost = € 436 fee; Recruit 75% = € 327 (+ € 10 first-deal bonus)
+    await expect(page.getByText("€ 337,00").first()).toBeVisible();
 
     await page.goto("/app/finder/profiel");
     await page.getByLabel("IBAN").fill("NL20 INGB 0001 2345 67");
@@ -91,7 +91,7 @@ test.describe.serial("deal → invoice → payment → payout", () => {
     await expect(page.getByText("Je profiel is opgeslagen.")).toBeVisible();
 
     await page.goto("/app/finder/saldo");
-    await page.getByLabel("Bedrag").fill("271,60");
+    await page.getByLabel("Bedrag").fill("337,00");
     await page.getByRole("button", { name: "Vraag uitbetaling aan" }).click();
     await expect(page.getByText(/uitbetaling is aangevraagd/)).toBeVisible();
 
@@ -104,7 +104,7 @@ test.describe.serial("deal → invoice → payment → payout", () => {
     const xml = await (await page.request.get((await link.getAttribute("href"))!)).text();
     expect(xml).toContain("urn:iso:std:iso:20022:tech:xsd:pain.001.001.03");
     expect(xml).toContain("NL20INGB0001234567");
-    expect(xml).toContain("<InstdAmt Ccy=\"EUR\">271.60</InstdAmt>");
+    expect(xml).toContain("<InstdAmt Ccy=\"EUR\">337.00</InstdAmt>");
     await page.getByRole("button", { name: "Markeer als uitbetaald" }).first().click();
     await expect(page.getByText("PAID").first()).toBeVisible();
 

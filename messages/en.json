@@ -194,12 +194,16 @@
     "rule1": "You must be 18 or older.",
     "rule2": "You can't refer yourself, not even through someone else.",
     "rule3": "Only share your link with people who actually need something. Spam costs you your account.",
-    "rule4": "You only earn from customers you bring in yourself."
+    "rule4": "You only earn from customers you bring in yourself.",
+    "asideShare": "of every fee is yours",
+    "asideBest": "Top worked example per job",
+    "asideFree": "Free account, no strings attached",
+    "asideCats": "categories to choose from"
   },
   "business": {
     "eyebrow": "For businesses",
     "title": "Only pay for customers who actually come in.",
-    "sub": "People trust a tip from someone they know more than an ad. FindersArmy puts thousands of those tips to work for you. You pay a finder's fee when a referred customer becomes your customer. Otherwise nothing.",
+    "sub": "People trust a tip from someone they know more than an ad. FindersArmy puts a whole network of Finders to work giving those tips for you. You pay a finder's fee when a referred customer becomes your customer. Otherwise nothing.",
     "cta": "Register your business",
     "ctaNote": "Takes 5 minutes. You go live after review.",
     "vsTitle": "What you don't pay",

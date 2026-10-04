@@ -194,12 +194,16 @@
     "rule1": "Je moet 18 jaar of ouder zijn.",
     "rule2": "Je mag jezelf niet aanbrengen, ook niet via iemand anders.",
     "rule3": "Stuur je link alleen naar mensen die echt iets nodig hebben. Spam kost je je account.",
-    "rule4": "Je verdient alleen aan klanten die jij zelf aanbrengt."
+    "rule4": "Je verdient alleen aan klanten die jij zelf aanbrengt.",
+    "asideShare": "van elke fee is voor jou",
+    "asideBest": "Hoogste voorbeeld per klus",
+    "asideFree": "Gratis account, geen verplichtingen",
+    "asideCats": "categorieën om uit te kiezen"
   },
   "business": {
     "eyebrow": "Voor bedrijven",
     "title": "Betaal alleen voor klanten die echt binnenkomen.",
-    "sub": "Mensen vertrouwen een tip van iemand die ze kennen meer dan een advertentie. FindersArmy zet duizenden van die tips voor je aan het werk. Je betaalt een finder's fee als een aangebrachte klant klant wordt. Anders niets.",
+    "sub": "Mensen vertrouwen een tip van iemand die ze kennen meer dan een advertentie. FindersArmy laat een heel netwerk van Finders die tips voor jou geven. Je betaalt een finder's fee als een aangebrachte klant klant wordt. Anders niets.",
     "cta": "Meld je bedrijf aan",
     "ctaNote": "Aanmelden duurt 5 minuten. Na controle sta je live.",
     "vsTitle": "Wat je niet betaalt",

@@ -7,9 +7,9 @@ export function FaqList({ items }: { items: FaqItem[] }) {
     <div className="border-t border-border">
       {items.map((item) => (
         <details key={item.q} className="group border-b border-border">
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left font-display text-lg font-semibold tracking-tight [&::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left font-display text-lg font-semibold tracking-tight transition-colors duration-150 hover:text-olive dark:hover:text-accent [&::-webkit-details-marker]:hidden">
             {item.q}
-            <Plus aria-hidden className="mt-1 size-4 shrink-0 text-subtle transition-transform duration-200 group-open:rotate-45" />
+            <span aria-hidden className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border border-border transition-colors duration-200 group-open:border-signal group-open:bg-signal group-open:text-ink"><Plus className="size-3.5 transition-transform duration-200 group-open:rotate-45" /></span>
           </summary>
           <p className="max-w-3xl pb-6 text-subtle leading-relaxed">{item.a}</p>
         </details>

@@ -7,7 +7,7 @@ import { Money } from "@/components/ui/money";
 export async function CampaignCard({ id, business, logoUrl, category, region, earnCents, boostLabel, locale }: { id: string; business: string; logoUrl: string | null; category: string; region: string; earnCents: number; boostLabel?: string | null; locale: string }) {
   const t = await getTranslations("common");
   return (
-    <Link href={`/app/finder/campagne/${id}`} className="group flex h-full flex-col gap-4 rounded-md border border-border bg-surface p-5 transition-colors duration-150 hover:border-fg">
+    <Link href={`/app/finder/campagne/${id}`} data-spot data-tilt className="group flex h-full flex-col gap-4 rounded-lg border border-border bg-surface p-5 transition-colors duration-150 hover:border-fg">
       <div className="flex items-center justify-between gap-2">
         <span className="eyebrow truncate">{category}</span>
         {boostLabel ? <Badge tone="signal">{boostLabel}</Badge> : null}

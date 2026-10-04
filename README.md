@@ -57,6 +57,7 @@ Optionele koppelingen hebben een veilige lokale fallback:
 | Cloudflare R2 | bestanden in de database (`StoredFile`) |
 | Upstash Redis | rate limiting in geheugen (alleen geschikt voor één instantie) |
 | Google OAuth | knop verborgen, alleen magic link |
+| Anthropic (`ANTHROPIC_API_KEY`) | hulp-chat zoekt zelf in de site-kennis en verwijst naar de juiste pagina |
 
 ## Tests
 
@@ -129,6 +130,14 @@ tests/unit · tests/e2e
 - **Privacy:** een Finder ziet van klanten alleen voornaam en woonplaats. IP-adressen worden alleen gehasht opgeslagen. Afgewezen aanvragen worden na 12 maanden automatisch geanonimiseerd. Gebruikers kunnen hun gegevens exporteren en hun account verwijderen.
 - **Uitbetalingen** lopen via een `PayoutProvider`-interface. Fase 1 is een SEPA pain.001.001.03-bestand, gevalideerd tegen de officiële ISO-XSD in de tests. Stripe Connect of Mollie Connect kan later dezelfde interface implementeren.
 - **Notificaties** lopen via kanalen (in-app + e-mail). WhatsApp of SMS is een extra `Channel` in `src/lib/server/notify.ts`.
+
+## Hulp-chat (rechtsonder)
+
+Op elke pagina staat een hulp-chat. De kennis wordt opgebouwd uit dezelfde bronnen als de website zelf (`src/lib/assistant/knowledge.ts`): alle paginateksten uit `messages/*.json`, de FAQ, alle categorieën met rekenvoorbeelden, en live uit de database de rangen, bonussen, termijnen en live campagnes. Pas je de site aan, dan weet de chat het meteen; er is niets dubbel te onderhouden.
+
+- Met `ANTHROPIC_API_KEY` antwoordt Claude (model via `ASSISTANT_MODEL`, standaard `claude-opus-5-5`, met automatische terugval bij overbelasting). Voor vragen over belasting, KvK of privacy mag hij zoeken op belastingdienst.nl, kvk.nl, rijksoverheid.nl, autoriteitpersoonsgegevens.nl en consuwijzer.nl. De vaste site-kennis wordt gecachet, zodat een vraag weinig kost.
+- Zonder sleutel zoekt de chat zelf in dezelfde kennis en toont de relevante passage met een link.
+- Rate limit: 30 vragen per 10 minuten per (gehasht) IP. Gesprekken worden niet opgeslagen; de geschiedenis staat alleen in de browser-sessie.
 
 ## Open punten voor de eigenaar
 

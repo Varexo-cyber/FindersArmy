@@ -122,6 +122,8 @@ export function AssistantWidget() {
   }
 
   const suggestions = t.raw("suggestions") as string[];
+  // Forms with a bottom action bar (sign-up, login, the customer form) keep the screen to themselves.
+  if (/^\/(aanmelden|login|r\/|bevestig)/.test(pathname)) return null;
 
   return (
     <div className={cn("fixed right-4 z-50 flex flex-col items-end gap-3", inApp ? "bottom-20 md:bottom-6" : "bottom-4 md:bottom-6")}>
