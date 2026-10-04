@@ -90,6 +90,12 @@
   * {
     border-color: var(--border);
   }
+  /* A grid without an explicit template gets one shrinkable column, so long content inside a
+     single-column (mobile) grid can never push the page wider than the viewport.
+     Any grid-cols-* utility overrides this, because utilities sit in a later layer. */
+  :where(.grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;

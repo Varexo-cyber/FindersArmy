@@ -49,7 +49,7 @@ export function ShareFragment({ message }: { message: string }) {
     <div className="flex flex-col gap-3 p-4">
       <div className="ml-auto max-w-[85%] rounded-md rounded-br-none bg-[#d9fdd3] px-3 py-2 text-[13px] leading-snug text-ink dark:bg-[#1f3a1e] dark:text-paper">
         {message}
-        <span className="mt-1 flex items-center justify-end gap-1 font-mono text-[10px] text-ink/50 dark:text-paper/50">
+        <span className="mt-1 flex items-center justify-end gap-1 font-mono text-[10px] text-ink/75 dark:text-paper/70">
           14:02 <Check className="size-3" />
         </span>
       </div>
