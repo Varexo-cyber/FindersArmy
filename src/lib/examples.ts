@@ -14,11 +14,11 @@ export function allCategoryExamples() {
   return CATEGORIES.map((c) => ({ category: c, ...categoryExample(c) }));
 }
 
-/** The homepage example: a € 5.000 job at 8% earns a Recruit € 240. */
+/** The homepage example: a € 5.000 job at 10% earns a Recruit € 375. */
 export const HOME_EXAMPLE = (() => {
-  const rule = { feeType: "PERCENTAGE" as const, feePercentBps: 800, minJobAmountCents: 50_000, minFeeCents: 5_000 };
+  const rule = { feeType: "PERCENTAGE" as const, feePercentBps: 1000, minJobAmountCents: 50_000, minFeeCents: 5_000 };
   const jobCents = 500_000;
   const feeCents = baseFee(rule, jobCents);
   const r = calculateFee({ rule, dealAmountCents: jobCents, finderShareBps: RECRUIT_SHARE });
-  return { jobCents, rateBps: 800, feeCents, shareBps: RECRUIT_SHARE, finderCents: r.finderCents };
+  return { jobCents, rateBps: 1000, feeCents, shareBps: RECRUIT_SHARE, finderCents: r.finderCents };
 })();

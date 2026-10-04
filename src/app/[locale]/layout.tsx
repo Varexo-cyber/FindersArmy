@@ -56,6 +56,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           {t("skip")}
         </a>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <script src="/fx.js" defer />
         <ServiceWorker />
       </body>
     </html>

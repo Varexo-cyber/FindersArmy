@@ -5,16 +5,16 @@ export type RankKey = "RECRUIT" | "SOLDIER" | "SERGEANT" | "LIEUTENANT" | "COMMA
 export interface RankDefinition {
   key: RankKey;
   minPaidDeals: number;
-  /** Finder share of the fee, in basis points. 6250 = 62.5%. */
+  /** Finder share of the fee, in basis points. 7500 = 75%. */
   shareBps: number;
 }
 
 export const DEFAULT_RANKS: RankDefinition[] = [
-  { key: "RECRUIT", minPaidDeals: 0, shareBps: 6000 },
-  { key: "SOLDIER", minPaidDeals: 3, shareBps: 6250 },
-  { key: "SERGEANT", minPaidDeals: 10, shareBps: 6500 },
-  { key: "LIEUTENANT", minPaidDeals: 25, shareBps: 6750 },
-  { key: "COMMANDER", minPaidDeals: 50, shareBps: 7000 },
+  { key: "RECRUIT", minPaidDeals: 0, shareBps: 7500 },
+  { key: "SOLDIER", minPaidDeals: 3, shareBps: 7750 },
+  { key: "SERGEANT", minPaidDeals: 10, shareBps: 8000 },
+  { key: "LIEUTENANT", minPaidDeals: 25, shareBps: 8250 },
+  { key: "COMMANDER", minPaidDeals: 50, shareBps: 8500 },
 ];
 
 export function validateRanks(ranks: RankDefinition[]): RankDefinition[] {

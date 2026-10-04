@@ -10,7 +10,7 @@ export const FAQ: Record<"nl" | "en", Record<FaqGroup, FaqItem[]>> = {
     finders: [
       { q: "Wat is een Finder?", a: "Iemand die een klant aanbrengt bij een lokaal bedrijf. Je kent iemand die iets nodig heeft, je stuurt je persoonlijke link, en als de klus doorgaat krijg je een finder's fee." },
       { q: "Kost het iets om Finder te worden?", a: "Nee. Aanmelden is gratis en je zit nergens aan vast. Je betaalt nooit iets." },
-      { q: "Hoeveel verdien ik?", a: "Dat hangt af van de fee die het bedrijf heeft ingesteld en van je rang. Je ziet bij elke campagne wat je kunt verdienen, met een rekenvoorbeeld. Als Rekruut krijg je 60% van de fee, als Commandant 70%." },
+      { q: "Hoeveel verdien ik?", a: "Dat hangt af van de fee die het bedrijf heeft ingesteld en van je rang. Je ziet bij elke campagne wat je kunt verdienen, met een rekenvoorbeeld. Als Rekruut krijg je al 75% van de fee, als Commandant 85%." },
       { q: "Wanneer krijg ik mijn geld?", a: "Zodra het bedrijf de factuur voor jouw klant heeft betaald, staat je fee als beschikbaar saldo klaar. Vanaf € 25 vraag je een uitbetaling aan. We maken over in de eerstvolgende betaalronde, meestal binnen een week." },
       { q: "Wat gebeurt er als het bedrijf de klus niet doorgeeft?", a: "De klant krijgt na de deal automatisch een e-mail om te bevestigen dat de klus is uitgevoerd. Daarnaast kun je zelf melden dat je weet dat de klus is gedaan. Ons team zoekt het dan uit. Bedrijven die niet eerlijk zijn, worden geschorst." },
       { q: "Moet ik belasting betalen over mijn verdiensten?", a: "Inkomsten uit FindersArmy zijn in principe belastbaar als resultaat uit overige werkzaamheden. Je ontvangt per uitbetaling een specificatie. We werken samen met een boekhouder aan een duidelijke jaaropgave." },
@@ -43,7 +43,7 @@ export const FAQ: Record<"nl" | "en", Record<FaqGroup, FaqItem[]>> = {
     finders: [
       { q: "What is a Finder?", a: "Someone who brings a customer to a local business. You know someone who needs something, you send your personal link, and when the job goes ahead you get a finder's fee." },
       { q: "Does it cost anything to become a Finder?", a: "No. Sign-up is free and there's no commitment. You never pay anything." },
-      { q: "How much do I earn?", a: "It depends on the fee the business set and on your rank. Each campaign shows what you can earn, with a worked example. As a Recruit you get 60% of the fee, as Commander 70%." },
+      { q: "How much do I earn?", a: "It depends on the fee the business set and on your rank. Each campaign shows what you can earn, with a worked example. As a Recruit you already get 75% of the fee, as Commander 85%." },
       { q: "When do I get my money?", a: "Once the business has paid the invoice for your customer, your fee is available. From € 25 you request a payout. We transfer in the next payment run, usually within a week." },
       { q: "What if the business doesn't report the job?", a: "After the deal, the customer automatically gets an email to confirm the job was done. You can also report that you know the job was done. Our team will investigate. Businesses that aren't honest get suspended." },
       { q: "Do I pay tax on my earnings?", a: "Income from FindersArmy is generally taxable in the Netherlands as income from other activities. You receive a statement with every payout. We're working with an accountant on a clear annual statement." },

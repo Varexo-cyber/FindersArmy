@@ -4,14 +4,14 @@ import { canRequestPayout, computeBalances, expectedAdjustment, releaseOnPayment
 
 describe("ranks", () => {
   it.each([
-    [0, "RECRUIT", 6000],
-    [2, "RECRUIT", 6000],
-    [3, "SOLDIER", 6250],
-    [10, "SERGEANT", 6500],
-    [24, "SERGEANT", 6500],
-    [25, "LIEUTENANT", 6750],
-    [50, "COMMANDER", 7000],
-    [500, "COMMANDER", 7000],
+    [0, "RECRUIT", 7500],
+    [2, "RECRUIT", 7500],
+    [3, "SOLDIER", 7750],
+    [10, "SERGEANT", 8000],
+    [24, "SERGEANT", 8000],
+    [25, "LIEUTENANT", 8250],
+    [50, "COMMANDER", 8500],
+    [500, "COMMANDER", 8500],
   ])("%i paid deals → %s", (deals, key, bps) => {
     const r = rankFor(deals);
     expect(r.key).toBe(key);
@@ -30,8 +30,8 @@ describe("ranks", () => {
     expect(() => validateRanks([{ key: "SOLDIER", minPaidDeals: 1, shareBps: 6000 }])).toThrow();
     expect(() =>
       validateRanks([
-        { key: "RECRUIT", minPaidDeals: 0, shareBps: 6500 },
-        { key: "SOLDIER", minPaidDeals: 3, shareBps: 6000 },
+        { key: "RECRUIT", minPaidDeals: 0, shareBps: 8000 },
+        { key: "SOLDIER", minPaidDeals: 3, shareBps: 7500 },
       ]),
     ).toThrow();
     expect(validateRanks([...DEFAULT_RANKS].reverse())[0]!.key).toBe("RECRUIT");

@@ -189,3 +189,206 @@
     padding-left: 1.25rem;
   }
 }
+
+/* ─── Interaction layer (see public/fx.js) ───────────────────────────────────
+   Light follows the pointer, things flow, numbers count. Everything is optional
+   decoration on top of a complete page and switches off with reduced motion. */
+@layer components {
+  /* Spotlight: a soft light under the pointer plus a lit border. */
+  [data-spot] {
+    position: relative;
+    isolation: isolate;
+    --mx: 50%;
+    --my: 50%;
+  }
+  [data-spot]::before,
+  [data-spot]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 250ms var(--ease-out-quick);
+  }
+  [data-spot]::before {
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in oklab, var(--signal) 22%, transparent), transparent 60%);
+  }
+  [data-spot]::after {
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx) var(--my), color-mix(in oklab, var(--signal) 90%, transparent), transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  [data-spot]:hover::before,
+  [data-spot]:hover::after,
+  [data-spot]:focus-within::before,
+  [data-spot]:focus-within::after {
+    opacity: 1;
+  }
+
+  [data-magnetic],
+  [data-tilt] {
+    transition: transform 220ms var(--ease-out-quick);
+    will-change: transform;
+  }
+
+  /* Shine sweep across primary buttons. */
+  .fx-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .fx-shine::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  .fx-shine:hover::after {
+    transform: translateX(120%);
+    transition: transform 700ms var(--ease-out-quick);
+  }
+  .fx-glow {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 0%, transparent);
+    transition: box-shadow 250ms var(--ease-out-quick), transform 150ms var(--ease-out-quick);
+  }
+  .fx-glow:hover {
+    box-shadow: 0 10px 40px -8px color-mix(in oklab, var(--signal) 70%, transparent);
+  }
+
+  /* Hero flow: two soft lights drifting after the pointer, over a breathing grid. */
+  .fx-flow {
+    position: relative;
+    overflow: hidden;
+    --fx: 65%;
+    --fy: 35%;
+  }
+  .fx-flow::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 46% at var(--fx) var(--fy), color-mix(in oklab, var(--signal) 34%, transparent), transparent 70%),
+      radial-gradient(30% 40% at calc(100% - var(--fx)) calc(100% - var(--fy)), color-mix(in oklab, #6f8f45 55%, transparent), transparent 70%);
+    filter: blur(40px);
+    animation: fx-drift 18s ease-in-out infinite alternate;
+  }
+  .fx-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(245 243 238 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(245 243 238 / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 80%);
+  }
+  @keyframes fx-drift {
+    from { transform: translate3d(-2%, -1%, 0) scale(1); }
+    to { transform: translate3d(2%, 2%, 0) scale(1.08); }
+  }
+
+  /* Text with a slow light running through it. */
+  .fx-gradient-text {
+    background: linear-gradient(100deg, var(--signal) 0%, #f3ffc4 40%, var(--signal) 60%, #b8e62a 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: fx-sheen 6s linear infinite;
+  }
+  @keyframes fx-sheen {
+    to { background-position: -220% 0; }
+  }
+
+  /* Endless band of categories. */
+  .fx-marquee {
+    display: flex;
+    width: max-content;
+    animation: fx-marquee 60s linear infinite;
+  }
+  .fx-marquee-wrap:hover .fx-marquee {
+    animation-play-state: paused;
+  }
+  @keyframes fx-marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  /* Reveal on scroll: content below the fold rises into place. It is never hidden, so
+     previews, thumbnails and readers who don't scroll still see everything. */
+  .is-pre {
+    transform: translateY(32px) scale(0.98);
+  }
+  .is-pre.is-in {
+    transform: none;
+    transition: transform 800ms var(--ease-out-quick);
+  }
+
+  /* Calculator result pops when it changes. */
+  .is-bump [data-calc-you] {
+    animation: fx-bump 300ms var(--ease-out-quick);
+  }
+  @keyframes fx-bump {
+    40% { transform: scale(1.06); }
+  }
+  .fx-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right, var(--signal) calc(var(--p, 0.4) * 100%), rgb(245 243 238 / 0.15) 0);
+    outline-offset: 6px;
+  }
+  .fx-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--signal);
+    border: 3px solid var(--ink);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--signal) 35%, transparent);
+    cursor: grab;
+  }
+  .fx-range::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--signal);
+    border: 3px solid var(--ink);
+    cursor: grab;
+  }
+
+  .fx-pulse-dot {
+    position: relative;
+  }
+  .fx-pulse-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    border: 2px solid var(--signal);
+    animation: fx-ping 1.8s ease-out infinite;
+  }
+  @keyframes fx-ping {
+    from { opacity: 0.9; transform: scale(0.6); }
+    to { opacity: 0; transform: scale(1.6); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fx-flow::before,
+    .fx-gradient-text,
+    .fx-marquee,
+    .fx-pulse-dot::after {
+      animation: none !important;
+    }
+    .fx-shine::after {
+      display: none;
+    }
+  }
+}
