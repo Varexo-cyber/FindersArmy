@@ -783,5 +783,25 @@
     "home": "Go to homepage",
     "serverTitle": "Something went wrong on our side.",
     "serverBody": "We're aware. Please try again in a few minutes."
+  },
+  "assistant": {
+    "open": "Ask the FindersArmy assistant",
+    "close": "Close",
+    "title": "FindersArmy help",
+    "subtitle": "Knows everything about earning, payouts and signing up.",
+    "placeholder": "Ask your question…",
+    "send": "Send",
+    "thinking": "Thinking…",
+    "privacy": "Don't share personal data. Answers may contain mistakes.",
+    "offlineNote": "Answer from the site's knowledge base.",
+    "error": "That didn't work. Please try again.",
+    "greeting": "Hi! I know everything about FindersArmy. What would you like to know?",
+    "suggestions": [
+      "How much can I earn?",
+      "When do I get my money?",
+      "What does it cost a business?",
+      "Which businesses are on it?"
+    ],
+    "reset": "New conversation"
   }
 }

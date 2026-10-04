@@ -783,5 +783,25 @@
     "home": "Naar de homepage",
     "serverTitle": "Er ging iets mis aan onze kant.",
     "serverBody": "We zijn op de hoogte. Probeer het over een paar minuten opnieuw."
+  },
+  "assistant": {
+    "open": "Vraag het de FindersArmy-hulp",
+    "close": "Sluiten",
+    "title": "FindersArmy-hulp",
+    "subtitle": "Weet alles over verdienen, uitbetalen en aanmelden.",
+    "placeholder": "Stel je vraag…",
+    "send": "Versturen",
+    "thinking": "Even denken…",
+    "privacy": "Deel geen persoonsgegevens. Antwoorden kunnen fouten bevatten.",
+    "offlineNote": "Antwoord uit de kennisbank van de site.",
+    "error": "Dat lukte even niet. Probeer het opnieuw.",
+    "greeting": "Hoi! Ik weet alles over FindersArmy. Wat wil je weten?",
+    "suggestions": [
+      "Hoeveel kan ik verdienen?",
+      "Wanneer krijg ik mijn geld?",
+      "Wat kost het voor een bedrijf?",
+      "Welke bedrijven zitten erop?"
+    ],
+    "reset": "Nieuw gesprek"
   }
 }

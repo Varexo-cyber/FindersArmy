@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
 import { themeScript } from "@/components/theme-toggle";
 import { siteUrl } from "@/lib/site";
+import { AssistantWidget } from "@/components/assistant/assistant-widget";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -55,7 +56,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-fg focus:px-4 focus:py-2 focus:text-bg">
           {t("skip")}
         </a>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {children}
+          <AssistantWidget />
+        </NextIntlClientProvider>
         <script src="/fx.js" defer />
         <ServiceWorker />
       </body>
