@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         // Signal is reserved for money and the primary action.
-        primary: "fx-shine fx-glow bg-signal text-ink hover:bg-[#c6f224] border border-ink/10",
+        primary: "fx-shine bg-signal text-ink hover:bg-[#c6f224] border border-ink/10",
         solid: "bg-fg text-bg hover:opacity-90",
         outline: "border border-border bg-transparent hover:bg-surface-2",
         ghost: "hover:bg-surface-2",

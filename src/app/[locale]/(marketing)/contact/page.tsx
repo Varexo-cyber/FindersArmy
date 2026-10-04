@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section } from "@/components/marketing/section";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -18,7 +19,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   ];
   return (
     <>
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} />
+      <PageHero photo={PHOTOS.koppelKeuken} locale={locale} eyebrow={t("eyebrow")} title={t("title")} />
       <Section>
         <dl className="grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">
           {rows.map(([label, email]) => (

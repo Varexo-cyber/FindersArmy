@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CategoryGrid } from "@/components/marketing/category-grid";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section, SectionHeading } from "@/components/marketing/section";
 import { CATEGORIES, EXCLUDED_CATEGORIES } from "@/content/categories";
 import { liveCampaignCounts } from "@/lib/server/public-stats";
@@ -18,7 +19,7 @@ export default async function CategoriesPage({ params }: { params: Promise<{ loc
   const counts = await liveCampaignCounts();
   return (
     <>
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} sub={t("sub", { count: CATEGORIES.length })} />
+      <PageHero photo={PHOTOS.timmerman} locale={locale} eyebrow={t("eyebrow")} title={t("title")} sub={t("sub", { count: CATEGORIES.length })} />
       <Section>
         <CategoryGrid locale={locale} earnLabel={t("exampleEarning")} liveLabel={t("liveCampaigns").toLowerCase()} counts={counts} />
       </Section>

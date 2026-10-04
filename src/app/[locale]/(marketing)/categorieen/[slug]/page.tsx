@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Money } from "@/components/ui/money";
+import { photoForCategory } from "@/content/photos";
 import { PageHero, Section } from "@/components/marketing/section";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { categoryExample } from "@/lib/examples";
@@ -51,14 +52,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
   const group = CATEGORY_GROUPS.find((g) => g.key === c.group)!;
   return (
     <>
-      <PageHero
+      <PageHero photo={photoForCategory(c.slug, c.group)} locale={locale}
         eyebrow={locale === "en" ? group.en : group.nl}
         title={name}
         sub={locale === "en" ? c.descriptionEn : c.descriptionNl}
         aside={
-          <div data-spot data-tilt className="flex flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
+          <div data-spot className="flex flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
             <p className="text-sm text-[#c9cbc4]">{t("exampleEarning")}</p>
-            <p className="money fx-gradient-text text-6xl font-semibold md:text-7xl" data-count={ex.finderCents}>{formatEuroShort(ex.finderCents, locale)}</p>
+            <p className="money text-signal text-6xl font-semibold md:text-7xl" data-count={ex.finderCents}>{formatEuroShort(ex.finderCents, locale)}</p>
             <dl className="flex flex-col gap-3 border-t border-white/10 pt-5 font-mono text-sm">
               <div className="flex justify-between gap-6"><dt className="font-sans text-[#9a9d94]">{t("typicalJob")}</dt><dd>{formatCents(ex.jobCents, locale)}</dd></div>
               <div className="flex justify-between gap-6"><dt className="font-sans text-[#9a9d94]">Fee</dt><dd className="text-right">{ruleText}</dd></div>
@@ -67,7 +68,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
         }
       >
         <div className="flex flex-wrap items-center gap-4">
-          <Link href="/aanmelden/finder" data-magnetic className={buttonVariants({ variant: "primary", size: "lg" })}>{tf("shareCta")} <ArrowRight aria-hidden /></Link>
+          <Link href="/aanmelden/finder" className={buttonVariants({ variant: "primary", size: "lg" })}>{tf("shareCta")} <ArrowRight aria-hidden /></Link>
           <Link href="/categorieen" className="inline-flex items-center gap-2 text-sm text-subtle hover:text-fg">
             <ArrowLeft aria-hidden className="size-4" /> {t("backToAll")}
           </Link>

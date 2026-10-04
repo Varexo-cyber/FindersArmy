@@ -3,6 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Insignia } from "@/components/brand/insignia";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section, SectionHeading } from "@/components/marketing/section";
 import { CategoryGrid } from "@/components/marketing/category-grid";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
@@ -29,14 +30,14 @@ export default async function FindersPage({ params }: { params: Promise<{ locale
   return (
     <>
       <JsonLd data={faqJsonLd(FAQ[locale].finders)} />
-      <PageHero
+      <PageHero photo={PHOTOS.meisjeLacht} locale={locale}
         eyebrow={t("eyebrow")}
         title={t("title")}
         sub={t("sub")}
         aside={
-          <div data-spot data-tilt className="flex flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
+          <div data-spot className="flex flex-col gap-5 rounded-xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md md:p-8">
             <p className="flex items-baseline gap-3">
-              <span className="money fx-gradient-text text-7xl font-semibold md:text-8xl">{topShare}%</span>
+              <span className="money text-signal text-7xl font-semibold md:text-8xl">{topShare}%</span>
             </p>
             <p className="text-lg text-[#c9cbc4]">{t("asideShare")}</p>
             <dl className="grid grid-cols-2 gap-4 border-t border-white/10 pt-5">
@@ -53,7 +54,7 @@ export default async function FindersPage({ params }: { params: Promise<{ locale
           </div>
         }
       >
-        <Link href="/aanmelden/finder" data-magnetic className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
+        <Link href="/aanmelden/finder" className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
           {t("cta")} <ArrowRight aria-hidden />
         </Link>
       </PageHero>
@@ -79,7 +80,7 @@ export default async function FindersPage({ params }: { params: Promise<{ locale
         <SectionHeading title={t("ranksTitle")} sub={t("ranksSub")} />
         <ol className="grid gap-4 sm:grid-cols-2 md:grid-cols-5">
           {DEFAULT_RANKS.map((r, i) => (
-            <li key={r.key} data-spot data-tilt data-reveal style={{ transitionDelay: `${i * 70}ms` }} className={cn("flex flex-col gap-4 rounded-lg border p-5", i === DEFAULT_RANKS.length - 1 ? "border-signal bg-ink text-paper [--subtle:#a9aca2]" : "border-border bg-bg")}>
+            <li key={r.key} data-spot data-reveal style={{ transitionDelay: `${i * 70}ms` }} className={cn("flex flex-col gap-4 rounded-lg border p-5", i === DEFAULT_RANKS.length - 1 ? "border-signal bg-ink text-paper [--subtle:#a9aca2]" : "border-border bg-bg")}>
               <Insignia rank={r.key} className={cn("size-12", i === DEFAULT_RANKS.length - 1 ? "text-signal" : "text-olive dark:text-accent")} />
               <p className="font-display text-xl font-semibold tracking-tight">{tr(r.key)}</p>
               <div className="flex flex-col gap-1 font-mono text-sm">

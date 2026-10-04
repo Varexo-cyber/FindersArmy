@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section, SectionHeading } from "@/components/marketing/section";
 import { BusinessCalculator } from "@/components/marketing/business-calculator";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
@@ -20,7 +21,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
   return (
     <>
       <JsonLd data={faqJsonLd(FAQ[locale].business)} />
-      <PageHero
+      <PageHero photo={PHOTOS.bedrijf} locale={locale}
         eyebrow={t("eyebrow")}
         title={t("heroTitle2")}
         sub={t("sub")}
@@ -36,7 +37,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
         }
       >
         <div className="flex flex-col gap-2">
-          <Link href="/aanmelden/bedrijf" data-magnetic className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
+          <Link href="/aanmelden/bedrijf" className={buttonVariants({ variant: "primary", size: "xl", className: "self-start" })}>
             {t("cta")} <ArrowRight aria-hidden />
           </Link>
           <span className="font-mono text-xs text-subtle">{t("ctaNote")}</span>
@@ -50,7 +51,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
             [t("armyTitle"), t("armyBody")],
             [t("controlTitle"), t("controlBody")],
           ].map(([title, body], i) => (
-            <div key={title} data-spot data-tilt data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-6">
+            <div key={title} data-spot data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-6">
               <span className="flex size-9 items-center justify-center rounded-full bg-signal font-mono text-sm font-semibold text-ink">{i + 1}</span>
               <h2 className="text-2xl">{title}</h2>
               <p className="text-subtle">{body}</p>

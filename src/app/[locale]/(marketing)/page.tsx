@@ -7,8 +7,8 @@ import { Insignia } from "@/components/brand/insignia";
 import { Section, SectionHeading } from "@/components/marketing/section";
 import { FeeFragment, Frame, LeadFragment, ShareFragment } from "@/components/marketing/fragments";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
-import { EarningsCalculator } from "@/components/marketing/earnings-calculator";
-import { CategoryMarquee } from "@/components/marketing/category-marquee";
+import Image from "next/image";
+import { PHOTOS, TIP_TILES } from "@/content/photos";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { FAQ } from "@/content/faq";
 import { HOME_EXAMPLE, categoryExample } from "@/lib/examples";
@@ -34,48 +34,91 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const paidOut = await paidOutTotalCents();
   const faq = [...FAQ[locale].finders.slice(0, 3), ...FAQ[locale].business.slice(0, 3)];
   const ex = HOME_EXAMPLE;
+  const tileExample = (slug: string) => categoryExample(CATEGORIES.find((c) => c.slug === slug)!).finderCents;
 
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", name: "FindersArmy", url: siteUrl(), logo: `${siteUrl()}/icon.svg`, email: "hallo@findersarmy.com", areaServed: "NL" }} />
       <JsonLd data={faqJsonLd(faq)} />
 
-      {/* Hero: dark stage, light that flows after the pointer, live calculator. */}
-      <section data-flow className="fx-flow -mt-px bg-ink text-paper [--fg:var(--paper)] [--subtle:#a9aca2] [--border:#2b2e27]">
-        <div className="fx-grid" aria-hidden />
-        <div className="container-x relative grid gap-12 py-16 md:grid-cols-[1.2fr_1fr] md:items-center md:py-24">
+      {/* Hero: a real photo, a real conversation, a real payout. */}
+      <section className="overflow-hidden">
+        <div className="container-x grid gap-12 pt-10 pb-16 md:grid-cols-[1.05fr_1fr] md:items-center md:pt-16 md:pb-24">
           <div className="flex flex-col gap-7">
-            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] tracking-[0.08em] text-[#c9cbc4] uppercase">
-              <span aria-hidden className="size-1.5 rounded-full bg-signal" />
-              {t("heroPill")}
-            </p>
-            <h1 className="text-[3.2rem] leading-[0.92] md:text-[6rem]">
-              {t("heroTitleA")}
+            <p className="text-sm font-medium text-subtle">{t("h3Kicker")}</p>
+            <h1 className="text-[3.1rem] leading-[0.95] md:text-[5.4rem]">
+              {t("h3TitleA")}
               <br />
-              <span className="fx-gradient-text">{t("heroTitleB")}</span>
+              <span className="box-decoration-clone bg-[linear-gradient(transparent_60%,var(--signal)_60%,var(--signal)_88%,transparent_88%)]">{t("h3TitleB")}</span>
             </h1>
-            <p className="max-w-xl text-lg text-[#c9cbc4] md:text-xl">{t("heroSub2")}</p>
+            <p className="max-w-xl text-lg text-subtle md:text-xl">{t("h3Sub")}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/aanmelden/finder" data-magnetic className={buttonVariants({ variant: "primary", size: "xl" })}>
+              <Link href="/aanmelden/finder" className={buttonVariants({ variant: "solid", size: "xl" })}>
                 {t("ctaFinder")} <ArrowRight aria-hidden />
               </Link>
-              <Link href="/bedrijven" className={cn(buttonVariants({ variant: "outline", size: "xl" }), "border-white/20 text-paper hover:bg-white/10")}>
+              <Link href="/bedrijven" className={buttonVariants({ variant: "outline", size: "xl" })}>
                 {t("ctaBusiness")}
               </Link>
             </div>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#a9aca2]">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-subtle">
               {[t("trust1"), t("trust2"), t("trust3")].map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-signal" />{x}</li>
+                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-fg" />{x}</li>
               ))}
             </ul>
           </div>
-          <EarningsCalculator locale={locale} />
+
+          <div className="relative mx-auto w-full max-w-md md:max-w-none">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[5/6]">
+              <Image src={PHOTOS.vriendenStraat.src} alt={PHOTOS.vriendenStraat.alt[locale]} fill priority sizes="(min-width: 768px) 45vw, 90vw" className="object-cover" />
+            </div>
+            {/* The message that starts it all. */}
+            <div className="absolute -left-3 top-8 flex w-[78%] max-w-xs flex-col gap-1.5 md:-left-10 md:top-12">
+              <p className="self-start rounded-2xl rounded-bl-md bg-bg px-4 py-2.5 text-sm shadow-lg">{t("h3ChatQ")}</p>
+              <div className="self-end rounded-2xl rounded-br-md bg-[#d9fdd3] px-4 py-2.5 text-sm text-ink shadow-lg">
+                <p>{t("h3ChatA")}</p>
+                <p className="mt-1 font-medium text-[#027eb5] underline">{t("h3ChatLink")}</p>
+              </div>
+            </div>
+            {/* ...and how it ends. */}
+            <div className="absolute -right-2 bottom-8 flex items-center gap-3 rounded-2xl bg-ink px-4 py-3 text-paper shadow-xl md:-right-6 md:bottom-12">
+              <span className="flex size-10 items-center justify-center rounded-full bg-signal text-ink"><Check aria-hidden className="size-5" /></span>
+              <div>
+                <p className="text-xs text-[#a9aca2]">{t("h3Notif")}</p>
+                <p className="money text-2xl font-semibold">+ {formatCents(tileExample("autodealers"), locale)}</p>
+                <p className="text-xs text-[#a9aca2]">{t("h3NotifSub")}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Endless band of what people earn per category. */}
-      <section className="border-b border-border py-8">
-        <CategoryMarquee locale={locale} label={t("marqueeEarn")} />
+      {/* Someone you know needs something: photo tiles with what it earns. */}
+      <section className="border-t border-border bg-surface py-16 md:py-24">
+        <div className="container-x">
+          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <SectionHeading title={t("tilesTitle")} sub={t("tilesSub")} className="mb-0 md:mb-0" />
+            <Link href="/categorieen" className={buttonVariants({ variant: "outline" })}>
+              {t("categoriesAll")} <ArrowRight aria-hidden />
+            </Link>
+          </div>
+          <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+            {TIP_TILES.map((tile) => (
+              <li key={tile.slug} className="w-[72%] shrink-0 snap-start sm:w-[45%] md:w-auto">
+                <Link href={`/categorieen/${tile.slug}`} className="photo-zoom group relative block aspect-[3/4] overflow-hidden rounded-2xl bg-ink">
+                  <Image src={tile.photo.src} alt={tile.photo.alt[locale]} fill sizes="(min-width: 768px) 25vw, 72vw" className="object-cover opacity-90" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4 text-paper">
+                    <p className="text-base leading-snug font-medium">{locale === "en" ? tile.en : tile.nl}</p>
+                    <p className="flex items-baseline gap-2">
+                      <span className="money rounded-md bg-signal px-2 text-2xl font-semibold text-ink">{formatEuroShort(tileExample(tile.slug), locale)}</span>
+                      <span className="text-sm text-[#d6d8d0]">{t("tilesYou")}</span>
+                    </p>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {paidOut !== null ? (
@@ -98,7 +141,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             { title: t("step3Title"), body: t("step3Body"), frag: <FeeFragment label={t("mockFeeLabel")} cents={ex.finderCents} status={ts("WON")} /> },
           ].map((s, i) => (
             <li key={i} data-reveal style={{ transitionDelay: `${i * 90}ms` }} className="flex flex-col gap-5">
-              <div data-spot data-tilt className="rounded-md">
+              <div data-spot className="rounded-md">
                 <Frame className="min-h-44 bg-bg">{s.frag}</Frame>
               </div>
               <div className="flex gap-4">
@@ -113,31 +156,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ol>
       </Section>
 
-      {/* The worked example with numbers that count up. */}
-      <Section tone="surface">
-        <div className="grid gap-10 md:grid-cols-2 md:items-center">
-          <SectionHeading eyebrow={t("calcEyebrow")} title={t("calcTitle")} sub={t("calcNote")} className="mb-0 md:mb-0" />
-          <dl data-reveal data-spot className="divide-y divide-border overflow-hidden rounded-md border border-border bg-bg font-mono text-sm">
-            {[
-              [t("calcJob"), formatCents(ex.jobCents, locale)],
-              [t("calcRate"), `${ex.rateBps / 100}%`],
-              [t("calcFee"), formatCents(ex.feeCents, locale)],
-              [t("calcShare"), `${ex.shareBps / 100}%`],
-            ].map(([k, v]) => (
-              <div key={k} className="flex items-center justify-between px-5 py-4">
-                <dt className="font-sans text-subtle">{k}</dt>
-                <dd>{v}</dd>
+      {/* Photo band + the worked example. */}
+      <section className="py-16 md:py-24">
+        <div className="container-x grid gap-10 md:grid-cols-2 md:items-center">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[28px]">
+            <Image src={PHOTOS.vriendenLachen.src} alt={PHOTOS.vriendenLachen.alt[locale]} fill sizes="(min-width: 768px) 45vw, 92vw" className="object-cover" />
+          </div>
+          <div className="flex flex-col gap-6">
+            <h2 className="text-4xl md:text-5xl">{t("bandTitle")}</h2>
+            <p className="text-lg text-subtle">{t("bandBody")}</p>
+            <dl className="divide-y divide-border rounded-2xl border border-border bg-surface text-sm">
+              {[
+                [t("calcJob"), formatCents(ex.jobCents, locale)],
+                [t("calcRate"), `${ex.rateBps / 100}%`],
+                [t("calcFee"), formatCents(ex.feeCents, locale)],
+                [t("calcShare"), `${ex.shareBps / 100}%`],
+              ].map(([k, v]) => (
+                <div key={k} className="flex items-center justify-between px-5 py-3.5">
+                  <dt className="text-subtle">{k}</dt>
+                  <dd className="money">{v}</dd>
+                </div>
+              ))}
+              <div className="flex items-center justify-between px-5 py-5">
+                <dt className="font-medium">{t("calcYou")}</dt>
+                <dd className="money rounded-md bg-signal px-2 text-4xl font-semibold text-ink" data-count={ex.finderCents}>
+                  {formatEuroShort(ex.finderCents, locale)}
+                </dd>
               </div>
-            ))}
-            <div className="flex items-center justify-between px-5 py-6">
-              <dt className="font-sans font-medium">{t("calcYou")}</dt>
-              <dd className="money bg-signal px-2 text-4xl font-semibold text-ink md:text-5xl" data-count={ex.finderCents}>
-                {formatEuroShort(ex.finderCents, locale)}
-              </dd>
-            </div>
-          </dl>
+            </dl>
+          </div>
         </div>
-      </Section>
+      </section>
 
       {/* Ranks: the more you bring in, the bigger your share. */}
       <Section>
@@ -165,21 +214,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <section className="bg-ink py-16 text-paper md:py-24">
         <div className="container-x grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
           <div className="flex flex-col gap-5">
-            <p className="font-mono text-[11px] tracking-[0.12em] text-[#9a9d94] uppercase">{t("businessEyebrow")}</p>
+            <p className="text-sm font-medium text-signal">{t("businessEyebrow")}</p>
             <h2 className="text-4xl md:text-6xl">{t("bizTitle2")}</h2>
             <p className="max-w-xl text-lg text-[#c9cbc4]">{t("bizBody2")}</p>
-            <Link href="/bedrijven" data-magnetic className={cn(buttonVariants({ variant: "primary", size: "lg" }), "self-start")}>
+            <Link href="/bedrijven" className={cn(buttonVariants({ variant: "primary", size: "lg" }), "self-start")}>
               {t("businessCta")} <ArrowRight aria-hidden />
             </Link>
           </div>
-          <ul className="grid gap-3">
+          <div className="flex flex-col gap-3">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
+            <Image src={PHOTOS.bedrijf.src} alt={t("bizPhotoAlt")} fill sizes="(min-width: 768px) 40vw, 92vw" className="object-cover" />
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-3">
             {[t("bizStat1"), t("bizStat2"), t("bizStat3")].map((label) => (
-              <li key={label} data-spot data-reveal className="flex items-baseline gap-4 rounded-md border border-white/10 bg-white/[0.03] px-6 py-5">
-                <span className="money text-5xl font-semibold text-signal">€ 0</span>
-                <span className="text-lg text-[#c9cbc4]">{label}</span>
+              <li key={label} className="flex flex-col gap-1 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4">
+                <span className="money text-4xl font-semibold text-signal">€ 0</span>
+                <span className="text-sm text-[#c9cbc4]">{label}</span>
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </section>
 
@@ -230,13 +284,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </Section>
 
       <section className="container-x pt-16 md:pt-24">
-        <div data-flow className="fx-flow flex flex-col gap-6 rounded-md bg-ink p-8 text-paper md:flex-row md:items-center md:justify-between md:p-14">
-          <div className="fx-grid" aria-hidden />
+        <div className="relative flex flex-col gap-6 overflow-hidden rounded-[28px] bg-ink p-8 text-paper md:flex-row md:items-center md:justify-between md:p-14">
+          <Image src={PHOTOS.groep.src} alt="" fill sizes="100vw" className="object-cover opacity-35" />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/30" />
           <div className="relative flex max-w-xl flex-col gap-3">
             <h2 className="text-3xl md:text-5xl">{t("ctaTitle")}</h2>
             <p className="text-[#c9cbc4]">{t("ctaBody")}</p>
           </div>
-          <Link href="/aanmelden/finder" data-magnetic className={cn(buttonVariants({ variant: "primary", size: "xl" }), "relative shrink-0")}>
+          <Link href="/aanmelden/finder" className={cn(buttonVariants({ variant: "primary", size: "xl" }), "relative shrink-0")}>
             {t("ctaFinder")} <ArrowRight aria-hidden />
           </Link>
         </div>

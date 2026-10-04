@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section } from "@/components/marketing/section";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
 import { FAQ, type FaqGroup } from "@/content/faq";
@@ -16,7 +17,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
   return (
     <>
       <JsonLd data={faqJsonLd(groups.flatMap((g) => FAQ[locale][g]))} />
-      <PageHero eyebrow={t("eyebrow")} title={t("title")}>
+      <PageHero photo={PHOTOS.jongenLacht} locale={locale} eyebrow={t("eyebrow")} title={t("title")}>
         <nav aria-label={t("title")} className="flex flex-wrap gap-2">
           {groups.map((g) => (
             <a key={g} href={`#${g}`} data-spot className="rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm text-paper transition-colors duration-150 hover:border-signal">

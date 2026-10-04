@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { photoForGroup } from "@/content/photos";
 import { Link } from "@/i18n/navigation";
 import { Money } from "@/components/ui/money";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
@@ -25,15 +27,17 @@ export function CategoryGrid({
       <nav aria-label={locale === "en" ? "Sectors" : "Sectoren"} className="flex flex-wrap gap-2">
         {groups.map((g) => (
           <a key={g.key} href={`#sector-${g.key}`} data-spot className="rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm transition-colors duration-150 hover:border-fg">
-            {locale === "en" ? g.en : g.nl} <span className="font-mono text-xs text-subtle">{g.items.length}</span>
+            {locale === "en" ? g.en : g.nl} <span className="text-xs text-subtle">{g.items.length}</span>
           </a>
         ))}
       </nav>
       {groups.map((g) => (
         <section key={g.key} id={`sector-${g.key}`} className="scroll-mt-24 flex flex-col gap-5">
-          <div className="flex items-baseline justify-between gap-4 border-b border-border pb-3">
-            <h2 className="text-2xl md:text-3xl">{locale === "en" ? g.en : g.nl}</h2>
-            <span className="font-mono text-xs text-subtle">{g.items.length}</span>
+          <div className="relative flex h-36 items-end overflow-hidden rounded-2xl bg-ink p-5 md:h-44 md:p-7">
+            <Image src={photoForGroup(g.key).src} alt="" fill sizes="(min-width: 1024px) 1100px, 100vw" className="object-cover" />
+            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            <h2 className="relative text-3xl text-paper md:text-4xl">{locale === "en" ? g.en : g.nl}</h2>
+            <span className="relative ml-3 text-sm text-[#d6d8d0]">{g.items.length}</span>
           </div>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {g.items.map((c) => {
@@ -44,7 +48,7 @@ export function CategoryGrid({
                   <Link
                     href={`/categorieen/${c.slug}`}
                     data-spot
-                    data-tilt
+                   
                     className="group flex h-full flex-col gap-3 rounded-lg border border-border bg-bg p-5 transition-colors duration-150 hover:border-fg"
                   >
                     <div className="flex items-start justify-between gap-4">

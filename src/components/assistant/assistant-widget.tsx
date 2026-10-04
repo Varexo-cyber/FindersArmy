@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowUp, RotateCcw, Sparkles, X } from "lucide-react";
+import { ArrowUp, MessageCircle, RotateCcw, X } from "lucide-react";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -133,20 +133,17 @@ export function AssistantWidget() {
           aria-label={t("title")}
           className="flex h-[min(620px,calc(100dvh-7rem))] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-[0_30px_80px_-20px_rgb(0_0_0/0.45)]"
         >
-          <header data-flow className="fx-flow relative flex items-start gap-3 bg-ink px-4 py-4 text-paper">
-            <span className="relative flex size-9 shrink-0 items-center justify-center rounded-full bg-signal text-ink">
-              <Sparkles aria-hidden className="size-4" />
-            </span>
+          <header className="relative flex items-start gap-3 border-b border-border px-4 py-4">
             <div className="relative flex-1">
               <p className="font-display text-base font-semibold tracking-tight">{t("title")}</p>
-              <p className="text-xs text-[#a9aca2]">{t("subtitle")}</p>
+              <p className="text-xs text-subtle">{t("subtitle")}</p>
             </div>
             {msgs.length ? (
-              <button type="button" onClick={() => setMsgs([])} aria-label={t("reset")} title={t("reset")} className="relative rounded-md p-1.5 text-[#a9aca2] hover:text-paper">
+              <button type="button" onClick={() => setMsgs([])} aria-label={t("reset")} title={t("reset")} className="relative rounded-md p-1.5 text-subtle hover:text-fg">
                 <RotateCcw aria-hidden className="size-4" />
               </button>
             ) : null}
-            <button type="button" onClick={() => setOpen(false)} aria-label={t("close")} className="relative rounded-md p-1.5 text-[#a9aca2] hover:text-paper">
+            <button type="button" onClick={() => setOpen(false)} aria-label={t("close")} className="relative rounded-md p-1.5 text-subtle hover:text-fg">
               <X aria-hidden className="size-4" />
             </button>
           </header>
@@ -170,7 +167,7 @@ export function AssistantWidget() {
                   m.role === "user" ? "self-end rounded-tr-sm bg-fg text-bg" : "rounded-tl-sm bg-surface-2",
                 )}
               >
-                {m.content ? <Rich text={m.content} /> : <span className="inline-flex items-center gap-2 text-subtle"><span className="fx-pulse-dot size-1.5 rounded-full bg-signal" />{t("thinking")}</span>}
+                {m.content ? <Rich text={m.content} /> : <span className="text-subtle">{t("thinking")}</span>}
               </div>
             ))}
             {offline && msgs.length ? <p className="text-[11px] text-subtle">{t("offlineNote")}</p> : null}
@@ -201,7 +198,7 @@ export function AssistantWidget() {
                 placeholder={t("placeholder")}
                 className="max-h-32 min-h-11 flex-1 resize-none rounded-md border border-border bg-surface px-3 py-2.5 text-sm"
               />
-              <button type="submit" disabled={busy || !input.trim()} aria-label={t("send")} className="fx-glow inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-signal text-ink disabled:opacity-40">
+              <button type="submit" disabled={busy || !input.trim()} aria-label={t("send")} className="inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-fg text-bg disabled:opacity-40">
                 <ArrowUp aria-hidden className="size-5" />
               </button>
             </div>
@@ -214,13 +211,10 @@ export function AssistantWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? t("close") : t("open")}
-        data-magnetic
-        className="fx-glow group relative flex h-14 items-center gap-2 rounded-full bg-ink pr-5 pl-4 text-paper shadow-[0_12px_40px_-10px_rgb(0_0_0/0.5)] ring-1 ring-white/10"
+       
+        className="flex h-12 items-center gap-2 rounded-full bg-fg px-4 text-bg shadow-lg transition-transform duration-150 hover:-translate-y-0.5"
       >
-        <span className="relative flex size-8 items-center justify-center rounded-full bg-signal text-ink">
-          {open ? <X aria-hidden className="size-4" /> : <Sparkles aria-hidden className="size-4" />}
-          {!open ? <span aria-hidden className="fx-pulse-dot absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-signal ring-2 ring-ink" /> : null}
-        </span>
+        {open ? <X aria-hidden className="size-5" /> : <MessageCircle aria-hidden className="size-5" />}
         <span className="hidden text-sm font-medium sm:inline">{open ? t("close") : t("title")}</span>
       </button>
     </div>

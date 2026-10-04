@@ -43,11 +43,10 @@ export default async function DiscoverPage({ params, searchParams }: { params: P
 
       <Link
         href="/app/finder/rang"
-        data-flow
+       
         data-spot
-        className="fx-flow relative mb-6 flex flex-col gap-4 overflow-hidden rounded-xl bg-ink p-5 text-paper sm:flex-row sm:items-center md:p-6"
+        className="relative mb-6 flex flex-col gap-4 overflow-hidden rounded-xl bg-ink p-5 text-paper sm:flex-row sm:items-center md:p-6"
       >
-        <div className="fx-grid" aria-hidden />
         <Insignia rank={rank.key} className="relative size-12 shrink-0 text-signal" />
         <div className="relative flex min-w-0 flex-1 flex-col gap-2">
           <p className="font-display text-lg font-semibold tracking-tight">

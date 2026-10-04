@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section, SectionHeading } from "@/components/marketing/section";
 import { PIPELINE } from "@/lib/lead-status";
 import { pageMetadata } from "@/lib/metadata";
@@ -21,7 +22,7 @@ export default async function HowPage({ params }: { params: Promise<{ locale: st
   ];
   return (
     <>
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")} />
+      <PageHero photo={PHOTOS.vriendenTafel} locale={locale} eyebrow={t("eyebrow")} title={t("title")} sub={t("sub")} />
       <Section>
         <div className="grid gap-6 md:grid-cols-3">
           {columns.map((c) => (

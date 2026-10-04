@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { PHOTOS } from "@/content/photos";
 import { PageHero, Section } from "@/components/marketing/section";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -12,7 +13,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const t = await getTranslations("about");
   return (
     <>
-      <PageHero eyebrow={t("eyebrow")} title={t("title")} />
+      <PageHero photo={PHOTOS.groep} locale={locale} eyebrow={t("eyebrow")} title={t("title")} />
       <Section>
         <div className="grid gap-12 md:grid-cols-[2fr_1fr]">
           <div className="flex max-w-2xl flex-col gap-6 text-lg leading-relaxed">
@@ -20,7 +21,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <p>{t("p2")}</p>
             <p>{t("p3")}</p>
           </div>
-          <aside data-spot data-tilt className="flex flex-col gap-3 self-start rounded-lg border border-signal/40 bg-ink p-6 text-paper [--subtle:#a9aca2]">
+          <aside data-spot className="flex flex-col gap-3 self-start rounded-lg border border-signal/40 bg-ink p-6 text-paper [--subtle:#a9aca2]">
             <h2 className="text-xl">{t("statusTitle")}</h2>
             <p className="text-sm text-subtle">{t("statusBody")}</p>
           </aside>
