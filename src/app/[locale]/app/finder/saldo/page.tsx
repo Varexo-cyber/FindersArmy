@@ -15,7 +15,7 @@ import { getSettings } from "@/lib/server/settings";
 import { db } from "@/lib/server/db";
 import { formatCents } from "@/lib/money";
 
-export default async function BalancePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function BalancePage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ aangevraagd?: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const { finder } = await requireFinder();
@@ -31,6 +31,7 @@ export default async function BalancePage({ params }: { params: Promise<{ locale
   return (
     <>
       <PageHeader title={t("balanceTitle")} />
+      {(await searchParams).aangevraagd ? <Alert tone="success" className="mb-6">{t("payoutRequested")}</Alert> : null}
       <div className="mb-8 grid overflow-hidden rounded-md border border-border sm:grid-cols-3 [&>*]:border-b [&>*]:border-border sm:[&>*]:border-r sm:[&>*]:border-b-0">
         <div className="flex flex-col gap-2 p-5">
           <span className="eyebrow">{t("balanceExpected")}</span>

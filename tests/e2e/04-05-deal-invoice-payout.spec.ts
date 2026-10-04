@@ -44,10 +44,9 @@ test.describe.serial("deal → invoice → payment → payout", () => {
     await login(page, "bedrijf1@findersarmy.test", "/app/bedrijf/leads");
     await page.goto("/app/bedrijf/leads");
     await page.getByRole("link", { name: new RegExp(customerLast) }).click();
-    await page.getByText("Contact opgenomen", { exact: true }).click();
     await page.getByRole("button", { name: "Contact opgenomen" }).click();
     await expect(page.getByText("CONTACT", { exact: true }).first()).toBeVisible();
-    await page.getByText("Deal gewonnen", { exact: true }).click();
+    await page.locator("label", { hasText: "Deal gewonnen" }).click();
     await page.getByLabel("Dealbedrag (excl. btw)").fill("4.200");
     await expect(page.getByText(/Fee bij dit bedrag/)).toBeVisible();
     await page.getByRole("button", { name: "Deal gewonnen" }).click();
