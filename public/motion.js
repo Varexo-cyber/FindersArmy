@@ -110,7 +110,7 @@
         var t = document.elementFromPoint(mx, my);
         var lab = t && t.closest ? t.closest("[data-cursor]") : null;
         var link = t && t.closest ? t.closest("a, button, [role=button], select, input, textarea, label") : null;
-        targetScale = lab ? 3.2 : link ? 1.9 : 1;
+        targetScale = lab ? 3 : link ? 1.6 : 1;
         label.textContent = lab ? lab.getAttribute("data-cursor") : "";
         cursor.classList.toggle("is-label", !!lab);
         cursor.classList.toggle("is-link", !!link && !lab);

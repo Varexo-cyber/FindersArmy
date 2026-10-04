@@ -223,7 +223,13 @@
     "freeBizLabel": "For businesses",
     "freeBizBody": "Free sign-up. No monthly fees, no cost per lead. You only pay for a customer who becomes a customer.",
     "freeFinderCta": "Create your free account",
-    "freeBizCta": "Sign up your business for free"
+    "freeBizCta": "Sign up your business for free",
+    "kFree": "Free. 18+.",
+    "kStruck": [
+      "application",
+      "vacancy",
+      "hassle"
+    ]
   },
   "finders": {
     "eyebrow": "For Finders",

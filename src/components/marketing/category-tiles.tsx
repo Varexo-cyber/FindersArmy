@@ -6,6 +6,10 @@ import { CATEGORIES } from "@/content/categories";
 import { TIP_TILES } from "@/content/photos";
 import { categoryExample } from "@/lib/examples";
 import { formatEuroShort } from "@/lib/money";
+import { cn } from "@/lib/utils";
+
+/** Cards cycle through the brand colours so the row has rhythm without leaning on photos. */
+const TONES = ["bg-signal text-ink", "bg-ink text-paper", "bg-surface text-fg ring-1 ring-border"];
 
 /**
  * Featured categories as large photo cards: the category, a typical deal and what a Recruit takes
@@ -18,29 +22,35 @@ export async function CategoryTiles({ locale, limit = TIP_TILES.length, header, 
     const c = CATEGORIES.find((x) => x.slug === tile.slug)!;
     const ex = categoryExample(c);
     return (
-      <li key={tile.slug} className="w-[78%] shrink-0 snap-start sm:w-[46%] lg:w-[380px]">
+      <li key={tile.slug} className="w-[80%] shrink-0 snap-start sm:w-[46%] lg:w-[360px]">
         <Link
           href={`/categorieen/${tile.slug}`}
           data-cursor={locale === "en" ? "View" : "Bekijk"}
-          className="photo-zoom group relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-[28px] bg-ink p-6 text-paper lg:aspect-auto lg:h-[min(68vh,560px)]"
+          className={cn(
+            "group relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-[32px] p-6 transition-transform duration-500 ease-out-quick hover:-translate-y-1.5 lg:aspect-auto lg:h-[min(64vh,520px)]",
+            TONES[i % TONES.length],
+          )}
         >
-          <Image src={tile.photo.src} alt={tile.photo.alt[locale]} fill sizes="(min-width: 1024px) 380px, 78vw" className="object-cover" />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/0 to-black/85" />
-          <div className="relative flex items-start justify-between gap-3">
-            <span className="money text-sm text-white/70">{String(i + 1).padStart(2, "0")}</span>
-            <span className="flex size-10 items-center justify-center rounded-full bg-white/15 backdrop-blur transition-colors group-hover:bg-signal group-hover:text-ink">
-              <ArrowUpRight aria-hidden className="size-4" />
+          <div className="flex items-center gap-3">
+            <span className="relative size-14 shrink-0 overflow-hidden rounded-2xl">
+              <Image src={tile.photo.src} alt="" fill sizes="56px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+            </span>
+            <span className="flex flex-col leading-tight">
+              <span className="font-display text-xl font-semibold tracking-tight">{locale === "en" ? c.nameEn : c.nameNl}</span>
+              <span className="text-sm opacity-70">{t("tileDeal", { amount: formatEuroShort(ex.jobCents, locale) })}</span>
             </span>
           </div>
-          <div className="relative flex flex-col gap-2">
-            <h3 className="font-display text-3xl font-semibold tracking-tight">{locale === "en" ? c.nameEn : c.nameNl}</h3>
-            <div className="flex items-end justify-between gap-3 border-t border-white/20 pt-3">
-              <span className="text-sm text-white/75">{t("tileDeal", { amount: formatEuroShort(ex.jobCents, locale) })}</span>
-              <span className="flex flex-col items-end">
-                <span className="text-xs text-white/75">{t("tilesYou")}</span>
-                <span className="money text-4xl font-semibold text-signal">{formatEuroShort(ex.finderCents, locale)}</span>
-              </span>
-            </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium opacity-70">{t("tilesYou")}</span>
+            <span className="money text-[4.6rem] leading-[0.95] font-semibold tracking-[-0.06em] md:text-[5.4rem]">
+              {formatEuroShort(ex.finderCents, locale).replace(/\s/g, "")}
+            </span>
+          </div>
+          <div className="flex items-center justify-between border-t border-current/15 pt-4 text-sm font-medium">
+            <span>{locale === "en" ? "Share your link" : "Deel je link"}</span>
+            <span className="flex size-10 items-center justify-center rounded-full border border-current/25 transition-transform duration-300 group-hover:rotate-45">
+              <ArrowUpRight aria-hidden className="size-4" />
+            </span>
           </div>
         </Link>
       </li>

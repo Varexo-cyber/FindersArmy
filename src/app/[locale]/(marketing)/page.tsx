@@ -49,9 +49,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div aria-hidden className="absolute inset-x-0 top-0 h-[70%] bg-[radial-gradient(60%_60%_at_80%_20%,color-mix(in_oklab,var(--signal)_22%,transparent),transparent_70%)]" />
         <div className="container-x relative grid gap-14 pt-12 pb-20 md:grid-cols-[1.1fr_1fr] md:items-center md:pt-20 md:pb-28">
           <div className="flex flex-col gap-7">
-            <p className="inline-flex w-fit flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-border bg-bg/70 px-4 py-2 text-sm font-medium backdrop-blur">
-              <span aria-hidden className="size-2 rounded-full bg-[#25d366]" />
-              {t("h3Kicker")}
+            <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-base font-medium md:text-lg">
+              <span>{t("kFree")}</span>
+              {(t.raw("kStruck") as string[]).map((w) => (
+                <s key={w} className="text-subtle decoration-signal decoration-[3px]">{w}</s>
+              ))}
             </p>
             <h1 className="text-[3rem] leading-[1] md:text-[5.4rem]">
               {t("h4A")}

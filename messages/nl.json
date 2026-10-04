@@ -223,7 +223,13 @@
     "freeBizLabel": "Voor bedrijven",
     "freeBizBody": "Gratis aanmelden. Geen maandkosten, geen kosten per lead. Je betaalt alleen voor een klant die klant wordt.",
     "freeFinderCta": "Maak je gratis account",
-    "freeBizCta": "Meld je bedrijf gratis aan"
+    "freeBizCta": "Meld je bedrijf gratis aan",
+    "kFree": "Gratis. Vanaf 18.",
+    "kStruck": [
+      "sollicitatie",
+      "vacature",
+      "poespas"
+    ]
   },
   "finders": {
     "eyebrow": "Voor Finders",
