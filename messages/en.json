@@ -32,7 +32,8 @@
     "theme": "Toggle light/dark",
     "language": "Nederlands",
     "languageCode": "NL",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "regions": "Regions"
   },
   "footer": {
     "tagline": "You know someone. Get paid for it.",
@@ -174,10 +175,46 @@
     "h3NotifSub": "Car dealer · deal won",
     "tilesTitle": "Someone needs something. You earn.",
     "tilesSub": "What you get as a Recruit when the deal goes through. Worked examples; the real fee is on each campaign.",
-    "tilesYou": "for you",
+    "tilesYou": "to your account",
     "bandTitle": "No selling. No hassle. Just you and your phone.",
     "bandBody": "You don't have to talk anyone into anything. You just send a link to someone who's already looking. The business does the rest.",
-    "bizPhotoAlt": "Business owners celebrating a new customer"
+    "bizPhotoAlt": "Business owners celebrating a new customer",
+    "tileDeal": "Deal of {amount}",
+    "phoneHello": "Hi! 👋",
+    "phoneExample": "Example",
+    "phoneBalance": "Your balance",
+    "phonePayout": "Pay out",
+    "phoneShare": "Share link",
+    "phoneRecent": "Latest deals",
+    "phoneWon": "Deal won",
+    "toastTitle": "Deal won 🎉",
+    "h4A": "Your network is your new",
+    "h4Words": [
+      "side job.",
+      "pocket money.",
+      "holiday fund.",
+      "driving licence."
+    ],
+    "h4Sub": "Everyone knows someone looking for a car, a kitchen or a wedding venue. Send them your link to a business. If the deal goes through, up to 85% of the fee goes to you. No boss, no schedule, no sales talk.",
+    "vsTitle": "Side job or FindersArmy?",
+    "vsSub": "You don't have to give anything up. It works alongside school, work or study.",
+    "vsJobTitle": "Regular side job",
+    "vsJob": [
+      "Fixed hours and a schedule",
+      "A boss watching over you",
+      "Paid per hour, however hard you work",
+      "Your weekend is gone"
+    ],
+    "vsFaTitle": "FindersArmy",
+    "vsFa": [
+      "Whenever you want, from your phone",
+      "You decide who gets a tip",
+      "Paid per deal, hundreds of euros per customer",
+      "One message can be enough"
+    ],
+    "regionsTitle": "All over the Netherlands",
+    "regionsSub": "From Groningen to Maastricht: Finders and businesses in all 12 provinces and all 342 municipalities.",
+    "regionsAll": "See your region"
   },
   "finders": {
     "eyebrow": "For Finders",
@@ -218,7 +255,7 @@
   "business": {
     "eyebrow": "For businesses",
     "title": "Only pay for customers who actually come in.",
-    "sub": "People trust a tip from someone they know more than an ad. FindersArmy puts a whole network of Finders to work giving those tips for you. You pay a finder's fee when a referred customer becomes your customer. Otherwise nothing.",
+    "sub": "People trust a tip from someone they know more than an ad. On FindersArmy, Finders across the Netherlands share your business with people who are actually looking. You only pay a finder's fee when a referred customer becomes your customer. Otherwise nothing.",
     "cta": "Register your business",
     "ctaNote": "Takes 5 minutes. You go live after review.",
     "vsTitle": "What you don't pay",
@@ -255,13 +292,17 @@
     "boostBody": "Need to move something? Temporarily raise your fee (“+ € 100 this week”) or boost a specific product. Your campaign gets a badge and sits at the top for Finders.",
     "excludedTitle": "Not for everyone",
     "excludedBody": "Real estate brokerage, mortgages, insurance and other financial products, legal services and medical care are excluded at launch. Paid customer referral is more strictly regulated there.",
-    "heroTitle2": "Only pay for customers who actually come in.",
+    "heroTitle2": "Sign up free. We send you customers.",
     "freeTitle": "Free to join. Free to stay.",
     "freeBody": "You pay nothing to be listed, nothing per month and nothing per request. Only when a referred customer actually becomes your customer do you pay the fee you chose yourself.",
     "armyTitle": "People go looking for you",
     "armyBody": "Finders know the neighbour who's renovating, the colleague looking for a car and the friend getting married. They forward your link with a personal recommendation. That beats any ad.",
     "controlTitle": "You stay in control",
-    "controlBody": "You set the fee, the minimum job amount and optionally a monthly budget. When the budget is used up, your campaign pauses by itself."
+    "controlBody": "You set the fee, the minimum job amount and optionally a monthly budget. When the budget is used up, your campaign pauses by itself.",
+    "whoTitle": "Who is looking for you?",
+    "whoBody": "Finders are regular people: students, parents, colleagues, neighbours. They know someone looking for exactly what you sell, and they only get paid when you win a customer. So they only send you people who really need something.",
+    "sectorsTitle": "For every kind of business",
+    "sectorsSub": "{count} categories in {groups} sectors, in all 342 municipalities. Is your industry missing? Sign up anyway and we'll add it."
   },
   "how": {
     "eyebrow": "How it works",
@@ -822,5 +863,33 @@
       "Which businesses are on it?"
     ],
     "reset": "New conversation"
+  },
+  "regions": {
+    "eyebrow": "All of the Netherlands",
+    "title": "Refer customers in your region",
+    "sub": "FindersArmy works in all 12 provinces and all {count} municipalities. Pick your province and see what your network is worth in your town.",
+    "municipalities": "{count} municipalities",
+    "inhabitants": "{count} inhabitants",
+    "biggest": "Largest cities",
+    "provinceTitle": "Earn with your network in {name}",
+    "provinceSub": "Know people in {name}? Every tip for a local business can earn you a finder's fee. Pick your municipality.",
+    "allMunicipalities": "All municipalities in {name}",
+    "cityTitle": "Earn money in {name}",
+    "citySub": "You know people in {name} looking for a car, a kitchen, a painter or a wedding venue. Send them your link to a business. If the deal goes through, you get up to 85% of the fee.",
+    "cityFinderTitle": "What your tips in {name} can earn",
+    "cityFinderSub": "Worked examples for a Recruit. The real fee is on each campaign.",
+    "cityBizTitle": "Business in {name}?",
+    "cityBizBody": "Sign up for free and let Finders from {name} and around send you customers. No subscription, no cost per lead. You only pay when a customer becomes your customer.",
+    "cityBizCta": "Sign up your business for free",
+    "cityLive": "{count, plural, =0 {No live campaigns in {name} yet. Be the first?} one {# live campaign in {name}} other {# live campaigns in {name}}}",
+    "nearby": "Also in {province}",
+    "faqQ1": "Can I earn money with FindersArmy in {name}?",
+    "faqA1": "Yes. Create a free account, pick a business and share your link with people in {name} who need something. If the deal goes through, you get your share of the fee paid to your own account.",
+    "faqQ2": "Which businesses in {name} can I recommend?",
+    "faqA2": "Every business with a live campaign working in {name}, from painters and car dealers to wedding venues and gyms. More are joining all the time.",
+    "faqQ3": "What does it cost a business in {name}?",
+    "faqA3": "Signing up is free and there is no subscription. A business only pays a finder's fee when a referred customer actually becomes a customer.",
+    "breadcrumb": "Regions",
+    "seeCategory": "All categories"
   }
 }

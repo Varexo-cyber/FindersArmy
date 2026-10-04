@@ -32,7 +32,8 @@
     "theme": "Wissel licht/donker",
     "language": "English",
     "languageCode": "EN",
-    "skip": "Naar de inhoud"
+    "skip": "Naar de inhoud",
+    "regions": "Regio's"
   },
   "footer": {
     "tagline": "Je kent iemand. Verdien eraan.",
@@ -174,10 +175,46 @@
     "h3NotifSub": "Autodealer · deal gewonnen",
     "tilesTitle": "Iemand zoekt iets. Jij verdient.",
     "tilesSub": "Zo veel krijg jij als Rekruut als de deal doorgaat. Rekenvoorbeelden; de echte fee staat bij elke campagne.",
-    "tilesYou": "voor jou",
+    "tilesYou": "naar jouw rekening",
     "bandTitle": "Geen verkoper. Geen gedoe. Gewoon jij en je telefoon.",
     "bandBody": "Je hoeft niemand iets aan te smeren. Je stuurt alleen een link naar iemand die toch al iets zoekt. Het bedrijf doet de rest.",
-    "bizPhotoAlt": "Ondernemers vieren een nieuwe klant"
+    "bizPhotoAlt": "Ondernemers vieren een nieuwe klant",
+    "tileDeal": "Deal van {amount}",
+    "phoneHello": "Hoi! 👋",
+    "phoneExample": "Voorbeeld",
+    "phoneBalance": "Jouw saldo",
+    "phonePayout": "Uitbetalen",
+    "phoneShare": "Link delen",
+    "phoneRecent": "Laatste deals",
+    "phoneWon": "Deal gewonnen",
+    "toastTitle": "Deal gewonnen 🎉",
+    "h4A": "Je netwerk is je nieuwe",
+    "h4Words": [
+      "bijbaan.",
+      "zakgeld.",
+      "vakantiegeld.",
+      "rijbewijs."
+    ],
+    "h4Sub": "Iedereen kent wel iemand die een auto, keuken of bruiloft zoekt. Stuur ze je link naar een bedrijf. Gaat de deal door, dan gaat tot 85% van de fee naar jou. Geen baas, geen rooster, geen verkooppraatjes.",
+    "vsTitle": "Bijbaan of FindersArmy?",
+    "vsSub": "Je hoeft er niets voor op te geven. Het werkt naast school, werk of studie.",
+    "vsJobTitle": "Gewone bijbaan",
+    "vsJob": [
+      "Vaste uren en een rooster",
+      "Een baas die meekijkt",
+      "Per uur betaald, hoe hard je ook werkt",
+      "Weekend kwijt"
+    ],
+    "vsFaTitle": "FindersArmy",
+    "vsFa": [
+      "Wanneer jij wilt, vanaf je telefoon",
+      "Jij beslist wie je een tip geeft",
+      "Per deal betaald, tot honderden euro's per klant",
+      "Eén appje kan genoeg zijn"
+    ],
+    "regionsTitle": "Overal in Nederland",
+    "regionsSub": "Van Groningen tot Maastricht: Finders en bedrijven in alle 12 provincies en alle 342 gemeenten.",
+    "regionsAll": "Bekijk jouw regio"
   },
   "finders": {
     "eyebrow": "Voor Finders",
@@ -218,7 +255,7 @@
   "business": {
     "eyebrow": "Voor bedrijven",
     "title": "Betaal alleen voor klanten die echt binnenkomen.",
-    "sub": "Mensen vertrouwen een tip van iemand die ze kennen meer dan een advertentie. FindersArmy laat een heel netwerk van Finders die tips voor jou geven. Je betaalt een finder's fee als een aangebrachte klant klant wordt. Anders niets.",
+    "sub": "Mensen vertrouwen een tip van iemand die ze kennen meer dan een advertentie. Op FindersArmy delen Finders door heel Nederland jouw bedrijf met mensen die echt iets zoeken. Je betaalt alleen een finder's fee als een aangebrachte klant klant wordt. Anders niets.",
     "cta": "Meld je bedrijf aan",
     "ctaNote": "Aanmelden duurt 5 minuten. Na controle sta je live.",
     "vsTitle": "Wat je niet betaalt",
@@ -255,13 +292,17 @@
     "boostBody": "Moet er iets weg? Verhoog tijdelijk je fee (“+ € 100 deze week”) of boost een specifiek product. Je campagne krijgt een badge en staat bovenaan bij Finders.",
     "excludedTitle": "Niet voor iedereen",
     "excludedBody": "Makelaardij, hypotheken, verzekeringen en andere financiële producten, advocatuur en medische zorg laten we bij de start niet toe. Voor het betaald aanbrengen van klanten gelden daar strengere regels.",
-    "heroTitle2": "Betaal alleen voor klanten die echt binnenkomen.",
+    "heroTitle2": "Gratis aanmelden. Wij sturen je klanten.",
     "freeTitle": "Gratis aanmelden. Gratis blijven.",
     "freeBody": "Je betaalt niets om erop te staan, niets per maand en niets per aanvraag. Pas als een aangebrachte klant echt klant wordt, betaal je de fee die je zelf hebt gekozen.",
     "armyTitle": "Mensen gaan voor jou op zoek",
     "armyBody": "Finders kennen de buurman die gaat verbouwen, de collega die een auto zoekt en de vriendin die gaat trouwen. Zij sturen jouw link door met een persoonlijke aanbeveling. Dat werkt beter dan elke advertentie.",
     "controlTitle": "Jij houdt de controle",
-    "controlBody": "Jij bepaalt de fee, het minimum klusbedrag en eventueel een maandbudget. Is het budget op, dan pauzeert je campagne vanzelf."
+    "controlBody": "Jij bepaalt de fee, het minimum klusbedrag en eventueel een maandbudget. Is het budget op, dan pauzeert je campagne vanzelf.",
+    "whoTitle": "Wie zoekt er voor je?",
+    "whoBody": "Finders zijn gewone mensen: studenten, ouders, collega's, buren. Ze kennen iemand die precies zoekt wat jij verkoopt, en ze worden pas betaald als jij een klant wint. Dus sturen ze je alleen mensen die echt iets nodig hebben.",
+    "sectorsTitle": "Voor elk soort bedrijf",
+    "sectorsSub": "{count} categorieën in {groups} sectoren, in alle 342 gemeenten. Staat jouw branche er niet tussen? Meld je toch aan, we voegen hem toe."
   },
   "how": {
     "eyebrow": "Hoe het werkt",
@@ -822,5 +863,33 @@
       "Welke bedrijven zitten erop?"
     ],
     "reset": "Nieuw gesprek"
+  },
+  "regions": {
+    "eyebrow": "Heel Nederland",
+    "title": "Klanten aanbrengen in jouw regio",
+    "sub": "FindersArmy werkt in alle 12 provincies en alle {count} gemeenten. Kies je provincie en zie wat jouw netwerk in jouw stad oplevert.",
+    "municipalities": "{count} gemeenten",
+    "inhabitants": "{count} inwoners",
+    "biggest": "Grootste steden",
+    "provinceTitle": "Geld verdienen met je netwerk in {name}",
+    "provinceSub": "Ken je mensen in {name}? Elke tip voor een lokaal bedrijf kan je een finder's fee opleveren. Kies je gemeente.",
+    "allMunicipalities": "Alle gemeenten in {name}",
+    "cityTitle": "Geld verdienen in {name}",
+    "citySub": "Je kent mensen in {name} die een auto, keuken, schilder of bruiloft zoeken. Stuur ze je link naar een bedrijf. Gaat de deal door, dan krijg jij tot 85% van de fee.",
+    "cityFinderTitle": "Wat jouw tips in {name} opleveren",
+    "cityFinderSub": "Rekenvoorbeelden voor een Rekruut. De echte fee staat bij elke campagne.",
+    "cityBizTitle": "Bedrijf in {name}?",
+    "cityBizBody": "Meld je gratis aan en laat Finders uit {name} en omgeving klanten naar je sturen. Geen abonnement, geen kosten per lead. Je betaalt alleen als een klant klant wordt.",
+    "cityBizCta": "Meld je bedrijf gratis aan",
+    "cityLive": "{count, plural, =0 {Nog geen live campagnes in {name}. Ben jij de eerste?} one {# live campagne in {name}} other {# live campagnes in {name}}}",
+    "nearby": "Ook in {province}",
+    "faqQ1": "Kan ik in {name} geld verdienen met FindersArmy?",
+    "faqA1": "Ja. Je maakt gratis een account, kiest een bedrijf en deelt je link met mensen in {name} die iets zoeken. Gaat de deal door, dan krijg je je deel van de fee op je eigen rekening.",
+    "faqQ2": "Welke bedrijven in {name} kan ik aanbevelen?",
+    "faqA2": "Alle bedrijven met een live campagne die in {name} werken, van schilders en autodealers tot trouwlocaties en sportscholen. Er komen er steeds meer bij.",
+    "faqQ3": "Wat kost het voor een bedrijf in {name}?",
+    "faqA3": "Aanmelden is gratis en er is geen abonnement. Een bedrijf betaalt alleen een finder's fee als een aangebrachte klant echt klant wordt.",
+    "breadcrumb": "Regio's",
+    "seeCategory": "Alle categorieën"
   }
 }

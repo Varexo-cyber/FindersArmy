@@ -31,19 +31,24 @@ export const PHOTOS = {
   sportschool: p("sportschool", "1534438327276-14e5300c3a48", "Sportschool met dumbbells", "Gym with dumbbells"),
   timmerman: p("timmerman", "1589939705384-5185137a7f0f", "Vakman aan het werk", "Tradesperson at work"),
   huis: p("huis", "1600585154340-be6161a56a0c", "Modern huis met tuin", "Modern house with garden"),
+  winkel: p("winkel", "1441986300917-64674bd600d8", "Kledingwinkel van binnen", "Inside a clothing store"),
+  restaurant: p("restaurant", "1517248135467-4c7edcad34c4", "Restaurant met gedekte tafels", "Restaurant with set tables"),
+  reizen: p("reizen", "1469854523086-cc02fe5d8800", "Busje op een lege weg", "Van on an empty road"),
+  kantoor: p("kantoor", "1497366216548-37526070297c", "Modern kantoor", "Modern office"),
+  telefoon: p("telefoon", "1512941937669-90a1b58e7e9c", "Smartphone met apps", "Smartphone with apps"),
   bouw: p("bouw", "1504307651254-35680f356dfd", "Bouwplaats van bovenaf", "Construction site from above"),
 } as const;
 
-/** The homepage tiles: someone you know needs something, this is what it earns you. */
-export const TIP_TILES: { slug: string; photo: Photo; nl: string; en: string }[] = [
-  { slug: "autodealers", photo: PHOTOS.auto, nl: "Je oom zoekt een auto", en: "Your uncle wants a car" },
-  { slug: "keukens", photo: PHOTOS.keuken, nl: "Je zus wil een nieuwe keuken", en: "Your sister wants a new kitchen" },
-  { slug: "zonnepanelen", photo: PHOTOS.zonnepanelen, nl: "Je ouders willen zonnepanelen", en: "Your parents want solar panels" },
-  { slug: "badkamers", photo: PHOTOS.badkamer, nl: "Je tante wil een nieuwe badkamer", en: "Your aunt wants a new bathroom" },
-  { slug: "trouwlocaties", photo: PHOTOS.bruiloft, nl: "Je collega gaat trouwen", en: "Your colleague is getting married" },
-  { slug: "schilders", photo: PHOTOS.schilder, nl: "Je buurman laat schilderen", en: "Your neighbour needs a painter" },
-  { slug: "rijscholen", photo: PHOTOS.rijles, nl: "Je maat wil rijles", en: "Your mate wants driving lessons" },
-  { slug: "personal-trainers", photo: PHOTOS.sportschool, nl: "Je vriend wil fit worden", en: "Your friend wants to get fit" },
+/** Featured categories with a photo: what one deal earns you. */
+export const TIP_TILES: { slug: string; photo: Photo }[] = [
+  { slug: "autodealers", photo: PHOTOS.auto },
+  { slug: "keukens", photo: PHOTOS.keuken },
+  { slug: "zonnepanelen", photo: PHOTOS.zonnepanelen },
+  { slug: "badkamers", photo: PHOTOS.badkamer },
+  { slug: "trouwlocaties", photo: PHOTOS.bruiloft },
+  { slug: "schilders", photo: PHOTOS.schilder },
+  { slug: "rijscholen", photo: PHOTOS.rijles },
+  { slug: "personal-trainers", photo: PHOTOS.sportschool },
 ];
 
 const GROUP_PHOTO: Record<string, Photo> = {
@@ -53,7 +58,10 @@ const GROUP_PHOTO: Record<string, Photo> = {
   auto: PHOTOS.auto,
   events: PHOTOS.bruiloft,
   sport: PHOTOS.sportschool,
-  zakelijk: PHOTOS.vriendenTafel,
+  zakelijk: PHOTOS.kantoor,
+  winkels: PHOTOS.winkel,
+  horeca: PHOTOS.restaurant,
+  reizen: PHOTOS.reizen,
   leren: PHOTOS.rijles,
   diensten: PHOTOS.huis,
 };

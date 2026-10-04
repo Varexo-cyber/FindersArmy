@@ -28,3 +28,14 @@ export async function liveCampaignCounts(): Promise<Record<string, number>> {
     return {};
   }
 }
+
+/** Live campaigns whose region mentions this place ("Zwolle", "Overijssel"). Unknown counts as none. */
+export async function liveCampaignsIn(place: string): Promise<number> {
+  try {
+    return await db.campaign.count({
+      where: { status: "LIVE", business: { status: "ACTIVE" }, region: { contains: place, mode: "insensitive" } },
+    });
+  } catch {
+    return 0;
+  }
+}

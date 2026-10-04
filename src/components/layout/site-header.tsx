@@ -15,6 +15,7 @@ export async function SiteHeader() {
     { href: "/bedrijven", label: t("business") },
     { href: "/hoe-het-werkt", label: t("how") },
     { href: "/categorieen", label: t("categories") },
+    { href: "/regio", label: t("regions") },
     { href: "/faq", label: t("faq") },
   ];
   // Marketing pages stay static (fast, cacheable): no session lookup here. /login forwards

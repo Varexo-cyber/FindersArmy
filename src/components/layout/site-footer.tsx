@@ -1,3 +1,4 @@
+import { MUNICIPALITIES } from "@/content/regions";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/brand/logo";
@@ -15,6 +16,7 @@ export async function SiteFooter() {
         { href: "/bedrijven", label: nav("business") },
         { href: "/hoe-het-werkt", label: nav("how") },
         { href: "/categorieen", label: nav("categories") },
+        { href: "/regio", label: nav("regions") },
         { href: "/aanmelden/bedrijf", label: t("signupBusiness") },
       ],
     },
@@ -36,6 +38,7 @@ export async function SiteFooter() {
       ],
     },
   ];
+  const cities = [...MUNICIPALITIES].sort((a, b) => b.population - a.population).slice(0, 24);
   return (
     <footer className="mt-24 border-t border-border">
       <div className="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -58,6 +61,16 @@ export async function SiteFooter() {
             </ul>
           </nav>
         ))}
+      </div>
+      <div className="border-t border-border">
+        <nav aria-label={nav("regions")} className="container-x flex flex-wrap gap-x-4 gap-y-2 py-6 text-sm text-subtle">
+          {cities.map((m) => (
+            <Link key={`${m.province}-${m.slug}`} href={`/regio/${m.province}/${m.slug}`} className="hover:text-fg">
+              {m.name}
+            </Link>
+          ))}
+          <Link href="/regio" className="font-medium text-fg hover:underline">{nav("regions")} →</Link>
+        </nav>
       </div>
       <div className="border-t border-border">
         <div className="container-x flex flex-col gap-2 py-6 text-xs text-subtle md:flex-row md:justify-between">

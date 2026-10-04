@@ -379,3 +379,36 @@
     }
   }
 }
+
+/* Notification that drops in, stays a moment, and leaves again. */
+@keyframes fa-toast {
+  0%, 8% { opacity: 0; transform: translateY(-14px) scale(0.96); }
+  14%, 70% { opacity: 1; transform: none; }
+  78%, 100% { opacity: 0; transform: translateY(-8px) scale(0.98); }
+}
+.fa-toast {
+  animation: fa-toast 6s var(--ease-out-quick) infinite;
+}
+/* Words that cycle under the headline. */
+@keyframes fa-words {
+  0%, 18% { transform: translateY(0); }
+  25%, 43% { transform: translateY(-1.1em); }
+  50%, 68% { transform: translateY(-2.2em); }
+  75%, 93% { transform: translateY(-3.3em); }
+  100% { transform: translateY(-4.4em); }
+}
+.fa-words {
+  display: inline-flex;
+  flex-direction: column;
+  height: 1.1em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.fa-words > span {
+  animation: fa-words 10s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+  line-height: 1.1em;
+  height: 1.1em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fa-toast, .fa-words > span { animation: none; }
+}

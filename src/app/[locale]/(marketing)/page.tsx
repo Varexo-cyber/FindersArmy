@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Money } from "@/components/ui/money";
@@ -8,7 +8,10 @@ import { Section, SectionHeading } from "@/components/marketing/section";
 import { FeeFragment, Frame, LeadFragment, ShareFragment } from "@/components/marketing/fragments";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
 import Image from "next/image";
-import { PHOTOS, TIP_TILES } from "@/content/photos";
+import { PHOTOS } from "@/content/photos";
+import { PROVINCES } from "@/content/regions";
+import { CategoryTiles } from "@/components/marketing/category-tiles";
+import { PhoneMockup } from "@/components/marketing/phone-mockup";
 import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { FAQ } from "@/content/faq";
 import { HOME_EXAMPLE, categoryExample } from "@/lib/examples";
@@ -34,90 +37,45 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const paidOut = await paidOutTotalCents();
   const faq = [...FAQ[locale].finders.slice(0, 3), ...FAQ[locale].business.slice(0, 3)];
   const ex = HOME_EXAMPLE;
-  const tileExample = (slug: string) => categoryExample(CATEGORIES.find((c) => c.slug === slug)!).finderCents;
+  const words = t.raw("h4Words") as string[];
 
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Organization", name: "FindersArmy", url: siteUrl(), logo: `${siteUrl()}/icon.svg`, email: "hallo@findersarmy.com", areaServed: "NL" }} />
       <JsonLd data={faqJsonLd(faq)} />
 
-      {/* Hero: a real photo, a real conversation, a real payout. */}
-      <section className="overflow-hidden">
-        <div className="container-x grid gap-12 pt-10 pb-16 md:grid-cols-[1.05fr_1fr] md:items-center md:pt-16 md:pb-24">
+      {/* Hero: the hook, and the app on a phone. */}
+      <section className="relative overflow-hidden bg-ink text-paper [--fg:var(--paper)] [--subtle:#a9aca2] [--border:#2b2e27]">
+        <Image src={PHOTOS.vriendenStraat.src} alt="" fill priority sizes="100vw" className="object-cover opacity-25" />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/60" />
+        <div className="container-x relative grid gap-14 pt-14 pb-20 md:grid-cols-[1.15fr_1fr] md:items-center md:pt-20 md:pb-28">
           <div className="flex flex-col gap-7">
-            <p className="text-sm font-medium text-subtle">{t("h3Kicker")}</p>
-            <h1 className="text-[3.1rem] leading-[0.95] md:text-[5.4rem]">
-              {t("h3TitleA")}
+            <p className="text-sm font-medium text-signal">{t("h3Kicker")}</p>
+            <h1 className="text-[2.9rem] leading-[1.02] md:text-[5.2rem]">
+              {t("h4A")}
               <br />
-              <span className="box-decoration-clone bg-[linear-gradient(transparent_60%,var(--signal)_60%,var(--signal)_88%,transparent_88%)]">{t("h3TitleB")}</span>
+              <span className="fa-words text-signal" aria-label={words[0]}>
+                {[...words, words[0]].map((w, i) => (
+                  <span key={i} aria-hidden>{w}</span>
+                ))}
+              </span>
             </h1>
-            <p className="max-w-xl text-lg text-subtle md:text-xl">{t("h3Sub")}</p>
+            <p className="max-w-xl text-lg text-[#c9cbc4] md:text-xl">{t("h4Sub")}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/aanmelden/finder" className={buttonVariants({ variant: "solid", size: "xl" })}>
+              <Link href="/aanmelden/finder" className={buttonVariants({ variant: "primary", size: "xl" })}>
                 {t("ctaFinder")} <ArrowRight aria-hidden />
               </Link>
-              <Link href="/bedrijven" className={buttonVariants({ variant: "outline", size: "xl" })}>
+              <Link href="/bedrijven" className={cn(buttonVariants({ variant: "outline", size: "xl" }), "border-white/25 text-paper hover:bg-white/10")}>
                 {t("ctaBusiness")}
               </Link>
             </div>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-subtle">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#a9aca2]">
               {[t("trust1"), t("trust2"), t("trust3")].map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-fg" />{x}</li>
+                <li key={x} className="flex items-center gap-2"><Check aria-hidden className="size-4 text-signal" />{x}</li>
               ))}
             </ul>
           </div>
-
-          <div className="relative mx-auto w-full max-w-md md:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[5/6]">
-              <Image src={PHOTOS.vriendenStraat.src} alt={PHOTOS.vriendenStraat.alt[locale]} fill priority sizes="(min-width: 768px) 45vw, 90vw" className="object-cover" />
-            </div>
-            {/* The message that starts it all. */}
-            <div className="absolute -left-3 top-8 flex w-[78%] max-w-xs flex-col gap-1.5 md:-left-10 md:top-12">
-              <p className="self-start rounded-2xl rounded-bl-md bg-bg px-4 py-2.5 text-sm shadow-lg">{t("h3ChatQ")}</p>
-              <div className="self-end rounded-2xl rounded-br-md bg-[#d9fdd3] px-4 py-2.5 text-sm text-ink shadow-lg">
-                <p>{t("h3ChatA")}</p>
-                <p className="mt-1 font-medium text-[#027eb5] underline">{t("h3ChatLink")}</p>
-              </div>
-            </div>
-            {/* ...and how it ends. */}
-            <div className="absolute -right-2 bottom-8 flex items-center gap-3 rounded-2xl bg-ink px-4 py-3 text-paper shadow-xl md:-right-6 md:bottom-12">
-              <span className="flex size-10 items-center justify-center rounded-full bg-signal text-ink"><Check aria-hidden className="size-5" /></span>
-              <div>
-                <p className="text-xs text-[#a9aca2]">{t("h3Notif")}</p>
-                <p className="money text-2xl font-semibold">+ {formatCents(tileExample("autodealers"), locale)}</p>
-                <p className="text-xs text-[#a9aca2]">{t("h3NotifSub")}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Someone you know needs something: photo tiles with what it earns. */}
-      <section className="border-t border-border bg-surface py-16 md:py-24">
-        <div className="container-x">
-          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <SectionHeading title={t("tilesTitle")} sub={t("tilesSub")} className="mb-0 md:mb-0" />
-            <Link href="/categorieen" className={buttonVariants({ variant: "outline" })}>
-              {t("categoriesAll")} <ArrowRight aria-hidden />
-            </Link>
-          </div>
-          <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
-            {TIP_TILES.map((tile) => (
-              <li key={tile.slug} className="w-[72%] shrink-0 snap-start sm:w-[45%] md:w-auto">
-                <Link href={`/categorieen/${tile.slug}`} className="photo-zoom group relative block aspect-[3/4] overflow-hidden rounded-2xl bg-ink">
-                  <Image src={tile.photo.src} alt={tile.photo.alt[locale]} fill sizes="(min-width: 768px) 25vw, 72vw" className="object-cover opacity-90" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-4 text-paper">
-                    <p className="text-base leading-snug font-medium">{locale === "en" ? tile.en : tile.nl}</p>
-                    <p className="flex items-baseline gap-2">
-                      <span className="money rounded-md bg-signal px-2 text-2xl font-semibold text-ink">{formatEuroShort(tileExample(tile.slug), locale)}</span>
-                      <span className="text-sm text-[#d6d8d0]">{t("tilesYou")}</span>
-                    </p>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <PhoneMockup locale={locale} />
         </div>
       </section>
 
@@ -130,6 +88,47 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </section>
       ) : null}
+
+      {/* What one deal is worth, per category. */}
+      <section className="py-16 md:py-24">
+        <div className="container-x">
+          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <SectionHeading title={t("tilesTitle")} sub={t("tilesSub")} className="mb-0 md:mb-0" />
+            <Link href="/categorieen" className={buttonVariants({ variant: "outline" })}>
+              {t("categoriesAll")} <ArrowRight aria-hidden />
+            </Link>
+          </div>
+          <CategoryTiles locale={locale} />
+        </div>
+      </section>
+
+      {/* Side job versus FindersArmy. */}
+      <section className="bg-surface py-16 md:py-24">
+        <div className="container-x">
+          <SectionHeading title={t("vsTitle")} sub={t("vsSub")} />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="flex flex-col gap-5 rounded-3xl border border-border bg-bg p-7 md:p-9">
+              <h3 className="text-2xl text-subtle">{t("vsJobTitle")}</h3>
+              <ul className="flex flex-col gap-3">
+                {(t.raw("vsJob") as string[]).map((x) => (
+                  <li key={x} className="flex gap-3 text-subtle"><X aria-hidden className="mt-1 size-4 shrink-0" />{x}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-5 rounded-3xl bg-ink p-7 text-paper md:p-9">
+              <h3 className="text-2xl">{t("vsFaTitle")}</h3>
+              <ul className="flex flex-col gap-3">
+                {(t.raw("vsFa") as string[]).map((x) => (
+                  <li key={x} className="flex gap-3 text-lg"><Check aria-hidden className="mt-1.5 size-4 shrink-0 text-signal" />{x}</li>
+                ))}
+              </ul>
+              <Link href="/aanmelden/finder" className={cn(buttonVariants({ variant: "primary", size: "lg" }), "mt-2 self-start")}>
+                {t("ctaFinder")} <ArrowRight aria-hidden />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Steps: real UI fragments, the third one is money. */}
       <Section>
@@ -236,6 +235,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+
+      {/* Everywhere in the Netherlands. */}
+      <Section>
+        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <SectionHeading title={t("regionsTitle")} sub={t("regionsSub")} className="mb-0 md:mb-0" />
+          <Link href="/regio" className={buttonVariants({ variant: "outline" })}>{t("regionsAll")} <ArrowRight aria-hidden /></Link>
+        </div>
+        <ul className="flex flex-wrap gap-2">
+          {PROVINCES.map((p) => (
+            <li key={p.key}>
+              <Link href={`/regio/${p.key}`} className="inline-flex rounded-full border border-border px-4 py-2 text-sm hover:border-fg hover:bg-fg hover:text-bg">{p.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
       {/* Categories grouped by sector. */}
       <Section>

@@ -2,7 +2,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
-import { PHOTOS } from "@/content/photos";
+import Image from "next/image";
+import { PHOTOS, photoForGroup } from "@/content/photos";
+import { CATEGORIES, CATEGORY_GROUPS } from "@/content/categories";
 import { PageHero, Section, SectionHeading } from "@/components/marketing/section";
 import { BusinessCalculator } from "@/components/marketing/business-calculator";
 import { FaqList, JsonLd, faqJsonLd } from "@/components/marketing/faq-list";
@@ -43,6 +45,48 @@ export default async function BusinessPage({ params }: { params: Promise<{ local
           <span className="font-mono text-xs text-subtle">{t("ctaNote")}</span>
         </div>
       </PageHero>
+
+      {/* Who is looking for you: real people, photographed. */}
+      <section className="py-16 md:py-24">
+        <div className="container-x grid gap-10 md:grid-cols-2 md:items-center">
+          <div className="grid grid-cols-2 gap-3">
+            {[PHOTOS.meisjeLacht, PHOTOS.jongenLacht, PHOTOS.vriendenTafel, PHOTOS.koppelKeuken].map((ph, i) => (
+              <div key={ph.src} className={`relative overflow-hidden rounded-3xl ${i % 2 ? "mt-8 aspect-[3/4]" : "aspect-[3/4]"}`}>
+                <Image src={ph.src} alt={ph.alt[locale]} fill sizes="(min-width: 768px) 22vw, 45vw" className="object-cover" />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-5">
+            <h2 className="text-4xl md:text-5xl">{t("whoTitle")}</h2>
+            <p className="text-lg text-subtle">{t("whoBody")}</p>
+            <Link href="/aanmelden/bedrijf" className={buttonVariants({ variant: "solid", size: "lg", className: "self-start" })}>
+              {t("cta")} <ArrowRight aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Every kind of business. */}
+      <section className="bg-ink py-16 text-paper md:py-24">
+        <div className="container-x flex flex-col gap-8">
+          <div className="flex max-w-2xl flex-col gap-3">
+            <h2 className="text-4xl md:text-5xl">{t("sectorsTitle")}</h2>
+            <p className="text-lg text-[#c9cbc4]">{t("sectorsSub", { count: CATEGORIES.length, groups: CATEGORY_GROUPS.length })}</p>
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {CATEGORY_GROUPS.map((g) => (
+              <li key={g.key}>
+                <Link href={`/categorieen#sector-${g.key}`} className="photo-zoom group relative flex h-32 items-end overflow-hidden rounded-2xl p-4">
+                  <Image src={photoForGroup(g.key).src} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover opacity-70" />
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent" />
+                  <span className="relative font-display text-lg font-semibold">{locale === "en" ? g.en : g.nl}</span>
+                  <span className="relative ml-2 text-sm text-[#c9cbc4]">{CATEGORIES.filter((c) => c.group === g.key).length}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <Section>
         <div className="grid gap-4 md:grid-cols-3">

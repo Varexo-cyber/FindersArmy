@@ -151,8 +151,10 @@ export function searchKnowledge(query: string, chunks: KnowledgeChunk[], limit =
       const hits = d.body.filter((t) => t.startsWith(stem)).length;
       if (hits) score += w * (1 + Math.log2(hits));
     });
-    // Mild preference for short, specific answers over long pages.
-    return { c: d.c, score: score / Math.log2(16 + d.body.length / 80) };
+    // Mild preference for short, specific answers over long pages, and for the curated FAQ
+    // answers over marketing copy that happens to use the same words.
+    const curated = d.c.id.startsWith("faq:") ? 1.15 : 1;
+    return { c: d.c, score: (curated * score) / Math.log2(16 + d.body.length / 80) };
   });
   const ranked = scored.filter((s) => s.score > 0).sort((a, b) => b.score - a.score);
   // Further hits only when they are nearly as relevant as the best one.
