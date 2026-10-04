@@ -600,7 +600,7 @@
     "profileSaved": "Business details saved."
   },
   "referral": {
-    "recommends": "{finder} recommends {business}",
+    "recommends": "<b>{finder}</b> recommends <b>{business}</b>",
     "recommendsSub": "{finder} knows you need something, and thought of you. Request a free quote.",
     "about": "About {business}",
     "region": "Service area",

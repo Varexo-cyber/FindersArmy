@@ -16,7 +16,22 @@ export default function middleware(request: NextRequest) {
   if (host === "www.findersarmy.com") {
     return NextResponse.redirect(new URL(request.nextUrl.pathname + request.nextUrl.search, "https://findersarmy.com"), 308);
   }
-  return intl(request);
+  const response = intl(request);
+  const ref = request.nextUrl.pathname.match(/^\/(?:en\/)?r\/([a-z0-9]{4,16})$/);
+  if (ref) {
+    // Attribution cookie: codes in first-visit order. createLead uses the earliest code for the
+    // same campaign, so the first Finder to send someone keeps the customer.
+    const existing = (request.cookies.get("fa_ref")?.value ?? "").split(".").filter((c) => /^[a-z0-9]{4,16}$/.test(c));
+    if (!existing.includes(ref[1]!)) existing.push(ref[1]!);
+    response.cookies.set("fa_ref", existing.slice(-10).join("."), {
+      maxAge: 90 * 24 * 60 * 60,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: request.nextUrl.protocol === "https:",
+      path: "/",
+    });
+  }
+  return response;
 }
 
 export const config = {

@@ -600,7 +600,7 @@
     "profileSaved": "Bedrijfsgegevens opgeslagen."
   },
   "referral": {
-    "recommends": "{finder} raadt {business} aan",
+    "recommends": "<b>{finder}</b> raadt <b>{business}</b> aan",
     "recommendsSub": "{finder} kent iemand die iets nodig heeft, en dacht aan jou. Vraag vrijblijvend een offerte aan.",
     "about": "Over {business}",
     "region": "Werkgebied",
