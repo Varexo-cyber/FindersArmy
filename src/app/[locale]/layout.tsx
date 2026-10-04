@@ -61,6 +61,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <AssistantWidget />
         </NextIntlClientProvider>
         <script src="/fx.js" defer />
+        <script src="/motion.js" defer />
         <ServiceWorker />
       </body>
     </html>

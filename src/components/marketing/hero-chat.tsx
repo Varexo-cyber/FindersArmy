@@ -2,6 +2,7 @@ import Image from "next/image";
 import { CheckCheck } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PHOTOS } from "@/content/photos";
+import { LogoMark } from "@/components/brand/logo";
 import { formatCents } from "@/lib/money";
 
 /**
@@ -12,13 +13,13 @@ export async function HeroChat({ locale, cents }: { locale: "nl" | "en"; cents: 
   const t = await getTranslations("home");
   return (
     <div className="relative mx-auto w-full max-w-[520px]">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_40px_100px_-40px_rgb(0_0_0/0.55)]">
+      <div data-depth="-0.6" className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_40px_100px_-40px_rgb(0_0_0/0.55)]">
         <Image src={PHOTOS.vriendenStraat.src} alt={PHOTOS.vriendenStraat.alt[locale]} fill priority sizes="(min-width: 768px) 520px, 92vw" className="object-cover" />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
       {/* WhatsApp conversation */}
-      <div className="absolute -left-3 top-6 w-[84%] max-w-[330px] overflow-hidden rounded-2xl bg-[#efeae2] shadow-2xl ring-1 ring-black/5 md:-left-14 md:top-10">
+      <div data-depth="1.6" className="absolute -left-3 top-6 w-[84%] max-w-[330px] overflow-hidden rounded-2xl bg-[#efeae2] shadow-2xl ring-1 ring-black/5 md:-left-14 md:top-10">
         <div className="flex items-center gap-2.5 bg-[#008069] px-3.5 py-2.5 text-white">
           <span className="flex size-8 items-center justify-center rounded-full bg-[#dfe5e7] text-sm font-semibold text-[#54656f]">M</span>
           <span className="flex flex-col leading-tight">
@@ -32,7 +33,7 @@ export async function HeroChat({ locale, cents }: { locale: "nl" | "en"; cents: 
           </p>
           <div className="max-w-[88%] self-end rounded-lg rounded-tr-none bg-[#d9fdd3] p-1 shadow-sm">
             <div className="flex gap-2 rounded-md bg-[#cfe9c9] p-2">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-ink text-xs font-bold text-signal">FA</span>
+              <LogoMark className="size-9 shrink-0 text-ink [--bg:#f5f3ee]" />
               <span className="min-w-0 leading-tight">
                 <span className="block truncate text-[12px] font-semibold">{t("h3LinkTitle")}</span>
                 <span className="block truncate text-[11px] text-[#54656f]">{t("h3ChatLink")}</span>
@@ -47,9 +48,9 @@ export async function HeroChat({ locale, cents }: { locale: "nl" | "en"; cents: 
       </div>
 
       {/* Payout notification */}
-      <div className="absolute -right-2 bottom-8 w-[78%] max-w-[300px] rounded-2xl bg-white/90 p-3.5 text-ink shadow-2xl ring-1 ring-black/5 backdrop-blur-xl md:-right-10 md:bottom-12">
+      <div data-depth="2.6" className="absolute -right-2 bottom-8 w-[78%] max-w-[300px] rounded-2xl bg-white/90 p-3.5 text-ink shadow-2xl ring-1 ring-black/5 backdrop-blur-xl md:-right-10 md:bottom-12">
         <div className="flex items-center gap-2 text-[11px] text-[#6b6e66]">
-          <span className="flex size-5 items-center justify-center rounded-[6px] bg-ink text-[9px] font-bold text-signal">FA</span>
+          <LogoMark className="size-5 text-ink [--bg:#f5f3ee]" />
           <span className="font-medium tracking-wide uppercase">FindersArmy</span>
           <span className="ml-auto">{t("h3Now")}</span>
         </div>

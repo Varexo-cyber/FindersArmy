@@ -58,7 +58,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <br />
               <span className="fa-words" aria-label={words[0]}>
                 {[...words, words[0]].map((w, i) => (
-                  <span key={i} aria-hidden className="box-decoration-clone bg-[linear-gradient(transparent_55%,var(--signal)_55%,var(--signal)_80%,transparent_80%)]">{w}</span>
+                  <span key={i} aria-hidden className="box-decoration-clone dark:bg-none dark:text-signal bg-[linear-gradient(transparent_55%,var(--signal)_55%,var(--signal)_80%,transparent_80%)]">{w}</span>
                 ))}
               </span>
             </h1>
@@ -81,20 +81,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* Free, for both sides. */}
-      <section className="bg-ink py-14 text-paper md:py-20">
-        <div className="container-x flex flex-col gap-8">
-          <h2 className="text-4xl md:text-6xl">{t("freeTitle")}</h2>
+      {/* Free, for both sides: impossible to miss. */}
+      <section className="relative overflow-hidden bg-signal py-16 text-ink md:py-24">
+        <div className="container-x flex flex-col gap-10">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <h2 className="text-5xl leading-[0.95] md:text-8xl">{t("freeTitle")}</h2>
+            <p aria-hidden className="money text-[7rem] leading-none font-semibold tracking-tighter md:text-[11rem]">€0</p>
+          </div>
           <div className="grid gap-4 md:grid-cols-2">
             {[
               { label: t("freeFinderLabel"), body: t("freeFinderBody"), cta: t("freeFinderCta"), href: "/aanmelden/finder" },
               { label: t("freeBizLabel"), body: t("freeBizBody"), cta: t("freeBizCta"), href: "/aanmelden/bedrijf" },
             ].map((x) => (
-              <Link key={x.href} href={x.href} data-spot className="group flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.04] p-7 hover:border-signal md:p-9">
-                <p className="text-sm font-medium text-signal">{x.label}</p>
-                <p className="money text-7xl font-semibold md:text-8xl">€ 0</p>
-                <p className="max-w-md text-lg text-[#c9cbc4]">{x.body}</p>
-                <span className="mt-auto inline-flex items-center gap-2 font-medium">
+              <Link key={x.href} href={x.href} data-cursor={locale === "en" ? "Start" : "Start"} className="group flex flex-col gap-5 rounded-[28px] bg-ink p-7 text-paper transition-transform duration-300 hover:-translate-y-1 md:p-10">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-sm font-medium text-signal">{x.label}</p>
+                  <p className="money rounded-full bg-signal px-3 py-1 text-sm font-semibold text-ink">€ 0</p>
+                </div>
+                <p className="max-w-md text-2xl leading-snug md:text-3xl">{x.body}</p>
+                <span className="mt-auto inline-flex items-center gap-2 font-medium text-signal">
                   {x.cta} <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>
@@ -114,17 +119,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       ) : null}
 
       {/* What one deal is worth, per category. */}
-      <section className="py-16 md:py-24">
-        <div className="container-x">
-          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <CategoryTiles
+        locale={locale}
+        pinned
+        header={
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <SectionHeading title={t("tilesTitle")} sub={t("tilesSub")} className="mb-0 md:mb-0" />
             <Link href="/categorieen" className={buttonVariants({ variant: "outline" })}>
               {t("categoriesAll")} <ArrowRight aria-hidden />
             </Link>
           </div>
-          <CategoryTiles locale={locale} />
-        </div>
-      </section>
+        }
+      />
 
       {/* Side job versus FindersArmy. */}
       <section className="bg-surface py-16 md:py-24">
@@ -182,7 +188,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Photo band + the worked example. */}
       <section className="py-16 md:py-24">
         <div className="container-x grid gap-10 md:grid-cols-2 md:items-center">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[28px]">
+          <div data-unveil className="relative aspect-[4/3] overflow-hidden rounded-[28px]">
             <Image src={PHOTOS.vriendenLachen.src} alt={PHOTOS.vriendenLachen.alt[locale]} fill sizes="(min-width: 768px) 45vw, 92vw" className="object-cover" />
           </div>
           <div className="flex flex-col gap-6">

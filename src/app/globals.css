@@ -425,3 +425,82 @@
 @media (prefers-reduced-motion: reduce) {
   .fa-pop, .fa-dot { animation: none; }
 }
+
+/* ── Motion layer (public/motion.js) ─────────────────────────────────────── */
+.fa-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 70;
+  background: var(--signal);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+.fa-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 80;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--fg);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 200ms, border-color 200ms, opacity 200ms;
+  mix-blend-mode: difference;
+  border-color: #fff;
+}
+.fa-cursor.is-link {
+  background: #fff;
+}
+.fa-cursor.is-label {
+  mix-blend-mode: normal;
+  background: var(--signal);
+  border-color: var(--signal);
+}
+.fa-cursor span {
+  font-size: 4px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.fa-unveil {
+  clip-path: inset(14% 8% 14% 8% round 28px);
+  transition: clip-path 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fa-unveil img {
+  transform: scale(1.18);
+  transition: transform 1400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fa-unveil.is-open {
+  clip-path: inset(0 0 0 0 round 28px);
+}
+.fa-unveil.is-open img {
+  transform: scale(1);
+}
+[data-hscroll].is-pinned > [data-hscroll-sticky] {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-hscroll].is-pinned [data-hscroll-track] {
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
+}
+[data-depth] {
+  will-change: translate;
+}
+/* One colour grade over all photography, so stock shots read as one brand. */
+img[src*="photos"] {
+  filter: saturate(0.82) contrast(1.06) brightness(0.96) sepia(0.06);
+}

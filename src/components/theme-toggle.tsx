@@ -8,6 +8,8 @@ export function ThemeToggle({ label }: { label: string }) {
   const [theme, setTheme] = useState<"light" | "dark" | null>(null);
 
   useEffect(() => {
+    // Tell public/motion.js that React handles this button.
+    (window as unknown as { __faReact?: boolean }).__faReact = true;
     setTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
   }, []);
 
@@ -26,6 +28,7 @@ export function ThemeToggle({ label }: { label: string }) {
     <button
       type="button"
       onClick={toggle}
+      data-theme-toggle
       aria-label={label}
       title={label}
       className="inline-flex size-9 items-center justify-center rounded-md border border-transparent text-subtle transition-colors duration-150 hover:border-border hover:text-fg"

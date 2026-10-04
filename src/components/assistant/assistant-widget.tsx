@@ -138,7 +138,7 @@ export function AssistantWidget() {
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-3">
                 <span className="relative flex size-11 items-center justify-center rounded-2xl bg-signal text-ink">
-                  <LogoMark className="size-6" />
+                  <LogoMark className="size-6 text-ink [--bg:#d4ff3f]" />
                   <span aria-hidden className="absolute -right-0.5 -bottom-0.5 size-3 rounded-full bg-[#25d366] ring-2 ring-ink" />
                 </span>
                 <div>
@@ -234,7 +234,7 @@ export function AssistantWidget() {
         className="group flex h-14 items-center gap-3 rounded-full bg-ink py-2 pr-5 pl-2 text-paper shadow-[0_16px_40px_-12px_rgb(0_0_0/0.55)] ring-1 ring-white/10 transition-transform duration-200 hover:-translate-y-0.5"
       >
         <span className="relative flex size-10 items-center justify-center rounded-full bg-signal text-ink">
-          {open ? <X aria-hidden className="size-5" /> : <LogoMark className="size-5" />}
+          {open ? <X aria-hidden className="size-5" /> : <LogoMark className="size-5 text-ink [--bg:#d4ff3f]" />}
           {!open ? <span aria-hidden className="absolute -right-0.5 -bottom-0.5 size-3 rounded-full bg-[#25d366] ring-2 ring-ink" /> : null}
         </span>
         <span className="hidden flex-col items-start leading-tight sm:flex">
