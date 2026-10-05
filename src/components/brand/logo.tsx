@@ -15,7 +15,10 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className, withWordmark = true }: { className?: string; withWordmark?: boolean }) {
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark />
+      {/* Dark mode: the mark sits in a signal-yellow disc, like the help button. */}
+      <span className="inline-flex transition-colors duration-300 dark:size-10 dark:items-center dark:justify-center dark:rounded-full dark:bg-signal">
+        <LogoMark className="dark:size-6 dark:text-ink dark:[--bg:#d4ff3f]" />
+      </span>
       {withWordmark ? (
         <span className="font-display text-[19px] font-bold tracking-[-0.04em]">FindersArmy</span>
       ) : null}
