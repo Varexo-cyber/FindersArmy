@@ -5,7 +5,7 @@ import { withTimeTravel } from "@/lib/server/clock";
 
 export const maxDuration = 300;
 
-/** Called by Vercel Cron (see vercel.json) with `Authorization: Bearer $CRON_SECRET`. */
+/** Called daily (Netlify scheduled function netlify/functions/daily-cron.mts, or Vercel Cron) with `Authorization: Bearer $CRON_SECRET`. */
 export async function GET(req: NextRequest) {
   const secret = env().CRON_SECRET;
   if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {

@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { render } from "@react-email/render";
 import { createElement } from "react";
 import { EmailLayout, type EmailBlock } from "@/emails/layout";
-import { env } from "../env";
+import { env, isDemoMode } from "../env";
 import { db } from "./db";
 
 export interface Attachment {
@@ -38,7 +38,7 @@ export async function sendMail(message: MailMessage): Promise<void> {
   const e = env();
 
   if (!e.RESEND_API_KEY) {
-    if (e.NODE_ENV === "production" && !process.env.E2E) throw new Error("RESEND_API_KEY is required in production");
+    if (e.NODE_ENV === "production" && !process.env.E2E && !isDemoMode()) throw new Error("RESEND_API_KEY is required in production");
     await db.devMail.create({ data: { to: message.to.toLowerCase(), subject: message.subject, html, text } });
     if (e.NODE_ENV === "development") console.info(`[dev-mail] to=${message.to} subject="${message.subject}"`);
     return;

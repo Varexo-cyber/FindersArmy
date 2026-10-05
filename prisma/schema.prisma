@@ -2,7 +2,9 @@
 // Money is always stored as integer cents (Int). Percentages as basis points (1% = 100 bps).
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // "native" for local builds, rhel-openssl-3.0.x for Netlify functions (AWS Lambda).
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {

@@ -1,0 +1,8 @@
+# Netlify: Next.js runs through the official Next.js runtime (detected automatically).
+[build]
+  command = "bash scripts/netlify-build.sh"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+

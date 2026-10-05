@@ -36,6 +36,15 @@ const schema = z.object({
 
 export type Env = z.infer<typeof schema>;
 
+/**
+ * Test phase on a real host: no Mollie or Resend yet, so payments use the fake checkout, mail goes
+ * to the in-site mailbox and the login page offers one-click demo accounts. Remove DEMO_MODE
+ * (and set the real keys) before real users arrive.
+ */
+export function isDemoMode(): boolean {
+  return process.env.DEMO_MODE === "true" || process.env.DEMO_MODE === "1";
+}
+
 let cached: Env | null = null;
 
 export function env(): Env {
@@ -45,7 +54,7 @@ export function env(): Env {
     const issues = parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join(", ");
     throw new Error(`Invalid environment: ${issues}`);
   }
-  if (parsed.data.NODE_ENV === "production" && parsed.data.PAYMENT_PROVIDER === "fake" && !process.env.E2E) {
+  if (parsed.data.NODE_ENV === "production" && parsed.data.PAYMENT_PROVIDER === "fake" && !process.env.E2E && !isDemoMode()) {
     throw new Error("PAYMENT_PROVIDER=fake is not allowed in production");
   }
   cached = parsed.data;

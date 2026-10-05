@@ -1,3 +1,4 @@
+import { HydrationMark } from "@/components/layout/hydration-mark";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           {children}
           <AssistantWidget />
+            <HydrationMark />
         </NextIntlClientProvider>
         <script src="/fx.js" defer />
         <script src="/motion.js" defer />

@@ -143,11 +143,23 @@
     });
   }
   // Start after load and an idle tick, so React has finished hydrating before anything changes.
-  function boot() {
-    var go = function () { init(document); watch(); };
-    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1200 }); else setTimeout(go, 200);
+  // Start only once React has hydrated (HydrationMark), or, on static pages without React
+  // (previews), shortly after load.
+  function whenReady(fn) {
+    var done = false;
+    // React hydrates streamed pages in chunks; give the remaining chunks an idle tick too.
+    var go = function () {
+      if (done) return;
+      done = true;
+      var later = function () { setTimeout(fn, 600); };
+      if ("requestIdleCallback" in window) requestIdleCallback(later, { timeout: 1500 }); else later();
+    };
+    if (window.__faHydrated) go(); else window.addEventListener("fa:hydrated", go, { once: true });
+    window.addEventListener("load", function () {
+      if (!self.__next_f) setTimeout(go, 50);
+    });
   }
-  if (document.readyState === "complete") boot(); else window.addEventListener("load", boot);
+  whenReady(function () { init(document); watch(); });
   // Client-side navigations (Next.js) add new content: pick it up.
   function watch() {
     var pending = false;

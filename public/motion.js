@@ -34,7 +34,7 @@
     var bar = document.createElement("div");
     bar.className = "fa-progress";
     bar.setAttribute("aria-hidden", "true");
-    document.body.appendChild(bar);
+    document.documentElement.appendChild(bar);
 
     var cursor = null, label = null, cx = mx, cy = my, scale = 1, targetScale = 1;
     if (fine && !reduce) {
@@ -43,7 +43,7 @@
       cursor.setAttribute("aria-hidden", "true");
       label = document.createElement("span");
       cursor.appendChild(label);
-      document.body.appendChild(cursor);
+      document.documentElement.appendChild(cursor);
       document.documentElement.classList.add("has-fa-cursor");
     }
 
@@ -141,9 +141,21 @@
       requestAnimationFrame(frame);
     })();
   }
-  // After load and an idle tick, so React has hydrated before any attribute changes.
-  function boot() {
-    if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1200 }); else setTimeout(start, 200);
+  // Start only once React has hydrated (HydrationMark), or, on static pages without React
+  // (previews), shortly after load.
+  function whenReady(fn) {
+    var done = false;
+    // React hydrates streamed pages in chunks; give the remaining chunks an idle tick too.
+    var go = function () {
+      if (done) return;
+      done = true;
+      var later = function () { setTimeout(fn, 600); };
+      if ("requestIdleCallback" in window) requestIdleCallback(later, { timeout: 1500 }); else later();
+    };
+    if (window.__faHydrated) go(); else window.addEventListener("fa:hydrated", go, { once: true });
+    window.addEventListener("load", function () {
+      if (!self.__next_f) setTimeout(go, 50);
+    });
   }
-  if (document.readyState === "complete") boot(); else window.addEventListener("load", boot);
+  whenReady(start);
 })();
