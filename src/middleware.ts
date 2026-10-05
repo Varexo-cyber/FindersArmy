@@ -4,17 +4,28 @@ import { routing } from "./i18n/routing";
 
 const intl = createMiddleware(routing);
 
-const NL_DOMAINS = new Set(["finderarmy.nl", "www.finderarmy.nl", "findersarmy.nl", "www.findersarmy.nl"]);
+/** The domain the site lives on (APP_URL). Other brand domains redirect there. */
+function canonicalOrigin(): URL | null {
+  try {
+    return process.env.APP_URL ? new URL(process.env.APP_URL) : null;
+  } catch {
+    return null;
+  }
+}
+
+const BRAND_DOMAINS = ["finderarmy.nl", "findersarmy.nl", "finderarmy.com", "findersarmy.com"];
 
 export default function middleware(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0] ?? "";
-  if (NL_DOMAINS.has(host)) {
-    // The .nl domain is a pure redirect to the Dutch version on the main domain.
-    const url = new URL(request.nextUrl.pathname.replace(/^\/en(\/|$)/, "/") + request.nextUrl.search, "https://findersarmy.com");
-    return NextResponse.redirect(url, 308);
-  }
-  if (host === "www.findersarmy.com") {
-    return NextResponse.redirect(new URL(request.nextUrl.pathname + request.nextUrl.search, "https://findersarmy.com"), 308);
+  const canonical = canonicalOrigin();
+  if (canonical && host !== canonical.hostname) {
+    const bare = host.replace(/^www\./, "");
+    // www.<domain> and the other brand domains redirect to the one in APP_URL; netlify.app
+    // preview hosts are left alone so deploy previews keep working.
+    if (bare === canonical.hostname.replace(/^www\./, "") || BRAND_DOMAINS.includes(bare)) {
+      const path = BRAND_DOMAINS.includes(bare) && bare.endsWith(".nl") ? request.nextUrl.pathname.replace(/^\/en(\/|$)/, "/") : request.nextUrl.pathname;
+      return NextResponse.redirect(new URL(path + request.nextUrl.search, canonical.origin), 308);
+    }
   }
   const response = intl(request);
   const ref = request.nextUrl.pathname.match(/^\/(?:en\/)?r\/([a-z0-9]{4,16})$/);

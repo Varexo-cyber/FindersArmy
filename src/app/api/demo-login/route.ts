@@ -27,8 +27,11 @@ export async function GET(req: NextRequest) {
   const expires = new Date(now().getTime() + 1000 * 60 * 60 * 8);
   await db.session.create({ data: { sessionToken, userId: user.id, expires } });
 
-  const secure = req.nextUrl.protocol === "https:";
-  const res = NextResponse.redirect(new URL(account.to, req.nextUrl.origin));
+  // Behind Netlify's proxy the request URL can be an internal deploy host over http, so trust
+  // the forwarded protocol / APP_URL, and redirect with a relative Location (same host as the user).
+  const secure =
+    req.headers.get("x-forwarded-proto") === "https" || (process.env.APP_URL ?? "").startsWith("https://") || req.nextUrl.protocol === "https:";
+  const res = new NextResponse(null, { status: 303, headers: { Location: account.to, "Cache-Control": "no-store" } });
   res.cookies.set(secure ? "__Secure-authjs.session-token" : "authjs.session-token", sessionToken, {
     httpOnly: true,
     sameSite: "lax",
